@@ -1,0 +1,12 @@
+name: REDACTED Cartel custom approval logic bug
+address: 0x186E55C0BebD2f69348d94C4A27556d93C5Bd36C
+chain: eth
+tags:
+ - ERC20
+entry: contracts/wxBTRFLY.sol
+solc: 0.7.5
+vulnerable_contract: contracts/wxBTRFLY.sol
+vulnerable_function: transferFrom(address,address,uint256)  
+vunerable_lines: 836-840
+links:
+ - https://medium.com/immunefi/redacted-cartel-custom-approval-logic-bugfix-review-9b2d039ca2c5

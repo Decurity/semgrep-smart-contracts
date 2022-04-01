@@ -4,9 +4,9 @@ chain: eth
 tags:
  - Uniswap
  - Gearbox
-entry: contracts/UniswapV3.sol
-solc: 0.7.5
-vulnerable_contract: contracts/UniswapV3.sol
+entry: contracts/adapters/UniswapV3.sol
+solc: 0.7.6
+vulnerable_contract: contracts/adapters/UniswapV3.sol
 vulnerable_function: _extractTokens(bytes)
 vunerable_lines: 252-260
 links:

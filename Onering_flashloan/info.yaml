@@ -1,0 +1,12 @@
+name: OneRing Finance Flashloan
+address: 0xc06826f52f29b34c5d8b2c61abf844cebcf78abf
+chain: fantom
+tags:
+ - Flashloan
+entry: contracts/Vault.sol
+solc: 0.6.12
+vulnerable_contract: contracts/Vault.sol
+vulnerable_function: getSharePrice()
+vunerable_lines: 100-108
+links:
+ - https://medium.com/oneringfinance/onering-finance-exploit-post-mortem-after-oshare-hack-602a529db99b
