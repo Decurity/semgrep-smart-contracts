@@ -1,0 +1,15 @@
+name: TUSD Compound multiple entrypoints
+address: 0xa035b9e130f2b1aedc733eefb1c67ba4c503491f
+chain: eth
+tags:
+ - Compound
+ - TUSD
+entry: contracts/CErc20Delegate.sol
+solc: 0.5.16
+vulnerable_contract: contracts/CErc20.sol
+vulnerable_function: sweepToken(address)  
+vunerable_lines: 120-124
+links:
+ - https://medium.com/chainsecurity/trueusd-compound-vulnerability-bc5b696d29e2
+ - https://chainsecurity.com/security-audit/compound-ctoken/
+ - https://blog.openzeppelin.com/compound-comprehensive-protocol-audit/
