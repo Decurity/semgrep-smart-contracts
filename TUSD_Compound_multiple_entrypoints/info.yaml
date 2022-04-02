@@ -6,9 +6,10 @@ tags:
  - TUSD
 entry: contracts/CErc20Delegate.sol
 solc: 0.5.16
-vulnerable_contract: contracts/CErc20.sol
-vulnerable_function: sweepToken(address)  
+vulnerable_file: contracts/CErc20.sol
 vunerable_lines: 120-124
+vulnerable_contract: CErc20
+vulnerable_function: sweepToken(address)  
 links:
  - https://medium.com/chainsecurity/trueusd-compound-vulnerability-bc5b696d29e2
  - https://chainsecurity.com/security-audit/compound-ctoken/

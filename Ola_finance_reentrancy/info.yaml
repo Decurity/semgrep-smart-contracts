@@ -6,9 +6,10 @@ tags:
  - Reentrancy
 entry: contracts/CErc20Delegator.sol
 solc: 0.5.16
-vulnerable_contract: contracts/CErc20Delegator.sol
-vulnerable_function: borrowFresh(address,uint256)  
+vulnerable_file: contracts/CErc20Delegator.sol
 vunerable_lines: 1882-1948
+vulnerable_contract: CToken
+vulnerable_function: borrowFresh(address,uint256)  
 links:
  - https://twitter.com/peckshield/status/1509431646818234369
  - https://twitter.com/blocksecteam/status/1509466576848064512?t=iT8Xd8s9b3ActYp_wYeHKQ

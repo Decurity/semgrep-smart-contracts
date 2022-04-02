@@ -5,8 +5,9 @@ tags:
  - ERC20
 entry: contracts/wxBTRFLY.sol
 solc: 0.7.5
-vulnerable_contract: contracts/wxBTRFLY.sol
+vulnerable_file: contracts/wxBTRFLY.sol
+vulnerable_lines: 836-840
+vulnerable_contract: wxBTRFLY
 vulnerable_function: transferFrom(address,address,uint256)  
-vunerable_lines: 836-840
 links:
  - https://medium.com/immunefi/redacted-cartel-custom-approval-logic-bugfix-review-9b2d039ca2c5
