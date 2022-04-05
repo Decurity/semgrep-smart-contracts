@@ -255,6 +255,7 @@ contract UniswapV3Adapter is ISwapRouter, ReentrancyGuard {
         returns (address tokenA, address tokenB)
     {
         tokenA = path.toAddress(0);
+        // ruleid: gearbox-tokens-path-confusion
         tokenB = path.toAddress(path.length - ADDR_SIZE);
     }
 }

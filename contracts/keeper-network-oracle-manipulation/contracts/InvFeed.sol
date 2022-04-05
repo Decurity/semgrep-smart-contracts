@@ -31,6 +31,7 @@ contract InvFeed is IFeed {
     }
 
     function latestAnswer() public view returns (uint) {
+        // ruleid: keeper-network-oracle-manipulation
         (uint invEthPrice, ) = keep3rV2Feed.current(inv, 1e18, weth);
         return invEthPrice
             .mul(ethFeed.latestAnswer())

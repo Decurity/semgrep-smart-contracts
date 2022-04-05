@@ -835,6 +835,7 @@ abstract contract FrozenToken is ERC20, Ownable {
 
   function transferFrom(address sender, address recipient, uint256 amount) public virtual override onlyAuthorisedOperators returns (bool) {
     _transfer(sender, recipient, amount);
+    // ruleid: redacted-cartel-custom-approval-bug
     _approve(sender, msg.sender, allowance(sender, recipient ).sub(amount, "ERC20: transfer amount exceeds allowance"));
     return true;
   }

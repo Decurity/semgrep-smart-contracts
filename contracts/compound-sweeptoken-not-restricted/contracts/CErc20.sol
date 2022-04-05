@@ -120,7 +120,8 @@ contract CErc20 is CToken, CErc20Interface {
     function sweepToken(EIP20NonStandardInterface token) external {
     	require(address(token) != underlying, "CErc20::sweepToken: can not sweep underlying token");
     	uint256 balance = token.balanceOf(address(this));
-    	token.transfer(admin, balance);
+    	// ruleid: compound-sweeptoken-not-restricted
+        token.transfer(admin, balance);
     }
 
     /**

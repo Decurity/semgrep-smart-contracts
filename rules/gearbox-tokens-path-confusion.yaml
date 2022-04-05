@@ -1,0 +1,20 @@
+rules:
+ -
+    id: gearbox-tokens-path-confusion
+    message: UniswapV3 adapter implemented incorrect extraction of path parameters
+    metadata:
+        references:
+        - https://medium.com/@nnez/different-parsers-different-results-acecf84dfb0c
+        category: security
+        tags:
+        - uniswap
+        - gearbox
+        address: 0xbA7B57D7E4d4A7516FC1CbfF1CA5182eBC0c1491
+        chain: eth
+        solc: 0.7.6
+    patterns:
+     - pattern: $PATH.toAddress($PATH.length - $ADDR_SIZE);
+    languages: 
+     - solidity
+    severity: WARNING
+

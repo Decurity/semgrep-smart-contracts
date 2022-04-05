@@ -1,0 +1,25 @@
+rules:
+ -
+    id: onering-finance-oracle-manipulation
+    message: getSharePrice() can be manipulated via flashloan
+    metadata:
+        references:
+        - https://medium.com/oneringfinance/onering-finance-exploit-post-mortem-after-oshare-hack-602a529db99b
+        - https://twitter.com/peckshield/status/1506090607059431427
+        - https://ftmscan.io/address/0xc06826f52f29b34c5d8b2c61abf844cebcf7
+        category: security
+        tags:
+        - oracle-manipulation
+        - flashloan
+        address: 0xc06826f52f29b34c5d8b2c61abf844cebcf78abf
+        chain: fantom
+        solc: 0.6.12
+    patterns:
+    - pattern: |
+        function getSharePrice() {
+        ...
+        }
+    languages: 
+    - solidity
+    severity: INFO
+

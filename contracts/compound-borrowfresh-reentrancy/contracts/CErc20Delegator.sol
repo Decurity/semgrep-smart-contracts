@@ -1930,6 +1930,7 @@ contract CToken is CTokenStorage, CTokenInterface, CTokenViewInterface, Exponent
          *  On success, the cToken borrowAmount less of cash.
          *  doTransferOut reverts if anything goes wrong, since we can't be sure if side effects occurred.
          */
+        // ruleid: compound-borrowfresh-reentrancy
         doTransferOut(borrower, borrowAmount);
 
         /* We write the previously calculated values into storage */

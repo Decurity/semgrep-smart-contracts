@@ -96,7 +96,7 @@ contract OneRingVault is ERC20Upgradeable, OwnableUpgradeable {
     function balanceWithInvested() public view returns (uint256 balance) {
         balance = IStrategy(activeStrategy).investedBalanceInUSD();
     }
-
+    // ruleid: onering-finance-oracle-manipulation
     function getSharePrice() public view returns (uint256 _sharePrice) {
         _sharePrice = totalSupply() == 0
             ? underlyingUnit
