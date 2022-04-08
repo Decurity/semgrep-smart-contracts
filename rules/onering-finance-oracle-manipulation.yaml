@@ -11,6 +11,7 @@ rules:
         tags:
         - oracle-manipulation
         - flashloan
+        - onering-finance
         address: 0xc06826f52f29b34c5d8b2c61abf844cebcf78abf
         chain: fantom
         solc: 0.6.12

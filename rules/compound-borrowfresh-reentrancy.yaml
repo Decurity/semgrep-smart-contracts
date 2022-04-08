@@ -11,6 +11,9 @@ rules:
         category: security
         tags:
         - compound
+        - ola-finance
+        - hundred-finance
+        - agave
         - reentrancy
         address: 0x139Eb08579eec664d461f0B754c1F8B569044611
         chain: fuse

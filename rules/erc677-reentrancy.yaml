@@ -10,6 +10,7 @@ rules:
         category: security
         tags:
         - erc677
+        - weth
         address: 0x5De15b5543c178C111915d6B8ae929Af01a8cC58
         chain: fuse
         solc: 0.4.24

@@ -13,6 +13,7 @@ rules:
         category: security
         tags:
         - oracle-manipulation
+        - inverse-finance
         address: 0x210ac53b27f16e20a9aa7d16260f84693390258f
         chain: eth
         solc: 0.5.16

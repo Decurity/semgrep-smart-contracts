@@ -1,7 +1,7 @@
 rules:
  -
     id: redacted-cartel-custom-approval-bug
-    message: transferFrom can steal allowance of other accounts
+    message: transferFrom() can steal allowance of other accounts
     metadata:
         references:
         - https://medium.com/immunefi/redacted-cartel-custom-approval-logic-bugfix-review-9b2d039ca2c5
@@ -9,6 +9,7 @@ rules:
         category: security
         tags:
         - erc20
+        - redacted-cartel
         address: 0x186E55C0BebD2f69348d94C4A27556d93C5Bd36C
         chain: eth
         solc: 0.7.5
