@@ -1,4 +1,0 @@
-- name: semgrep-rules-test
-  # You may pin to the exact commit or the version.
-  # uses: returntocorp/semgrep-rules-test-action@81194d42d3755b24a2eef725138d16bfc61232a2
-  uses: returntocorp/semgrep-rules-test-action@v0.2
