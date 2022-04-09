@@ -96,8 +96,8 @@ contract OneRingVault is ERC20Upgradeable, OwnableUpgradeable {
     function balanceWithInvested() public view returns (uint256 balance) {
         balance = IStrategy(activeStrategy).investedBalanceInUSD();
     }
-    // ruleid: onering-finance-oracle-manipulation
     function getSharePrice() public view returns (uint256 _sharePrice) {
+        // ruleid: basic-oracle-manipulation
         _sharePrice = totalSupply() == 0
             ? underlyingUnit
             : underlyingUnit.mul(balanceWithInvested()).div(totalSupply());
@@ -329,5 +329,30 @@ contract OneRingVault is ERC20Upgradeable, OwnableUpgradeable {
 
     function underlyingLength() public view returns (uint256) {
         return underlyings.length;
+    }
+}
+
+// Deus Finance vulnerable oracle
+
+contract Oracle {
+    IERC20 public dei;
+    IERC20 public usdc;
+    IERC20 public pair;
+
+    constructor(
+        IERC20 dei_,
+        IERC20 usdc_,
+        IERC20 pair_
+    ) {
+        dei = dei_;
+        usdc = usdc_;
+        pair = pair_;
+    }
+
+    function getPrice() external view returns (uint256) {
+        return
+            // ruleid: basic-oracle-manipulation
+            ((dei.balanceOf(address(pair)) + (usdc.balanceOf(address(pair)) * 1e12)) *
+                1e18) / pair.totalSupply();
     }
 }
