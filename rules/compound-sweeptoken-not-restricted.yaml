@@ -7,13 +7,11 @@ rules:
         - https://medium.com/chainsecurity/trueusd-compound-vulnerability-bc5b696d29e2
         - https://chainsecurity.com/security-audit/compound-ctoken/
         - https://blog.openzeppelin.com/compound-comprehensive-protocol-audit/
-        category: security
+        - https://etherscan.io/address/0xa035b9e130f2b1aedc733eefb1c67ba4c503491f # Compound
+        category: access-control
         tags:
         - compound
         - tusd
-        address: 0xa035b9e130f2b1aedc733eefb1c67ba4c503491f
-        chain: eth
-        solc: 0.5.16
     patterns:
     - pattern-inside: |
         function sweepToken(...) {

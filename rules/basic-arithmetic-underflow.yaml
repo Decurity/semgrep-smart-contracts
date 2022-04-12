@@ -1,0 +1,23 @@
+rules:
+ -
+    id: basic-arithmetic-underflow
+    message: Possible arithmetic underflow
+    metadata:
+        references:
+         - https://medium.com/@Knownsec_Blockchain_Lab/knownsec-blockchain-lab-umbnetwork-attack-event-analysis-9bae1141e58
+        category: unsafe-math
+        tags:
+         - umbnetwork
+    mode: taint
+    pattern-sinks:
+      - pattern: $Y - $X
+    pattern-sources:
+        - pattern-either:
+            - pattern-inside: |
+                function $F(..., $X, ...) external { ... }
+            - pattern-inside: |
+                function $F(..., $X, ...) public { ... }
+    languages: 
+    - solidity
+    severity: INFO
+
