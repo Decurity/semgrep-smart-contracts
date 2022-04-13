@@ -48,6 +48,7 @@ rigoblock-missing-access-control | RigoBlock | setMultipleAllowances() is missin
 BETA: arbitrary-low-level-call | Auctus Options, Starstream Finance, BasketDAO, Li Finance | An attacker may perform call() to an arbitrary address with controlled calldata
 BETA: basic-arithmetic-underflow | Umbrella Network, Remittance Token | Possible arithmetic underflow
 BETA: treasuredao-input-validation-vuln | TreasureDAO | A user supplied argument can be passed as zero to multiplication operation
+BETA: basic-reentrancy | EarnHub | A method is called on a user supplied argument
 
 ## Not greppable incidents
 
