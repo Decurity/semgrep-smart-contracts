@@ -47,3 +47,11 @@ redacted-cartel-custom-approval-bug | Redacted Cartel | transferFrom() can steal
 BETA: arbitrary-low-level-call | Auctus Options, Starstream Finance, BasketDAO, Li Finance | An attacker may perform call() to an arbitrary address with controlled calldata
 BETA: basic-arithmetic-underflow | Umbrella Network | Possible arithmetic underflow
 BETA: treasuredao-input-validation-vuln | TreasureDAO | A user supplied argument can be passed as zero to multiplication operation
+
+## Not greppable incidents
+
+I haven't come up with rules for the following incidents:
+
+- Fantasm ([description](https://twitter.com/RugDocIO/status/1501629678993518599), [contract](https://ftmscan.com/address/0x880672ab1d46d987e5d663fc7476cd8df3c9f937))
+- Paraluni ([description](https://slowmist.medium.com/paraluni-incident-analysis-58be442a4f99), [contract](https://www.contract-diff.xyz/?address=0xa386f30853a7eb7e6a25ec8389337a5c6973421d&chain=1))
+- Flurry Finance ([description](https://twitter.com/CertiKTech/status/1496298929599746048), [contract](https://bscscan.com/address/0x5085c49828b0b8e69bae99d96a8e0fcf0a033369))
