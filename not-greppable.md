@@ -1,0 +1,2 @@
+- Fantasm ([description](https://twitter.com/RugDocIO/status/1501629678993518599), [contract](https://ftmscan.com/address/0x880672ab1d46d987e5d663fc7476cd8df3c9f937))
+- Paraluni ([description](https://slowmist.medium.com/paraluni-incident-analysis-58be442a4f99), [contract](https://www.contract-diff.xyz/?address=0xa386f30853a7eb7e6a25ec8389337a5c6973421d&chain=1))
