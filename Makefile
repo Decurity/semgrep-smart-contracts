@@ -1,3 +1,3 @@
 test:
-	semgrep --validate --config=$$PWD/rules $$PWD
+	semgrep --validate --config=$$PWD/solidity $$PWD
 	semgrep --test --quiet $$PWD

@@ -1,6 +1,6 @@
-# Solidity semgrep rules
+# Semgrep rules for smart contracts
 
-In this repository you can find [semgrep](https://semgrep.dev/) rules based on actual DeFi exploits.
+In this repository you can find [semgrep](https://semgrep.dev/) rules that look for patterns of vulnerabilities in smart contracts based on actual DeFi exploits.
 
 ## Disclaimer
 
@@ -11,7 +11,7 @@ Currently semgrep supports [Solidity](https://semgrep.dev/docs/language-support/
 semgrep + [smart-contract-sanctuary](https://github.com/tintinweb/smart-contract-sanctuary) = ❤️
 
 ```shell
-$ semgrep --config rules ~/smart-contract-sanctuary-arbitrum/contracts/mainnet
+$ semgrep --config solidity ~/smart-contract-sanctuary-arbitrum/contracts/mainnet
 ```
 
 ## Testing
@@ -23,13 +23,13 @@ In case a rule is not yet supported by semgrep, you will find `// todoruleid: ..
 Run tests: 
 
 ```shell
-$ semgrep --test rules
+$ semgrep --test solidity
 ```
 
 Validate rules: 
 
 ```shell
-$ semgrep --validate --config rules
+$ semgrep --validate --config solidity
 ```
 
 ## Rules
