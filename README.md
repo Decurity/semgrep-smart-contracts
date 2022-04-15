@@ -45,6 +45,7 @@ keeper-network-oracle-manipulation | Inverse Finance | Keep3rV2.current() call h
 basic-oracle-manipulation | Onering Finance, Deus Finance | getSharePrice() can be manipulated via flashloan
 redacted-cartel-custom-approval-bug | Redacted Cartel | transferFrom() can steal allowance of other accounts
 rigoblock-missing-access-control | RigoBlock | setMultipleAllowances() is missing onlyOwner modifier
+rikkei-setoracledata-not-restricted | Rikkei Finance | Function setOracleData is allowed to be called by anyone
 BETA: arbitrary-low-level-call | Auctus Options, Starstream Finance, BasketDAO, Li Finance | An attacker may perform call() to an arbitrary address with controlled calldata
 BETA: basic-arithmetic-underflow | Umbrella Network, Remittance Token | Possible arithmetic underflow
 BETA: treasuredao-input-validation-vuln | TreasureDAO | A user supplied argument can be passed as zero to multiplication operation
