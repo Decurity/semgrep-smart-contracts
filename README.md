@@ -48,6 +48,7 @@ redacted-cartel-custom-approval-bug | Redacted Cartel | transferFrom() can steal
 rigoblock-missing-access-control | RigoBlock | setMultipleAllowances() is missing onlyOwner modifier
 rikkei-setoracledata-not-restricted | Rikkei Finance | Function setOracleData is allowed to be called by anyone
 superfluid-ctx-injection | Superfluid | A specially crafted calldata may be used to impersonate other accounts
+tecra-coin-burnfrom-bug | Tecra Coin | Parameter "from" is checked at incorrect position in "_allowances" mapping
 BETA: arbitrary-low-level-call | Auctus Options, Starstream Finance, BasketDAO, Li Finance | An attacker may perform call() to an arbitrary address with controlled calldata
 BETA: basic-arithmetic-underflow | Umbrella Network, Remittance Token | Possible arithmetic underflow
 BETA: treasuredao-input-validation-vuln | TreasureDAO | A user supplied argument can be passed as zero to multiplication operation

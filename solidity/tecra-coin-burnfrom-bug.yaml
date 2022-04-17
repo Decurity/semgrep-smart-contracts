@@ -1,0 +1,21 @@
+rules:
+ -
+    id: tecra-coin-burnfrom-bug
+    message: Parameter "from" is checked at incorrect position in "_allowances" mapping
+    metadata:
+        references:
+        - https://twitter.com/Mauricio_0218/status/1490082073096462340
+        - https://etherscan.io/address/0xe38b72d6595fd3885d1d2f770aa23e94757f91a1
+        category: logic
+        tags:
+        - erc20
+        - tecra-coin
+    pattern-either:
+    - pattern: require(_allowances[$S][from] >= $X, ...)
+    - pattern: require(_allowances[$S][from] >= $X)
+    - pattern: require(allowance($S, from) >= $X, ...)
+    - pattern: require(allowance($S, from) >= $X)
+    languages: 
+    - solidity
+    severity: ERROR
+
