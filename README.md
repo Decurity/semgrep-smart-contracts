@@ -39,6 +39,7 @@ Rule ID | Targets | Description
 compound-borrowfresh-reentrancy | Compound, Ola Finance, Hundred Finance, Agave | Function borrowFresh() in Compound performs state update after doTransferOut()
 compound-sweeptoken-not-restricted | TUSD, Compound | Function sweepToken is allowed to be called by anyone
 erc20-public-transfer | Creat Future | Custom ERC20 implementation exposes _transfer() as public
+erc20-public-burn | HospoWise | Anyone can burn tokens of other accounts
 erc677-reentrancy | Ola Finance | ERC677 callAfterTransfer() reentrancy
 erc777-reentrancy | Bacon Protocol | ERC777 tokensReceived() reentrancy
 erc721-reentrancy | Hype Bears | ERC721 onERC721Received() reentrancy

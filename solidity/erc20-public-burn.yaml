@@ -1,0 +1,72 @@
+rules:
+ -
+    id: erc20-public-burn
+    message: Anyone can burn tokens of other accounts
+    metadata:
+        references:
+        - https://twitter.com/danielvf/status/1511013322015051797
+        - https://etherscan.io/address/0xf15ead6acb8ab52a1e335671a48f3a99e991614c
+        category: access-control
+        tags:
+        - erc20
+        - hospowise
+    patterns:
+      - pattern-either:
+         - pattern: |
+            function burn(...) public { 
+                _burn($ACCOUNT, $AMOUNT);
+             }
+         - pattern: |
+            function burn(...) external { 
+                _burn($ACCOUNT, $AMOUNT);
+             }
+      - pattern-not: function burn(...) onlyOwner { ... }
+      - pattern-not: function burn(...) onlyVault { ... }
+      - pattern-not: function burn(...) onlyMinter { ... }
+      - pattern-not: function burn(...) onlyBridge { ... }
+      - pattern-not: function burn(...) onlyOperator { ... }
+      - pattern-not: function burn(...) onlyFactory { ... }
+      - pattern-not: function burn(...) onlyAdmin { ... }
+      - pattern-not: function burn(...) onlyController { ... }
+      - pattern-not: function burn(...) hasMintBurnRole { ... }
+      - pattern-not: function burn(...) onlyBondlyStaking { ... }
+      - pattern-not: function burn(...) onlyApproved { ... }
+      - pattern-not: function burn(...) onlyTrusted { ... }
+      - pattern-not: function burn(...) onlyAdminOrOwner { ... }
+      - pattern-not: function burn(...) onlyOwnerOrMinter { ... }
+      - pattern-not: function burn(...) onlyMinterAndOwner { ... }
+      - pattern-not: function burn(...) onlyValidator { ... }
+      - pattern-not: function burn(...) onlyCore { ... }
+      - pattern-not: function burn(...) onlyMarket { ... }
+      - pattern-not: function burn(...) requiresTrust { ... }
+      - pattern-not: function burn(...) onlyOpeth { ... }
+      - pattern-not: function burn(...) onlyGovernance { ... }
+      - pattern-not: function burn(...) onlyStaking { ... }
+      - pattern-not: function burn(...) onlyDAO { ... }
+      - pattern-not: function burn(...) onlyBurner(from) { ... }
+      - pattern-not: function burn(...) onlyBurner { ... }
+      - pattern-not: function burn(...) auth { ... }
+      - pattern-not: function burn(...) isBridge { ... }
+      - pattern-not: function burn(...) managerOnly { ... }
+      - pattern-not: function burn(...) onlyHasRole(BURNER_ROLE) { ... }
+      - pattern-not: function burn(...) onlyRole(BURNER_ROLE) { ... }
+      - pattern-not: function burn(...) onlyRole(MINTER_ROLE) { ... }
+      - pattern-not: function burn(...) onlyRole(DEFAULT_ADMIN_ROLE) { ... }
+      - pattern-not: function burn(...) onlyBy(treasuryPoolAddress) { ... }
+      - pattern-not: function burn(...) onlyBy(farmingPoolAddress) { ... }
+      - pattern-not: |
+          function burn(...) {
+            _burn(msg.sender, ...)
+          }
+      - pattern-not: |
+          function burn(...) {
+            _burn(_msgSender(), ...)
+          }
+      - pattern-not: |
+          function burn(...) {
+            _burn(tokenId, ...)
+          }
+    languages: 
+    - solidity
+    severity: ERROR
+
