@@ -48,7 +48,7 @@ keeper-network-oracle-manipulation | Inverse Finance | Keep3rV2.current() call h
 basic-oracle-manipulation | Onering Finance, Deus Finance | getSharePrice() can be manipulated via flashloan
 redacted-cartel-custom-approval-bug | Redacted Cartel | transferFrom() can steal allowance of other accounts
 rigoblock-missing-access-control | RigoBlock | setMultipleAllowances() is missing onlyOwner modifier
-rikkei-setoracledata-not-restricted | Rikkei Finance | Function setOracleData is allowed to be called by anyone
+oracle-price-update-not-restricted | Rikkei Finance, Aave | Oracle price data can be submitted by anyone
 superfluid-ctx-injection | Superfluid | A specially crafted calldata may be used to impersonate other accounts
 tecra-coin-burnfrom-bug | Tecra Coin | Parameter "from" is checked at incorrect position in "_allowances" mapping
 BETA: arbitrary-low-level-call | Auctus Options, Starstream Finance, BasketDAO, Li Finance | An attacker may perform call() to an arbitrary address with controlled calldata
