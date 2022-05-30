@@ -43,6 +43,7 @@ erc20-public-burn | HospoWise | Anyone can burn tokens of other accounts
 erc677-reentrancy | Ola Finance | ERC677 callAfterTransfer() reentrancy
 erc777-reentrancy | Bacon Protocol | ERC777 tokensReceived() reentrancy
 erc721-reentrancy | Hype Bears | ERC721 onERC721Received() reentrancy
+erc721-arbitrary-transferfrom | Distortion Genesis | Custom ERC721 implementation lacks access control checks in _transfer()
 gearbox-tokens-path-confusion | Gearbox | UniswapV3 adapter implemented incorrect extraction of path parameters
 keeper-network-oracle-manipulation | Inverse Finance | Keep3rV2.current() call has high data freshness, but it has low security, an exploiter simply needs to manipulate 2 data points to be able to impact the feed.
 basic-oracle-manipulation | Onering Finance, Deus Finance | getSharePrice() can be manipulated via flashloan
