@@ -17,12 +17,15 @@ rules:
         - basket-dao
         - li-finance
     patterns:
-        - pattern-either:
-            - pattern-inside: |
-                function $F(..., $ADDR, ...) external { ... }
-            - pattern-inside: |
-                function $F(..., $ADDR, ...) public { ... }
+    - pattern-either:
+        - pattern-inside: |
+            function $F(..., address $ADDR, ..., bytes calldata $DATA, ...) external { ... }
+        - pattern-inside: |
+            function $F(..., address $ADDR, ..., bytes calldata $DATA, ...) public { ... }
+    - pattern-either:
         - pattern: $ADDR.call($DATA);
+        - pattern: $ADDR.call{$VALUE:...}($DATA);
+        - pattern: $ADDR.call{$VALUE:..., $GAS:...}($DATA);
     languages: 
     - solidity
     severity: ERROR
