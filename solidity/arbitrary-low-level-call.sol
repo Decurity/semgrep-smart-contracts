@@ -640,8 +640,17 @@ contract DistributorTreasury is Ownable {
         uint256 value,
         bytes calldata data
     ) external returns (bool, bytes memory) {
-        // todoruleid: arbitrary-low-level-call
+        // ruleid: arbitrary-low-level-call
         (bool success, bytes memory result) = to.call{value: value}(data);
+
+        // ruleid: arbitrary-low-level-call
+        (bool success, bytes memory result) = to.call{gas: value}(data);
+
+        // ruleid: arbitrary-low-level-call
+        (bool success, bytes memory result) = to.call(data);
+
+        // ruleid: arbitrary-low-level-call
+        (bool success, bytes memory result) = to.call{value: value, gas: 0}(data);
 
         return (success, result);
     }

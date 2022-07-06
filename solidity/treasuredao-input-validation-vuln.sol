@@ -33,7 +33,7 @@ contract TreasureMarketplaceBuyer is ERC721Holder, ERC1155Holder {
         (, uint256 pricePerItem,) = marketplace.listings(_nftAddress, _tokenId, _owner);
         require(_quantity > 0);
         require(pricePerItem == _pricePerItem, "pricePerItem changed!");
-        // todoruleid: treasuredao-input-validation-vuln
+        // ruleid: treasuredao-input-validation-vuln
         uint256 totalPrice =    _pricePerItem *  _quantity;
         IERC20(marketplace.paymentToken()).safeTransferFrom(msg.sender, address(this), totalPrice);
         IERC20(marketplace.paymentToken()).safeApprove(address(marketplace), totalPrice);

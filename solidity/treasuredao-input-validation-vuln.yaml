@@ -12,9 +12,9 @@ rules:
     patterns:
     - pattern-either:
             - pattern-inside: |
-                function $F(..., $X, ...) external { ... }
+                function $F(..., uint256 $X, ...) external { ... }
             - pattern-inside: |
-                function $F(..., $X, ...) public { ... }
+                function $F(..., uint256 $X, ...) public { ... }
     - pattern-not-inside: |
         require($X > 0, ...);
         ...
@@ -27,6 +27,8 @@ rules:
     - pattern-either: 
       - pattern: $Y * $X
       - pattern: $Y.mul($X)
+      - pattern: $X * $Y
+      - pattern: $X.mul($Y)
     languages: 
     - solidity
     severity: WARNING
