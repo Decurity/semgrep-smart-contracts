@@ -1,0 +1,37 @@
+rules:
+-
+  id: sense-oracle-access-control-missing
+  patterns:
+    - pattern-either:
+        - pattern-inside: |
+            function $F(...,$D $REQUEST,...) external {
+                ...
+            }
+        - pattern-inside: |
+            function $F(...,$D $REQUEST,...) public {
+                ...
+            }
+    - pattern-not-inside: |
+        function $F(...,$D $REQUEST,...) external $MODIFIER {
+            ...
+        }
+    - pattern-not-inside: |
+        function $F(...,$D $REQUEST,...) public $MODIFIER {
+            ...
+        }
+    - patterns:
+        - pattern: _updateOracle($LASTBLOCK,...,...)
+        - pattern-not-inside: |
+            ...
+            if (msg.sender == $BALANCER) { ... }
+            ...
+            _updateOracle($LASTBLOCK,...,...)
+        - pattern-not-inside: |
+            ...
+            require(msg.sender == address($BALANCER),...);
+            ...
+            _updateOracle($LASTBLOCK,...,...)
+  message: $F() could be vulnerable, https://medium.com/immunefi/sense-finance-access-control-issue-bugfix-review-32e0c806b1a0
+  languages:
+    - solidity
+  severity: WARNING
