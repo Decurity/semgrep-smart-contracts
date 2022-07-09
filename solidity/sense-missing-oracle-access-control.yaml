@@ -20,11 +20,7 @@ rules:
                 ...
             }
     - pattern-not-inside: |
-        function $F(...,$D $REQUEST,...) external $MODIFIER {
-            ...
-        }
-    - pattern-not-inside: |
-        function $F(...,$D $REQUEST,...) public $MODIFIER {
+        function $F(...,$D $REQUEST,...) external onlyVault(poolId) {
             ...
         }
     - patterns:
@@ -33,12 +29,10 @@ rules:
             ...
             if (msg.sender == $BALANCER) { ... }
             ...
-            _updateOracle($LASTBLOCK,...,...)
         - pattern-not-inside: |
             ...
             require(msg.sender == address($BALANCER),...);
             ...
-            _updateOracle($LASTBLOCK,...,...)
   languages:
     - solidity
   severity: ERROR
