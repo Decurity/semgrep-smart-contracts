@@ -54,6 +54,7 @@ superfluid-ctx-injection | Superfluid | A specially crafted calldata may be used
 tecra-coin-burnfrom-bug | Tecra Coin | Parameter "from" is checked at incorrect position in "_allowances" mapping
 arbitrary-low-level-call | Auctus Options, Starstream Finance, BasketDAO, Li Finance | An attacker may perform call() to an arbitrary address with controlled calldata
 treasuredao-input-validation-vuln | TreasureDAO | A user supplied argument can be passed as zero to multiplication operation
+sense-missing-oracle-access-control | Sense Finance | Oracle update is not restricted in onSwap(), rule by [Arbaz Kiraak](https://twitter.com/ArbazKiraak)
 BETA: basic-arithmetic-underflow | Umbrella Network, Remittance Token | Possible arithmetic underflow
 BETA: basic-reentrancy | EarnHub | A method is called on a user supplied argument
 
