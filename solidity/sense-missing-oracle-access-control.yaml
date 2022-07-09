@@ -1,6 +1,14 @@
 rules:
 -
-  id: sense-oracle-access-control-missing
+  id: sense-missing-oracle-access-control
+  message: Oracle update is not restricted in $F()
+  metadata:
+    author: https://twitter.com/ArbazKiraak
+    references:
+      - https://medium.com/immunefi/sense-finance-access-control-issue-bugfix-review-32e0c806b1a0
+    category: access-control
+    tags:
+      - sense-finance
   patterns:
     - pattern-either:
         - pattern-inside: |
@@ -31,7 +39,6 @@ rules:
             require(msg.sender == address($BALANCER),...);
             ...
             _updateOracle($LASTBLOCK,...,...)
-  message: $F() could be vulnerable, https://medium.com/immunefi/sense-finance-access-control-issue-bugfix-review-32e0c806b1a0
   languages:
     - solidity
-  severity: WARNING
+  severity: ERROR
