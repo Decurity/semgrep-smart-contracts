@@ -12,9 +12,9 @@ rules:
     patterns:
     - pattern-either:
             - pattern-inside: |
-                function $F(..., $X, ...) external { ... }
+                function $F(..., $TYPE $X, ...) external { ... }
             - pattern-inside: |
-                function $F(..., $X, ...) public { ... }
+                function $F(..., $TYPE $X, ...) public { ... }
     - pattern-not-inside: |
         function $F(..., $X, ...) onlyOwner { ... }
     - pattern: $X.$M(...)
