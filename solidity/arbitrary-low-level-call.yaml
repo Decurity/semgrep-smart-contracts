@@ -26,6 +26,7 @@ rules:
         - pattern: $ADDR.call($DATA);
         - pattern: $ADDR.call{$VALUE:...}($DATA);
         - pattern: $ADDR.call{$VALUE:..., $GAS:...}($DATA);
+        - pattern: $ADDR.call.value($VALUE)($DATA);
     languages: 
     - solidity
     severity: ERROR
