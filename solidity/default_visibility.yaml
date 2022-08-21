@@ -1,0 +1,67 @@
+rules:
+- 
+    id: default_visibility
+    patterns:
+        - pattern: |
+            function $F(...) {
+                ...
+            }
+        - pattern-not: | 
+            function $F(...) private {
+                ...
+            }
+        - pattern-not: | 
+            function $F(...) internal {
+                ...
+            }
+        - pattern-not: | 
+            function $F(...) external {
+                ...
+            }
+        - pattern-not: | 
+            function $F(...) public {
+                ...
+            }
+        - pattern-not: |
+            function $F(...) {
+                require(<... msg.sender == owner ...>);
+                ...
+            }
+        - pattern-not: function $F(...) onlyOwner { ... }
+        - pattern-not: function $F(...) onlyVault { ... }
+        - pattern-not: function $F(...) onlyMinter { ... }
+        - pattern-not: function $F(...) onlyBridge { ... }
+        - pattern-not: function $F(...) onlyOperator { ... }
+        - pattern-not: function $F(...) onlyFactory { ... }
+        - pattern-not: function $F(...) onlyAdmin { ... }
+        - pattern-not: function $F(...) onlyController { ... }
+        - pattern-not: function $F(...) hasMintBurnRole { ... }
+        - pattern-not: function $F(...) onlyBondlyStaking { ... }
+        - pattern-not: function $F(...) onlyApproved { ... }
+        - pattern-not: function $F(...) onlyTrusted { ... }
+        - pattern-not: function $F(...) onlyAdminOrOwner { ... }
+        - pattern-not: function $F(...) onlyOwnerOrMinter { ... }
+        - pattern-not: function $F(...) onlyMinterAndOwner { ... }
+        - pattern-not: function $F(...) onlyValidator { ... }
+        - pattern-not: function $F(...) onlyCore { ... }
+        - pattern-not: function $F(...) onlyMarket { ... }
+        - pattern-not: function $F(...) requiresTrust { ... }
+        - pattern-not: function $F(...) onlyOpeth { ... }
+        - pattern-not: function $F(...) onlyGovernance { ... }
+        - pattern-not: function $F(...) onlyStaking { ... }
+        - pattern-not: function $F(...) onlyDAO { ... }
+        - pattern-not: function $F(...) onlyBurner(from) { ... }
+        - pattern-not: function $F(...) onlyBurner { ... }
+        - pattern-not: function $F(...) auth { ... }
+        - pattern-not: function $F(...) isBridge { ... }
+        - pattern-not: function $F(...) managerOnly { ... }
+        - pattern-not: function $F(...) onlyHasRole(BURNER_ROLE) { ... }
+        - pattern-not: function $F(...) onlyRole(BURNER_ROLE) { ... }
+        - pattern-not: function $F(...) onlyRole(MINTER_ROLE) { ... }
+        - pattern-not: function $F(...) onlyRole(DEFAULT_ADMIN_ROLE) { ... }
+        - pattern-not: function $F(...) onlyBy(treasuryPoolAddress) { ... }
+        - pattern-not: function $F(...) onlyBy(farmingPoolAddress) { ... }
+  
+    message: function $F has default visibility
+    languages: [solidity]
+    severity: ERROR
