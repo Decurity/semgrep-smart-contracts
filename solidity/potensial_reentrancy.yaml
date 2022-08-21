@@ -1,0 +1,67 @@
+rules:
+- 
+  id: potensial_reentrancy
+  patterns:
+    - pattern-not-inside: function $F(...) onlyOwner { ... }
+    - pattern-not-inside: function $F(...) onlyVault { ... }
+    - pattern-not-inside: function $F(...) onlyMinter { ... }
+    - pattern-not-inside: function $F(...) onlyBridge { ... }
+    - pattern-not-inside: function $F(...) onlyOperator { ... }
+    - pattern-not-inside: function $F(...) onlyFactory { ... }
+    - pattern-not-inside: function $F(...) onlyAdmin { ... }
+    - pattern-not-inside: function $F(...) onlyController { ... }
+    - pattern-not-inside: function $F(...) hasMintBurnRole { ... }
+    - pattern-not-inside: function $F(...) onlyBondlyStaking { ... }
+    - pattern-not-inside: function $F(...) onlyApproved { ... }
+    - pattern-not-inside: function $F(...) onlyTrusted { ... }
+    - pattern-not-inside: function $F(...) onlyAdminOrOwner { ... }
+    - pattern-not-inside: function $F(...) onlyOwnerOrMinter { ... }
+    - pattern-not-inside: function $F(...) onlyMinterAndOwner { ... }
+    - pattern-not-inside: function $F(...) onlyValidator { ... }
+    - pattern-not-inside: function $F(...) onlyCore { ... }
+    - pattern-not-inside: function $F(...) onlyMarket { ... }
+    - pattern-not-inside: function $F(...) requiresTrust { ... }
+    - pattern-not-inside: function $F(...) onlyOpeth { ... }
+    - pattern-not-inside: function $F(...) onlyGovernance { ... }
+    - pattern-not-inside: function $F(...) onlyStaking { ... }
+    - pattern-not-inside: function $F(...) onlyDAO { ... }
+    - pattern-not-inside: function $F(...) onlyBurner(from) { ... }
+    - pattern-not-inside: function $F(...) onlyBurner { ... }
+    - pattern-not-inside: function $F(...) auth { ... }
+    - pattern-not-inside: function $F(...) isBridge { ... }
+    - pattern-not-inside: function $F(...) managerOnly { ... }
+    - pattern-not-inside: function $F(...) onlyHasRole(BURNER_ROLE) { ... }
+    - pattern-not-inside: function $F(...) onlyRole(BURNER_ROLE) { ... }
+    - pattern-not-inside: function $F(...) onlyRole(MINTER_ROLE) { ... }
+    - pattern-not-inside: function $F(...) onlyRole(DEFAULT_ADMIN_ROLE) { ... }
+    - pattern-not-inside: function $F(...) onlyBy(treasuryPoolAddress) { ... }
+    - pattern-not-inside: function $F(...) onlyBy(farmingPoolAddress) { ... }
+    - pattern-not-inside: function $F(...) nonReentrant {...}
+    - pattern-not-inside: function $F(...) callerIsUser {...}
+    - pattern-not-inside: | 
+        function $F(...) {
+          ...
+          require(tx.origin == msg.sender);
+          ...
+        } 
+    - pattern-either:
+      - pattern-inside: |
+          function $F(address $ADDR) {
+            ...
+          }
+      - pattern-inside: |
+          function $F(...) {
+            ...
+          }
+    - pattern-either:
+      - pattern: $ADDR.call{value:...}(...);
+      - pattern: $ADDR.call.value(...)(...);
+      - pattern: msg.sender.call{value:...}(...);
+      - pattern: msg.sender.call.value(...)(...);
+  message: potensial reentrancy in function $F
+  options:
+    symbolic_propagation: true
+  languages:
+    - solidity
+  severity: ERROR
+  
