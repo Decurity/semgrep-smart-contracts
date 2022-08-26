@@ -6,6 +6,7 @@ rules:
         references:
         - https://twitter.com/danielvf/status/1494317265835147272
         - https://etherscan.io/address/0x876b9ebd725d1fa0b879fcee12560a6453b51dc8
+        - https://play.secdim.com/game/dapp/challenge/rigoownsol
         category: access-control
         tags:
         - rigoblock
