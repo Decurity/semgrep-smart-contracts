@@ -55,6 +55,7 @@ tecra-coin-burnfrom-bug | Tecra Coin | Parameter "from" is checked at incorrect 
 arbitrary-low-level-call | Auctus Options, Starstream Finance, BasketDAO, Li Finance | An attacker may perform call() to an arbitrary address with controlled calldata
 sense-missing-oracle-access-control | Sense Finance | Oracle update is not restricted in onSwap(), rule by [Arbaz Kiraak](https://twitter.com/ArbazKiraak)
 proxy-storage-collision | Audius | Proxy declares a state var that may override a storage slot of the implementation
+uniswap-callback-not-protected | Generic | Uniswap callback is not protected
 BETA: basic-arithmetic-underflow | Umbrella Network, Remittance Token | Possible arithmetic underflow
 
 ## Not greppable incidents
