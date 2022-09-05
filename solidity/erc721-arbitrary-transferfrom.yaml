@@ -21,6 +21,9 @@ rules:
          (<... _msgSender() == $FROM ...>);
          ...
       - pattern-not-inside: |
+         (<... _msgSender() == $PREV.$ADDR ...>);
+         ...
+      - pattern-not-inside: |
          (<... msg.sender == $FROM ...>);
          ...
       - pattern-not-inside: |
