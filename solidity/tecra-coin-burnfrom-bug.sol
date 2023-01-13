@@ -163,6 +163,13 @@ contract TcrToken {
         _burn(from, amount);
     }
 
+    function decreaseAllowance(address from, uint256 amount) public virtual returns (bool) {
+        // ok: tecra-coin-burnfrom-bug
+        require(_allowances[msg.sender][from] >= amount);
+        _approve(msg.sender, from, _allowances[msg.sender][from] - amount);
+        return true;
+    }
+
     //
     // "transfer"
     //
