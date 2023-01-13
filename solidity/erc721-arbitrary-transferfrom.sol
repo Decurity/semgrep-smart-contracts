@@ -1199,6 +1199,48 @@ contract ERC721A is
         _afterTokenTransfers(from, to, tokenId, 1);
     }
 
+    // ERC721X
+    function _transfer(
+        address from,
+        address to,
+        uint256 tokenId
+    ) internal virtual {
+        TokenOwnership memory prevOwnership = ownershipOf(tokenId);
+
+        //bool isApprovedOrOwner = (_msgSender() == prevOwnership.addr ||
+        //getApproved(tokenId) == _msgSender() ||
+        //isApprovedForAll(prevOwnership.addr, _msgSender()));
+
+        require(_isApprovedOrOwner(_msgSender(), tokenId), "ERC721X: transfer caller is not owner nor approved");
+        require(prevOwnership.addr == from, "ERC721X: transfer from incorrect owner");
+        require(to != address(0), "ERC721X: transfer to the zero address");
+
+        _beforeTokenTransfers(from, to, tokenId, 1);
+
+        // Clear approvals from the previous owner
+        // ok: erc721-arbitrary-transferfrom
+        _approve(address(0), tokenId, prevOwnership.addr);
+
+        _addressData[from].balance -= 1;
+        _addressData[to].balance += 1;
+        _ownerships[tokenId] = TokenOwnership(to, uint64(block.timestamp));
+
+        // If the ownership slot of tokenId+1 is not explicitly set, that means the transfer initiator owns it.
+        // Set the slot of tokenId+1 explicitly in storage to maintain correctness for ownerOf(tokenId+1) calls.
+        uint256 nextTokenId = tokenId + 1;
+        if (_ownerships[nextTokenId].addr == address(0)) {
+            if (_exists(nextTokenId)) {
+                _ownerships[nextTokenId] = TokenOwnership(
+                prevOwnership.addr,
+                prevOwnership.startTimestamp
+                );
+            }
+        }
+
+        emit Transfer(from, to, tokenId);
+        _afterTokenTransfers(from, to, tokenId, 1);
+    }
+
   /**
    * @dev Approve `to` to operate on `tokenId`
    *
