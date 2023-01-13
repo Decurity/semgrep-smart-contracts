@@ -1349,6 +1349,16 @@ contract Hospo is ERC20, Ownable {
         _burn(account, amount);
     }
 
+    // ok: erc20-public-burn
+    function burn(address account, uint tokenAmount) external onlyLiquidityPool {
+        _burn(account, tokenAmount);
+    }
+    
+    // ok: erc20-public-burn
+    function burn(address from, uint256 amount) public onlyRole(MINTER_ROLE) {
+        _burn(from, amount);
+    }
+
     function updateRouter(address newAddress) external onlyOwner {
         require(
             newAddress != address(uniswapV2Router),
