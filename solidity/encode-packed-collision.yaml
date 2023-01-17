@@ -58,7 +58,13 @@ rules:
           function $F(..., uint256[] $A, uint256[] $B, ...) external {
             ...
           }
-    - pattern: keccak256(abi.encodePacked(..., $A, $B, ...))
+    - pattern-either:
+      - pattern: |
+          keccak256(abi.encodePacked(..., $A, $B, ...))
+      - pattern: |
+          $X = abi.encodePacked(..., $A, $B, ...);
+          ...
+          keccak256($X)
   languages:
     - solidity
   severity: ERROR
