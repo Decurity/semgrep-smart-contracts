@@ -11,51 +11,51 @@ rules:
   patterns:
     - pattern-either:
       - pattern-inside: |
-          function $F(..., bytes $A, bytes $B, ...) public {
+          function $F(..., bytes $A, ..., bytes $B, ...) public {
             ...
           }
       - pattern-inside: |
-          function $F(..., string $A, string $B, ...) public {
+          function $F(..., string $A, ..., string $B, ...) public {
             ...
           }
       - pattern-inside: |
-          function $F(..., bytes $A, string $B, ...) public {
+          function $F(..., bytes $A, ..., string $B, ...) public {
             ...
           }
       - pattern-inside: |
-          function $F(..., string $A, bytes $B, ...) public {
+          function $F(..., string $A, ..., bytes $B, ...) public {
             ...
           }
       - pattern-inside: |
-          function $F(..., address[] $A, address[] $B, ...) public {
+          function $F(..., address[] $A, ..., address[] $B, ...) public {
             ...
           }
       - pattern-inside: |
-          function $F(..., uint256[] $A, uint256[] $B, ...) public {
+          function $F(..., uint256[] $A, ..., uint256[] $B, ...) public {
             ...
           }
       - pattern-inside: |
-          function $F(..., bytes $A, bytes $B, ...) external {
+          function $F(..., bytes $A, ..., bytes $B, ...) external {
             ...
           }
       - pattern-inside: |
-          function $F(..., string $A, string $B, ...) external {
+          function $F(..., string $A, ..., string $B, ...) external {
             ...
           }
       - pattern-inside: |
-          function $F(..., bytes $A, string $B, ...) external {
+          function $F(..., bytes $A, ..., string $B, ...) external {
             ...
           }
       - pattern-inside: |
-          function $F(..., string $A, bytes $B, ...) external {
+          function $F(..., string $A, ..., bytes $B, ...) external {
             ...
           }
       - pattern-inside: |
-          function $F(..., address[] $A, address[] $B, ...) external {
+          function $F(..., address[] $A, ..., address[] $B, ...) external {
             ...
           }
       - pattern-inside: |
-          function $F(..., uint256[] $A, uint256[] $B, ...) external {
+          function $F(..., uint256[] $A, ..., uint256[] $B, ...) external {
             ...
           }
     - pattern-either:
