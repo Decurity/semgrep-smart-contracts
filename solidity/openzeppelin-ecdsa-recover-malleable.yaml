@@ -1,12 +1,18 @@
 rules:
  -
     id: openzeppelin-ecdsa-recover-malleable
-    message: potentially vulnerable to the signature replay attack due to CVE-2022-35961
+    message: Potential signature malleability in $F
     metadata:
-        category: logic
+      references:
+         - https://github.com/advisories/GHSA-4h98-2769-gh6h
+      category: signature-replay
+      tags:
+         - swc-117
+         - cve-2022-35961
+         - openzeppelin
     pattern-either:
     - pattern: |
-         function $X(..., bytes $Y, ...) {
+         function $F(..., bytes $Y, ...) {
             ...
             $Z = ECDSA.recover(..., $Y);
             ...
@@ -14,39 +20,7 @@ rules:
             ...
          }
     - pattern: |
-         function $X(bytes $Y, ...) {
-            ...
-            $Z = ECDSA.recover(..., $Y);
-            ...
-            $A[$Y] = ...;
-            ...
-         }
-    - pattern: |
-         function $X(..., bytes $Y) {
-            ...
-            $Z = ECDSA.recover(..., $Y);
-            ...
-            $A[$Y] = ...;
-            ...
-         }
-    - pattern: |
-         function $X(..., bytes $Y, ...) {
-            ...
-            $Z = ECDSA.recover(..., $Y);
-            ...
-            $A[$B][$Y] = ...;
-            ...
-         }
-    - pattern: |
-         function $X(bytes $Y, ...) {
-            ...
-            $Z = ECDSA.recover(..., $Y);
-            ...
-            $A[$B][$Y] = ...;
-            ...
-         }
-    - pattern: |
-         function $X(..., bytes $Y) {
+         function $F(..., bytes $Y, ...) {
             ...
             $Z = ECDSA.recover(..., $Y);
             ...
@@ -55,4 +29,4 @@ rules:
          }
     languages: 
     - solidity
-    severity: ERROR
+    severity: WARNING
