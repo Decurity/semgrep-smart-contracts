@@ -58,6 +58,7 @@ proxy-storage-collision | Audius | Proxy declares a state var that may override 
 uniswap-callback-not-protected | Generic | Uniswap callback is not protected
 encode-packed-collision | Generic | Hash collision with variable length arguments in abi.encodePacked
 BETA: basic-arithmetic-underflow | Umbrella Network, Remittance Token | Possible arithmetic underflow
+unrestricted-transferownership | Ragnarok Online Invasion | Contract ownership can be transfered by anyone
 
 ## Not greppable incidents
 
