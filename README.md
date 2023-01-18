@@ -56,6 +56,7 @@ arbitrary-low-level-call | Auctus Options, Starstream Finance, BasketDAO, Li Fin
 sense-missing-oracle-access-control | Sense Finance | Oracle update is not restricted in onSwap(), rule by [Arbaz Kiraak](https://twitter.com/ArbazKiraak)
 proxy-storage-collision | Audius | Proxy declares a state var that may override a storage slot of the implementation
 uniswap-callback-not-protected | Generic | Uniswap callback is not protected
+encode-packed-collision | Generic | Hash collision with variable length arguments in abi.encodePacked
 BETA: basic-arithmetic-underflow | Umbrella Network, Remittance Token | Possible arithmetic underflow
 
 ## Not greppable incidents
