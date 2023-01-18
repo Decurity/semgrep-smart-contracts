@@ -60,6 +60,7 @@ encode-packed-collision | Generic | Hash collision with variable length argument
 openzeppelin-ecdsa-recover-malleable | OpenZeppelin | Potential signature malleability
 BETA: basic-arithmetic-underflow | Umbrella Network, Remittance Token | Possible arithmetic underflow
 unrestricted-transferownership | Ragnarok Online Invasion | Contract ownership can be transfered by anyone
+msg-value-multicall | Sushiswap | Function with constant msg.value can be called multiple times
 
 ## Not greppable incidents
 
