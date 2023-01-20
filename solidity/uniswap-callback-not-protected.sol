@@ -120,6 +120,38 @@ contract Test {
             }
         }
     }
+    
+    // ok: uniswap-callback-not-protected
+    function uniswapV3SwapCallback(int256 _amount0Delta, int256 _amount1Delta, bytes calldata _data)
+        external
+        override(IUniswapV3SwapCallback)
+    {
+        // Swaps entirely within 0-liquidity regions are not supported
+        if (_amount0Delta <= 0 && _amount1Delta <= 0) revert InvalidDeltaAmounts();
+        // Uniswap pools always call callback on msg.sender so this check is enough to prevent malicious behavior
+        if (msg.sender == LUSD_USDC_POOL) {
+            SwapCallbackData memory data = abi.decode(_data, (SwapCallbackData));
+            // Repay debt in full
+            (address upperHint, address lowerHint) = _getHints();
+            BORROWER_OPERATIONS.adjustTrove(0, data.collToWithdraw, data.debtToRepay, false, upperHint, lowerHint);
+
+            // Pay LUSD_USDC_POOL for the swap by passing it as a recipient to the next swap (WETH -> USDC)
+            IUniswapV3PoolActions(USDC_ETH_POOL).swap(
+                LUSD_USDC_POOL, // recipient
+                false, // zeroForOne
+                -_amount1Delta, // amount of USDC to pay to LUSD_USDC_POOL for the swap
+                SQRT_PRICE_LIMIT_X96,
+                ""
+            );
+        } else if (msg.sender == USDC_ETH_POOL) {
+            // Pay USDC_ETH_POOL for the USDC
+            uint256 amountToPay = uint256(_amount1Delta);
+            IWETH(WETH).deposit{value: amountToPay}(); // wrap only what is needed to pay
+            IWETH(WETH).transfer(address(USDC_ETH_POOL), amountToPay);
+        } else {
+            revert ErrorLib.InvalidCaller();
+        }
+    }
 
     // ok: uniswap-callback-not-protected
     function uniswapV2Call(address sender, uint amount0, uint amount1, bytes calldata data) external override {
