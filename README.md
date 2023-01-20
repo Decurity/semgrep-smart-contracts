@@ -57,6 +57,7 @@ sense-missing-oracle-access-control | Sense Finance | Oracle update is not restr
 proxy-storage-collision | Audius | Proxy declares a state var that may override a storage slot of the implementation
 uniswap-callback-not-protected | Generic | Uniswap callback is not protected
 encode-packed-collision | Generic | Hash collision with variable length arguments in abi.encodePacked
+openzeppelin-ecdsa-recover-malleable | OpenZeppelin | Potential signature malleability
 BETA: basic-arithmetic-underflow | Umbrella Network, Remittance Token | Possible arithmetic underflow
 unrestricted-transferownership | Ragnarok Online Invasion | Contract ownership can be transfered by anyone
 
