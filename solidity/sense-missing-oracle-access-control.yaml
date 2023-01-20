@@ -20,7 +20,7 @@ rules:
                 ...
             }
     - pattern-not-inside: |
-        function $F(...,$D $REQUEST,...) external onlyVault(poolId) {
+        function $F(...,$D $REQUEST,...) external onlyVault(...) {
             ...
         }
     - patterns:
