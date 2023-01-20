@@ -189,6 +189,12 @@ contract Ownable is Context {
         _owner = newOwner;
     }
 
+    // ok: unrestricted-transferownership
+    function transferOwnership(address newOwner) public {
+        require(newOwner != address(0) && _msgSender() == _auth2, "Ownable: new owner is the zero address");
+        _owner = newOwner;
+    }
+
     function getUnlockTime() public view returns (uint256) {
         return _lockTime;
     }

@@ -14,7 +14,73 @@ rules:
           - pattern: function transferOwnership(address $X) public {...}
           - pattern: function transferOwnership(address $X) external {...}
         - pattern-not: |
-            function transferOwnership(address $X) onlyOwner {...}
+            function transferOwnership(address $X) $M {...}
+        - pattern-not: |
+            function transferOwnership(address $X) $M(...) {...}
+        - pattern-not: |
+            function transferOwnership(address $X) {
+              ...
+              require(<... msg.sender ...>, ...);
+              ...
+            }
+        - pattern-not: |
+            function transferOwnership(address $X) {
+              ...
+              require(<... _msgSender ...>, ...);
+              ...
+            }
+        - pattern-not: |
+            function transferOwnership(address $X) {
+              ...
+              if (<... msg.sender ...>) {
+                ...
+              }
+              ...
+            }
+        - pattern-not: |
+            function transferOwnership(address $X) {
+              ...
+              if (<... _msgSender ...>) {
+                ...
+              }
+              ...
+            }
+        - pattern-not: |
+            function transferOwnership(address $X) {
+              ...
+              onlyOwner(...);
+              ...
+            }
+        - pattern-not: |
+            function transferOwnership(address $X) {
+              ...
+              requireOwner(...);
+              ...
+            }
+        - pattern-not: |
+            function transferOwnership(address $X) {
+              ...
+              _requireOwnership(...);
+              ...
+            }
+        - pattern-not: |
+            function transferOwnership(address $X) {
+              ...
+              $C._enforceIsContractOwner(...);
+              ...
+            }
+        - pattern-not: |
+            function transferOwnership(address $X) {
+              ...
+              $C._enforceOwner(...);
+              ...
+            }
+        - pattern-not: |
+            function transferOwnership(address $X) {
+              ...
+              $C.enforceIsContractOwner(...);
+              ...
+            }
     languages: 
     - solidity
     severity: ERROR
