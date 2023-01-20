@@ -182,10 +182,10 @@ contract Ownable is Context {
         _owner = address(0);
     }
 
-    // ruleid: unrestricted-transferownership
     function transferOwnership(address newOwner) public virtual {
         require(newOwner != address(0), "Ownable: new owner is the zero address");
         emit OwnershipTransferred(_owner, newOwner);
+        // ruleid: unrestricted-transferownership
         _owner = newOwner;
     }
 

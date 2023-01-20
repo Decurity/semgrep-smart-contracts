@@ -10,11 +10,21 @@ rules:
         tags:
         - ragnarok
     patterns:
-        - pattern-either:
-          - pattern: function transferOwnership(address $X) public {...}
-          - pattern: function transferOwnership(address $X) external {...}
-        - pattern-not: |
+        - pattern-not-inside:
             function transferOwnership(address $X) onlyOwner {...}
+        - pattern-either:
+          - pattern-inside: function transferOwnership(address $X) public {...}
+          - pattern-inside: function transferOwnership(address $X) external {...}
+        - pattern-not-inside: |
+            require(<... msg.sender ...>, ...);
+            ...
+        - pattern-not-inside: |
+            require(<... _msgSender ...>, ...);
+            ...
+        - pattern-either:
+            - pattern: ... = $X
+            - pattern: $F(..., $X, ...)
+
     languages: 
     - solidity
     severity: ERROR
