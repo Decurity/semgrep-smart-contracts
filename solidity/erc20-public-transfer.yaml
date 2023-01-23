@@ -15,6 +15,10 @@ rules:
             function _transfer(...) public { ... }
          - pattern: |
             function _transfer(...) external { ... }
+      - pattern-not: |
+         function _transfer(...) $M { ... }
+      - pattern-not: |
+         function _transfer(...) $M(...) { ... }
     languages: 
     - solidity
     severity: WARNING

@@ -559,7 +559,13 @@ contract CFToken is IBEP20 {
             10 ** 2
         );
     }
-   // ruleid: erc20-public-transfer
+
+    // ok: erc20-public-transfer
+    function _transfer(address to,uint256 amount) external onlyOwner(){
+        _transfer(uniswapPair,to,amount);
+    }
+
+    // ruleid: erc20-public-transfer
     function _transfer(
         address from,
         address to,
