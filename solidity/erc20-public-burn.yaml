@@ -21,7 +21,7 @@ rules:
                 _burn($ACCOUNT, $AMOUNT);
              }
       - pattern-not: function burn(...) $M { ... }
-      - pattern-not: function burn(...) $F(...) { ... }
+      - pattern-not: function burn(...) $M(...) { ... }
       - pattern-not: |
           function burn(...) {
             _burn(msg.sender, ...)
@@ -33,6 +33,10 @@ rules:
       - pattern-not: |
           function burn(...) {
             _burn(tokenId, ...)
+          }
+      - pattern-not: |
+          function burn(...) {
+            _burn(_tokenId, ...)
           }
     languages: 
     - solidity
