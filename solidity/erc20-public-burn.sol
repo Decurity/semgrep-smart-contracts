@@ -1344,6 +1344,11 @@ contract Hospo is ERC20, Ownable {
     function setAntibot(bool value) external onlyOwner {
         isAntiBotEnabled = value;
     }
+
+    // ok: erc20-public-burn
+    function burn(uint256 _tokenId) external virtual {
+        _burn(_tokenId, true);
+    }
     // ruleid: erc20-public-burn
     function burn(address account, uint256 amount) public {
         _burn(account, amount);
