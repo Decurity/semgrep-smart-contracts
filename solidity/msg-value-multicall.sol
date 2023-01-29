@@ -271,11 +271,11 @@ contract DutchAuction is IMisoMarket, MISOAccessControls, BoringBatchable, SafeT
             revertBecauseUserDidNotProvideAgreement();
         }
         // Get ETH able to be committed
-        // todoruleid: msg-value-multicall
+        // ruleid: msg-value-multicall
         uint256 ethToTransfer = calculateCommitment(msg.value);
 
         /// @notice Accept ETH Payments.
-        // todoruleid: msg-value-multicall
+        // ruleid: msg-value-multicall
         uint256 ethToRefund = msg.value.sub(ethToTransfer);
         if (ethToTransfer > 0) {
             _addCommitment(_beneficiary, ethToTransfer);
