@@ -124,6 +124,13 @@ contract CErc20 is CToken, CErc20Interface {
         token.transfer(admin, balance);
     }
 
+    function sweepToken(EIP20NonStandardInterface token) external onlyHouseKeeper {
+    	require(address(token) != underlying, "CErc20::sweepToken: can not sweep underlying token");
+    	uint256 balance = token.balanceOf(address(this));
+    	// ok: compound-sweeptoken-not-restricted
+        token.transfer(admin, balance);
+    }
+
     /**
      * @notice The sender adds to reserves.
      * @param addAmount The amount fo underlying token to add as reserves

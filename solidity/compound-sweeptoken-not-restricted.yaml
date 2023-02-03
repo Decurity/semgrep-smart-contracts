@@ -17,6 +17,10 @@ rules:
         function sweepToken(...) {
         ...
         }
+    - pattern-not-inside: |
+        function sweepToken(...) $M {
+        ...
+        }
     - pattern: token.transfer(...);
     - pattern-not-inside: |
         require(msg.sender == admin, "...");
