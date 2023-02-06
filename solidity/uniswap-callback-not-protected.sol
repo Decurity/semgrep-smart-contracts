@@ -208,6 +208,29 @@ contract Test {
         IERC20(_pool.token1()).safeTransfer(address(_pool), amount1Owed);
     }
 
+    // ok: uniswap-callback-not-protected
+    function uniswapV3SwapCallback(
+        int256 amount0Delta,
+        int256 amount1Delta,
+        bytes calldata data
+    ) external override swapCallBack nonReentrant {
+        (address pool, address payer) = abi.decode(data, (address, address));
+        require(_msgSender() == pool, "callback caller");
+        if (amount0Delta > 0) {
+            IERC20(IUniswapV3Pool(pool).token0()).safeTransferFrom(
+                payer,
+                pool,
+                uint256(amount0Delta)
+            );
+        } else {
+            IERC20(IUniswapV3Pool(pool).token1()).safeTransferFrom(
+                payer,
+                pool,
+                uint256(amount1Delta)
+            );
+        }
+    }
+
     // ruleid: uniswap-callback-not-protected
     function uniswapV3SwapCallback(
         int256 amount0Delta,
