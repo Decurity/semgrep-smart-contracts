@@ -25,6 +25,9 @@ rules:
     - pattern-not-inside: |
         require(msg.sender == admin, "...");
         ...
+    - pattern-not-inside: |
+        require(_msgSender() == admin, "...");
+        ...
     languages: 
     - solidity
     severity: WARNING
