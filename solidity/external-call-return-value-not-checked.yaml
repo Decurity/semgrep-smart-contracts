@@ -1,0 +1,55 @@
+rules:
+  - id: external-call-return-value-not-checked-copy
+    message: Functions call, staticcall, delegatecall, send returns a boolean indicating whether the call completed successfully. Not testing explicitly whether these calls fail may lead to unexpected behavior in the caller contract.
+    languages:
+      - solidity
+    severity: WARNING
+    metadata:
+      references:
+        - "https://entethalliance.org/specs/ethtrust-sl/v1/#req-1-check-return"
+      tags:
+        - ethtrust
+        - external-call
+    patterns:
+      - pattern-either: 
+        - pattern: (bool $SUCC, ) = $ADDR.$METHOD(...);
+        - pattern: (bool $SUCC, bytes memory $DATA) = $ADDR.$METHOD(...);
+        - pattern: $ADDR.$METHOD(...);
+      - metavariable-regex:
+          metavariable: $METHOD
+          regex: ^(call|delegatecall|staticcall|send)$
+      - pattern-not-inside: |
+          function $FUNC(...){
+            ...
+            require($SUCC, ...);
+          } 
+      - pattern-not-inside: |
+          function $FUNC(...){
+            ...
+            if (!$SUCC){
+              ...
+            }
+          } 
+      - pattern-not-inside: |
+          function $FUNC(...){
+            ...
+            if ($SUCC != ...){
+              ...
+            }
+          }
+      - pattern-not-inside: |
+          function $FUNC(...){
+            ...
+            if ($SUCC){
+              ...
+            }
+          } 
+      - pattern-not-inside: |
+          function $FUNC(...){
+            ...
+            if ($SUCC == ...){
+              ...
+            }
+          } 
+        
+
