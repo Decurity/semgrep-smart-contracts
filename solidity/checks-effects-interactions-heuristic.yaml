@@ -1,0 +1,46 @@
+rules:
+ -
+    id: checks-effects-interactions-heuristic
+    message: The Checks-Effects-Interactions pattern ensures that validation of the request, and changes to the state variables of the contract, are performed before any interactions take place with other contracts. When contracts are implemented this way, the scope for Re-entrancy Attacks is reduced significantly.
+    metadata:
+      category: logic
+      references:
+        - https://entethalliance.org/specs/ethtrust-sl/v1/#req-1-use-c-e-i
+    patterns:
+      - pattern-inside:
+          contract $C {
+            $TYPE $STORAGE;
+            ...
+          }
+      - pattern-either:
+        - pattern: |
+            function $F(...) {
+              ...
+              $ADDR.$FUNC(...);
+              ...
+              <... $WRITE($STORAGE) ...>;
+              ...
+            }
+        - pattern: |
+            function $F(...) {
+              ...
+              $ADDR.$FUNC(...);
+              ...
+              <... $WRITE($STORAGE[...]) ...>;
+              ...
+            }
+        - pattern: |
+            function $F(...) {
+              ...
+              $ADDR.$FUNC(...);
+              ...
+              <... $WRITE($STORAGE[...][...]) ...>;
+              ...
+            }
+        
+      - metavariable-regex:
+          metavariable: $WRITE
+          regex: (write|change|increase|decrease|delete|remove|add)
+    languages: 
+      - solidity
+    severity: ERROR
