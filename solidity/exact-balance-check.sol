@@ -11,6 +11,7 @@ contract Foobar {
     }
     
     function doit2(address ext) {
+        // ruleid: exact-balance-check
         require(
             1==1 &&
             (address(ext).balance == 1337) ||
@@ -32,6 +33,7 @@ contract Foobar {
     }
 
     function doit2_safe(address ext) {
+        // ok: exact-balance-check
         require(
             1==1 &&
             (address(ext).balance <= 1337) ||
