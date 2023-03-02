@@ -61,6 +61,7 @@ openzeppelin-ecdsa-recover-malleable | OpenZeppelin | Potential signature mallea
 BETA: basic-arithmetic-underflow | Umbrella Network, Remittance Token | Possible arithmetic underflow
 unrestricted-transferownership | Ragnarok Online Invasion | Contract ownership can be transfered by anyone
 msg-value-multicall | Sushiswap | Function with constant msg.value can be called multiple times
+no-bidi-characters | Generic | The code must not contain any of Unicode Direction Control Characters
 
 ## Not greppable incidents
 
