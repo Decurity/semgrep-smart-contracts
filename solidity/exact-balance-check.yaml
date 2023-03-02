@@ -7,12 +7,12 @@ rules:
       references:
         - https://entethalliance.org/specs/ethtrust-sl/v1/#req-1-exact-balance-check
     mode: taint
-    options:
-      taint_unify_mvars: true
     pattern-sinks:
       - patterns:
          - pattern-inside: require(...)
-         - pattern: $X == ...
+         - pattern-either:
+            - pattern: $X == ...
+            - pattern: ... == $X
     pattern-sources:
          - pattern-either:
             - pattern: $T.balanceOf($A)

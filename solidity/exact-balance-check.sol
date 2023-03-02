@@ -24,6 +24,17 @@ contract Foobar {
         // do smth
     }
 
+    function doit3(address ext) {
+        require(
+            1==1 &&
+            // ruleid: exact-balance-check
+            (1337 == address(ext).balance) ||
+            1==2,
+            "Wrong balance!"
+        );
+        // do smth
+    }
+
     function doit_safe(address ext) {
         require(
             1==1 &&
