@@ -36,9 +36,10 @@ contract Foobar {
     }
 
     function doit4(address ext) {
-        // ruleid: exact-balance-check
+        // ruleid: exact-balance-check-no-taint
         if (address(ext).balance == 1337) {
             // do smth
+            uint a = 123;
         };
         // do smth
     }
@@ -46,10 +47,13 @@ contract Foobar {
     function doit5(address ext) {
         // ok: exact-balance-check
         if (1==1) {
+            // ruleid: exact-balance-check-no-taint
             bool b = address(ext).balance == 1337;
+            if(b) {}
         };
         // do smth
     }
+
     function doit_safe(address ext) {
         require(
             1==1 &&
