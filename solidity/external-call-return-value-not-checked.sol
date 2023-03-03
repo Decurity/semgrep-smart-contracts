@@ -1,7 +1,8 @@
 pragma solidity ^0.8.17;
 
 contract Test {
-    function setVars(address _contract, uint _num) public payable {
+    bool flag;
+    function setVars(address payable _contract, uint _num) public payable {
         
         // ok: external-call-return-value-not-checked
         (bool success, ) = _contract.delegatecall(
@@ -15,40 +16,56 @@ contract Test {
         );
         if (!success2) revert();
 
-        // ok: external-call-return-value-not-checked
-        (bool success3, bytes memory data) = _contract.staticcall(
-            abi.encodeWithSignature("setVars(uint256)", _num)
-        );
-        if (success3 != 0) revert();
+        // // ok: external-call-return-value-not-checked
+        // (bool success3, bytes memory data) = _contract.staticcall(
+        //     abi.encodeWithSignature("setVars(uint256)", _num)
+        // );
+        // if (success3 != 0) revert();
 
         // ok: external-call-return-value-not-checked
-        (bool success4, bytes memory data) = _contract.call(
+        (bool success3, bytes memory data) = _contract.call(
             abi.encodeWithSignature("setVars(uint256)", _num)
         );
-        if (success4){
-            revert;
+        if (success3){
+            ok();
         }
+
         // ok: external-call-return-value-not-checked
-        bool success5 = _contract.send(
+        (bool success4, ) = _contract.call(
             abi.encodeWithSignature("setVars(uint256)", _num)
         );
-        if (success5 == 0) revert();
+        if (success4 && 1 == 1){
+            ok();
+        }
+
+        // ok: external-call-return-value-not-checked
+        (bool success5, ) = _contract.call(
+            abi.encodeWithSignature("setVars(uint256)", _num)
+        );
+
+        if (!success5 || 0 == 0){
+            revert();
+        }
 
         
     }
 
-    function setVars2(address _contract, uint _num) public payable {
+    function setVars2(address payable _contract, uint _num) public payable {
         // ruleid: external-call-return-value-not-checked
-         _contract.delegetecall(
+         _contract.call(
             abi.encodeWithSignature("setVars(uint256)", _num)
         );
 
         // ruleid: external-call-return-value-not-checked
-        (bool success, bytes memory data) = _contract.call(
+        (bool success1, bytes memory data) = _contract.call(
             abi.encodeWithSignature("setVars(uint256)", _num)
         );
         
         // ruleid: external-call-return-value-not-checked
-        bool success = _contract.send(1 ether);
+        bool success2 = _contract.send(1 ether);
+    }
+
+    function ok() public{
+        flag = true;
     }
 }
