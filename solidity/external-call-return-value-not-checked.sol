@@ -46,7 +46,7 @@ contract Test {
 
     function setVars2(address payable _contract, uint _num) public payable {
         // ruleid: external-call-return-value-not-checked
-         _contract.call(
+         _contract.call{value: 1337}(
             abi.encodeWithSignature("setVars(uint256)", _num)
         );
 

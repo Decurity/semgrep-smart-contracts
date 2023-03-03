@@ -13,8 +13,11 @@ rules:
     patterns:
       - pattern-either: 
         - pattern: (bool $SUCC, ) = $ADDR.$METHOD(...);
+        - pattern: (bool $SUCC, ) = $ADDR.$METHOD{value:$VAL}(...);
         - pattern: (bool $SUCC, bytes memory $DATA) = $ADDR.$METHOD(...);
+        - pattern: (bool $SUCC, bytes memory $DATA) = $ADDR.$METHOD{value:$VAL}(...);
         - pattern: $ADDR.$METHOD(...);
+        - pattern: $ADDR.$METHOD{value:$VAL}(...);
       - metavariable-regex:
           metavariable: $METHOD
           regex: ^(call|delegatecall|staticcall|send)$
