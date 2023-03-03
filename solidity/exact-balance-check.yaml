@@ -50,10 +50,6 @@ rules:
             if (<... ... == $T.balanceOf($A) ...>) {
                ...
             }
-         - pattern: |
-            if (<... $T.balance == ... ...>) {
-               ...
-            }
          # init
          - pattern: |
             $X = $T.balance;
