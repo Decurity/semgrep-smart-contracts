@@ -12,7 +12,7 @@ contract Foobar {
         );
         // do smth
     }
-    
+
     function doit2(address ext) {
         require(
             1==1 &&
@@ -35,6 +35,21 @@ contract Foobar {
         // do smth
     }
 
+    function doit4(address ext) {
+        // ruleid: exact-balance-check
+        if (address(ext).balance == 1337) {
+            // do smth
+        };
+        // do smth
+    }
+
+    function doit5(address ext) {
+        // ok: exact-balance-check
+        if (1==1) {
+            bool b = address(ext).balance == 1337;
+        };
+        // do smth
+    }
     function doit_safe(address ext) {
         require(
             1==1 &&
