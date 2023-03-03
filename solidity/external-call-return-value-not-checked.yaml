@@ -1,5 +1,5 @@
 rules:
-  - id: external-call-return-value-not-checked-copy
+  - id: external-call-return-value-not-checked
     message: Functions call, staticcall, delegatecall, send returns a boolean indicating whether the call completed successfully. Not testing explicitly whether these calls fail may lead to unexpected behavior in the caller contract.
     languages:
       - solidity
