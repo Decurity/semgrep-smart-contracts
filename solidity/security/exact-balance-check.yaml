@@ -1,0 +1,54 @@
+rules:
+  - id: exact-balance-check
+    message: Testing the balance of an account as a basis for some action has risks
+      associated with unexpected receipt of ether or another token, including
+      tokens deliberately transfered to cause such tests to fail, as an MEV
+      attack.
+    metadata:
+      category: security
+      technology:
+          - solidity
+      cwe: "CWE-667: Improper Locking"
+      confidence: LOW
+      likelihood: MEDIUM
+      impact: MEDIUM
+      subcategory:
+          - vuln
+      references:
+        - https://entethalliance.org/specs/ethtrust-sl/v1/#req-1-exact-balance-check
+    mode: taint
+    pattern-sinks:
+      - pattern-either:
+        - patterns:
+            - pattern-either:
+                - pattern: $X == ...
+                - pattern: ... == $X
+            - pattern-either:
+                - pattern-inside: require(...)
+                - pattern-inside: |
+                    if (<... $X == ... ...>) {
+                      ...
+                    }
+                - pattern-inside: |
+                    if (<... ... == $X ...>) {
+                      ...
+                    }
+        - patterns:
+            - pattern-either:
+                - pattern: $BOOL = <... ... == ... ...>
+            - pattern-either:
+                - pattern-inside: |
+                    ...
+                    require(<... $BOOL ...>)
+                - pattern-inside: |
+                    ...
+                    if (<... $BOOL ...>) {
+                      ...
+                    }
+    pattern-sources:
+      - pattern-either:
+          - pattern: $T.balanceOf($A)
+          - pattern: $T.balance
+    languages:
+      - solidity
+    severity: WARNING
