@@ -16,12 +16,6 @@ contract Test {
         );
         if (!success2) revert();
 
-        // // ok: external-call-return-value-not-checked
-        // (bool success3, bytes memory data) = _contract.staticcall(
-        //     abi.encodeWithSignature("setVars(uint256)", _num)
-        // );
-        // if (success3 != 0) revert();
-
         // ok: external-call-return-value-not-checked
         (bool success3, bytes memory data) = _contract.call(
             abi.encodeWithSignature("setVars(uint256)", _num)
