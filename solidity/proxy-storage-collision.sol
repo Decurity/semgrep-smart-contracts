@@ -100,3 +100,90 @@ contract VaultTransparentUpgradeableProxy is TransparentUpgradeableProxy, IVault
         riskTolerance = vaultImmutables.riskTolerance;
     }
 }
+
+/**
+ * @notice This contract implements a proxy that is upgradeable by an admin.
+ */
+// ruleid: proxy-storage-collision
+contract VaultTransparentUpgradeableProxy is TransparentUpgradeableProxy, IVaultImmutable {
+    /// @notice Vault underlying asset
+    address private proxyAdmin = address(0);
+    IERC20 public override immutable underlying;
+
+    /// @notice Vault risk provider address
+    address public override immutable riskProvider;
+
+    /// @notice A number from -10 to 10 indicating the risk tolerance of the vault
+    int8 public override immutable riskTolerance;
+
+    /**
+     * @notice Initializes an upgradeable proxy managed by `_admin`, backed by the implementation at `_logic`.
+     */
+    constructor(
+        address _logic,
+        address admin_,
+        VaultImmutables memory vaultImmutables
+    ) TransparentUpgradeableProxy(_logic, admin_, "") payable {
+        underlying = vaultImmutables.underlying;
+        riskProvider = vaultImmutables.riskProvider;
+        riskTolerance = vaultImmutables.riskTolerance;
+    }
+}
+
+/**
+ * @notice This contract implements a proxy that is upgradeable by an admin.
+ */
+// ok: proxy-storage-collision
+contract VaultTransparentUpgradeableProxy is TransparentUpgradeableProxy, IVaultImmutable {
+    /// @notice Vault underlying asset
+    address constant proxyAdmin = address(0);
+    IERC20 public override immutable underlying;
+
+    /// @notice Vault risk provider address
+    address public override immutable riskProvider;
+
+    /// @notice A number from -10 to 10 indicating the risk tolerance of the vault
+    int8 public override immutable riskTolerance;
+
+    /**
+     * @notice Initializes an upgradeable proxy managed by `_admin`, backed by the implementation at `_logic`.
+     */
+    constructor(
+        address _logic,
+        address admin_,
+        VaultImmutables memory vaultImmutables
+    ) TransparentUpgradeableProxy(_logic, admin_, "") payable {
+        underlying = vaultImmutables.underlying;
+        riskProvider = vaultImmutables.riskProvider;
+        riskTolerance = vaultImmutables.riskTolerance;
+    }
+}
+
+/**
+ * @notice This contract implements a proxy that is upgradeable by an admin.
+ */
+// ok: proxy-storage-collision
+contract VaultTransparentUpgradeableProxy is TransparentUpgradeableProxy, IVaultImmutable {
+    /// @notice Vault underlying asset
+    address immutable proxyAdmin = address(0);
+    IERC20 public override immutable underlying;
+
+    /// @notice Vault risk provider address
+    address public override immutable riskProvider;
+
+    /// @notice A number from -10 to 10 indicating the risk tolerance of the vault
+    int8 public override immutable riskTolerance;
+
+    /**
+     * @notice Initializes an upgradeable proxy managed by `_admin`, backed by the implementation at `_logic`.
+     */
+    constructor(
+        address _logic,
+        address admin_,
+        VaultImmutables memory vaultImmutables
+    ) TransparentUpgradeableProxy(_logic, admin_, "") payable {
+        underlying = vaultImmutables.underlying;
+        riskProvider = vaultImmutables.riskProvider;
+        riskTolerance = vaultImmutables.riskTolerance;
+    }
+}
