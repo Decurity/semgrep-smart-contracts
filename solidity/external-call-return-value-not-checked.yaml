@@ -6,60 +6,61 @@ rules:
     severity: WARNING
     metadata:
       references:
-        - "https://entethalliance.org/specs/ethtrust-sl/v1/#req-1-check-return"
+        - https://entethalliance.org/specs/ethtrust-sl/v1/#req-1-check-return
       tags:
         - ethtrust
         - external-call
     patterns:
-      - pattern-either: 
-        - pattern: (bool $SUCC, ) = $ADDR.$METHOD(...);
-        - pattern: (bool $SUCC, ) = $ADDR.$METHOD{value:$VAL}(...);
-        - pattern: (bool $SUCC, ) = $ADDR.$METHOD{gas:$GAS}(...);
-        - pattern: (bool $SUCC, ) = $ADDR.$METHOD{value:$VAL, gas:$GAS}(...);
-        - pattern: (bool $SUCC, ) = $ADDR.$METHOD{gas:$GAS, value:$VAL}(...);
-        - pattern: (bool $SUCC, bytes memory $DATA) = $ADDR.$METHOD(...);
-        - pattern: (bool $SUCC, bytes memory $DATA) = $ADDR.$METHOD{value:$VAL}(...);
-        - pattern: (bool $SUCC, bytes memory $DATA) = $ADDR.$METHOD{gas:$GAS}(...);
-        - pattern: (bool $SUCC, bytes memory $DATA) = $ADDR.$METHOD{value:$VAL, gas:$GAS}(...);
-        - pattern: (bool $SUCC, bytes memory $DATA) = $ADDR.$METHOD{gas:$GAS, value:$VAL}(...);
-        - pattern: $ADDR.$METHOD(...);
-        - pattern: $ADDR.$METHOD{value:$VAL}(...);
-        - pattern: $ADDR.$METHOD{gas:$GAS}(...);
-        - pattern: $ADDR.$METHOD{value:$VAL, gas:$GAS}(...);
-        - pattern: $ADDR.$METHOD{gas:$GAS, value:$VAL}(...);
+      - pattern-either:
+          - pattern: (bool $SUCC, ) = $ADDR.$METHOD(...);
+          - pattern: (bool $SUCC, ) = $ADDR.$METHOD{value:$VAL}(...);
+          - pattern: (bool $SUCC, ) = $ADDR.$METHOD{gas:$GAS}(...);
+          - pattern: (bool $SUCC, ) = $ADDR.$METHOD{value:$VAL, gas:$GAS}(...);
+          - pattern: (bool $SUCC, ) = $ADDR.$METHOD{gas:$GAS, value:$VAL}(...);
+          - pattern: (bool $SUCC, bytes memory $DATA) = $ADDR.$METHOD(...);
+          - pattern: (bool $SUCC, bytes memory $DATA) = $ADDR.$METHOD{value:$VAL}(...);
+          - pattern: (bool $SUCC, bytes memory $DATA) = $ADDR.$METHOD{gas:$GAS}(...);
+          - pattern: (bool $SUCC, bytes memory $DATA) = $ADDR.$METHOD{value:$VAL,
+              gas:$GAS}(...);
+          - pattern: (bool $SUCC, bytes memory $DATA) = $ADDR.$METHOD{gas:$GAS,
+              value:$VAL}(...);
+          - pattern: $ADDR.$METHOD(...);
+          - pattern: $ADDR.$METHOD{value:$VAL}(...);
+          - pattern: $ADDR.$METHOD{gas:$GAS}(...);
+          - pattern: $ADDR.$METHOD{value:$VAL, gas:$GAS}(...);
+          - pattern: $ADDR.$METHOD{gas:$GAS, value:$VAL}(...);
       - metavariable-regex:
           metavariable: $METHOD
-          regex: ^(call|delegatecall|staticcall|send)$
+          regex: ^(call|delegatecall|staticcall|send)$ 
       - pattern-not-inside: |
           function $FUNC(...){
             ...
-            require($SUCC, ...);
+            require(<... $SUCC ...>, ...);
+            ...
           } 
       - pattern-not-inside: |
           function $FUNC(...){
             ...
-            if (!$SUCC){
+            if (<... $SUCC ...>){
               ...
             }
+            ...
           } 
       - pattern-not-inside: |
           function $FUNC(...){
             ...
-            if ($SUCC && ...){
-              ...
-            }
-          }
-      - pattern-not-inside: |
-          function $FUNC(...){
-            ...
-            if ($SUCC){
-              ...
-            }
+            return <... $SUCC ...>;
           } 
       - pattern-not-inside: |
           function $FUNC(...){
             ...
-            if (!$SUCC || ...){
-              ...
-            }
-          } 
+            $CHECK(..., $SUCC, ...);
+            ...
+          }   
+      - pattern-not-inside: |
+          function $FUNC(...){
+            ...
+            assert(<... $SUCC ...>);
+            ...
+          }  
+
