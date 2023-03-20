@@ -11,7 +11,7 @@ Currently semgrep supports [Solidity](https://semgrep.dev/docs/language-support/
 semgrep + [smart-contract-sanctuary](https://github.com/tintinweb/smart-contract-sanctuary) = ❤️
 
 ```shell
-$ semgrep --config solidity ~/smart-contract-sanctuary-arbitrum/contracts/mainnet
+$ semgrep --config solidity/security ~/smart-contract-sanctuary-arbitrum/contracts/mainnet
 ```
 
 ## Testing
@@ -32,7 +32,7 @@ Validate rules:
 $ semgrep --validate --config solidity
 ```
 
-## Rules
+## Security Rules
 
 Rule ID | Targets | Description
 --- | --- | ---
@@ -64,10 +64,17 @@ msg-value-multicall | Sushiswap | Function with constant msg.value can be called
 no-bidi-characters | Generic | The code must not contain any of Unicode Direction Control Characters
 delegatecall-to-arbitrary-address | Generic | An attacker may perform delegatecall() to an arbitrary address.
 
-## Not greppable incidents
+# Gas Optimization Rules
 
-I haven't come up with rules for the following incidents:
-
-- Fantasm ([description](https://twitter.com/RugDocIO/status/1501629678993518599), [contract](https://ftmscan.com/address/0x880672ab1d46d987e5d663fc7476cd8df3c9f937))
-- Paraluni ([description](https://slowmist.medium.com/paraluni-incident-analysis-58be442a4f99), [contract](https://www.contract-diff.xyz/?address=0xa386f30853a7eb7e6a25ec8389337a5c6973421d&chain=1))
-- Flurry Finance ([description](https://twitter.com/CertiKTech/status/1496298929599746048), [contract](https://bscscan.com/address/0x5085c49828b0b8e69bae99d96a8e0fcf0a033369))
+Rule ID | Description
+--- | ---
+array-length-outside-loop | Caching the array length outside a loop saves reading it on each iteration, as long as the array's length is not changed during the loop.
+init-variables-with-default-value | Explicitly initializing a variable with its default value costs unnecessary gas.
+state-variable-read-in-a-loop | Replace state variable reads and writes within loops with local variable reads and writes.
+unnecessary-checked-arithmetic-in-loop | A lot of times there is no risk that the loop counter can overflow. Using Solidity's unchecked block saves the overflow checks.
+use-custom-error-not-require | Consider using custom errors as they are more gas efficient while allowing developers to describe the error in detail using NatSpec.
+use-multiple-require | Using multiple require statements is cheaper than using && multiple check combinations. 
+use-nested-if | Using nested is cheaper than using && multiple check combinations.
+use-prefix-decrement-not-postfix | The prefix decrement expression is cheaper in terms of gas.
+use-prefix-increment-not-postfix | The prefix increment expression is cheaper in terms of gas.
+use-short-revert-string | Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and gas costs when the revert condition has been met.
