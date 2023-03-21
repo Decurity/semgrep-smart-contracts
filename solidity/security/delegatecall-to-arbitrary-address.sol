@@ -8,7 +8,14 @@ contract Test{
             abi.encodeWithSignature("setVars(uint256)", _num)
         );
     }
-
+    
+    function func1_gaz(address _contract, uint256 _num) external{
+        //ruleid: delegatecall-to-arbitrary-address
+        (bool success, bytes memory data) = _contract.delegatecall{gas:10000}(
+            abi.encodeWithSignature("setVars(uint256)", _num)
+        );
+    }
+    
     function func2(address payable _contract, uint256 _num) public{
         //ruleid: delegatecall-to-arbitrary-address
         (bool success, bytes memory data) = _contract.delegatecall(
