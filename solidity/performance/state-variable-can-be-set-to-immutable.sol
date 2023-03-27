@@ -1,8 +1,7 @@
 pragma solidity >=0.7.4;
 
-uint constant X = 32**22 + 8;
 
-//ruleid: non-immutable-state-variable
+//ruleid: state-variable-can-be-set-to-immutable
 contract T1{
     uint v1 = 1;
 
@@ -11,7 +10,7 @@ contract T1{
     }
 }
 
-//ok: non-immutable-state-variable
+//ok: state-variable-can-be-set-to-immutable
 contract T2{
     uint v1 = 1;
 
@@ -20,7 +19,7 @@ contract T2{
     }
 }
 
-//ok: non-immutable-state-variable
+//ok: state-variable-can-be-set-to-immutable
 contract T3{
     uint v1 = 1;
 
@@ -29,7 +28,7 @@ contract T3{
     }
 }
 
-//ok: non-immutable-state-variable
+//ok: state-variable-can-be-set-to-immutable
 contract T4{
     uint v1 = 1;
 
@@ -38,7 +37,7 @@ contract T4{
     }
 }
 
-//ok: non-immutable-state-variable
+//ok: state-variable-can-be-set-to-immutable
 contract T5{
     uint v1 = 1;
 
@@ -47,7 +46,7 @@ contract T5{
     }
 }
 
-//ok: non-immutable-state-variable
+//ok: state-variable-can-be-set-to-immutable
 contract T6{
     uint v1 = 1;
 
@@ -56,7 +55,7 @@ contract T6{
     }
 }
 
-//ok: non-immutable-state-variable
+//ok: state-variable-can-be-set-to-immutable
 contract T7{
     uint v1 = 1;
 
@@ -65,7 +64,7 @@ contract T7{
     }
 }
 
-//ok: non-immutable-state-variable
+//ok: state-variable-can-be-set-to-immutable
 contract T8{
     uint v1 = 1;
 
@@ -74,7 +73,7 @@ contract T8{
     }
 }
 
-//ok: non-immutable-state-variable
+//ok: state-variable-can-be-set-to-immutable
 contract T9{
     uint v1 = 1;
 
@@ -83,17 +82,17 @@ contract T9{
     }
 }
 
-//ok: non-immutable-state-variable
+//ok: state-variable-can-be-set-to-immutable
 contract T10{
     uint public immutable v1 = 1;
 }
 
-//ok: non-immutable-state-variable
+//ok: state-variable-can-be-set-to-immutable
 contract T11{
     uint immutable v1 = 1;
 }
 
-//ok: non-immutable-state-variable
+//ok: state-variable-can-be-set-to-immutable
 contract T12{
     uint constant v1 = 1;
 }
@@ -101,7 +100,7 @@ contract T12{
 
 // semgrep can't catch it correctly now
 
-//ok: non-immutable-state-variable
+//ok: state-variable-can-be-set-to-immutable
 // contract T13{
 //     uint v1 = 1;
 // }
