@@ -1,5 +1,5 @@
 rules:
-  - id: immutable-state-variable
+  - id: state-variable-can-be-set-to-immutable
     metadata:
       references:
         - https://twitter.com/0xAsm0d3us/status/1518960501983936512
