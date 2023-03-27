@@ -110,24 +110,6 @@ rules:
               ...
             }
           }
-      # - pattern-not: |
-      #     contract $CONTRACT{
-      #       ...
-      #       function $FUNC(...){
-      #         ...
-      #         ($VARIABLE, ...) = $NEWVALUE;
-      #         ...
-      #       }
-      #     }
-      # - pattern-not: |
-      #     contract $CONTRACT{
-      #       ...
-      #       function $FUNC(...){
-      #         ...
-      #         (..., $VARIABLE) = $NEWVALUE;
-      #         ...
-      #       }
-      #     }
       # Check for inherited class is not working
       # - pattern-not: |
       #     contract $NEW is $CONTRACT{
