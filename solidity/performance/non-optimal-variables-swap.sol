@@ -24,4 +24,12 @@ contract Tes2{
         a = b;
         b = c;
     }
+
+    function f1() {
+        // ruleid: non-optimal-variables-swap
+        uint256 c = a;
+        a = b;
+        f1();
+        b = c;
+    }
 }

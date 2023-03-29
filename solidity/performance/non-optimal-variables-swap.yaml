@@ -10,5 +10,7 @@ rules:
     patterns:
       - pattern: |
           $TMP = $VAR1;
+          ...
           $VAR1 = $VAR2;
+          ...
           $VAR2 = $TMP;
