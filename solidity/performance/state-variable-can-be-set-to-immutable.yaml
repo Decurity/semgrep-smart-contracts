@@ -9,7 +9,7 @@ rules:
     message: Consider making variable $VARIABLE constant or immutable to reduce waste of gas.
     languages: [solidity]
     severity: INFO
-    
+
     patterns:
       - pattern: |
           contract $CONTRACT{
@@ -71,6 +71,15 @@ rules:
             function $FUNC(...){
               ...
               $VARIABLE /= $NEWVALUE;
+              ...
+            }
+          }
+      - pattern-not: |
+          contract $CONTRACT{
+            ...
+            function $FUNC(...){
+              ...
+              $VARIABLE %= $NEWVALUE;
               ...
             }
           }
