@@ -1,0 +1,126 @@
+rules:
+  - id: state-variable-can-be-set-to-immutable
+    metadata:
+      references:
+        - https://twitter.com/0xAsm0d3us/status/1518960501983936512
+      category: performance
+      tags:
+        - variable
+    message: Consider making variable $VARIABLE constant or immutable to reduce waste of gas.
+    languages: [solidity]
+    severity: INFO
+
+    patterns:
+      - pattern: |
+          contract $CONTRACT{
+            ...
+            $TYPE $VARIABLE = $VALUE;
+            ...
+          }
+      - pattern-not: |
+            contract $CONTRACT{
+              ...
+              $TYPE immutable $VARIABLE = $VALUE;
+              ...
+            }   
+      - pattern-not: |
+            contract $CONTRACT{
+              ...
+              $TYPE constant $VARIABLE = $VALUE;
+              ...
+            }   
+      - pattern-not: |
+          contract $CONTRACT{
+            ...
+            function $FUNC(...){
+              ...
+              $VARIABLE = $NEWVALUE;
+              ...
+            }
+          }
+      - pattern-not: |
+          contract $CONTRACT{
+            ...
+            function $FUNC(...){
+              ...
+              $VARIABLE += $NEWVALUE;
+              ...
+            }
+          }
+      - pattern-not: |
+          contract $CONTRACT{
+            ...
+            function $FUNC(...){
+              ...
+              $VARIABLE -= $NEWVALUE;
+              ...
+            }
+          }
+      - pattern-not: |
+          contract $CONTRACT{
+            ...
+            function $FUNC(...){
+              ...
+              $VARIABLE *= $NEWVALUE;
+              ...
+            }
+          }
+      - pattern-not: |
+          contract $CONTRACT{
+            ...
+            function $FUNC(...){
+              ...
+              $VARIABLE /= $NEWVALUE;
+              ...
+            }
+          }
+      - pattern-not: |
+          contract $CONTRACT{
+            ...
+            function $FUNC(...){
+              ...
+              $VARIABLE %= $NEWVALUE;
+              ...
+            }
+          }
+      - pattern-not: |
+          contract $CONTRACT{
+            ...
+            function $FUNC(...){
+              ...
+              $VARIABLE++;
+              ...
+            }
+          }
+      - pattern-not: |
+          contract $CONTRACT{
+            ...
+            function $FUNC(...){
+              ...
+              ++$VARIABLE;
+              ...
+            }
+          }
+      - pattern-not: |
+          contract $CONTRACT{
+            ...
+            function $FUNC(...){
+              ...
+              --$VARIABLE;
+              ...
+            }
+          }
+      - pattern-not: |
+          contract $CONTRACT{
+            ...
+            function $FUNC(...){
+              ...
+              $VARIABLE--;
+              ...
+            }
+          }
+      # Check for inherited class is not working
+      # - pattern-not: |
+      #     contract $NEW is $CONTRACT{
+      #       ...
+      #     }
