@@ -64,7 +64,7 @@ msg-value-multicall | Sushiswap | Function with constant msg.value can be called
 no-bidi-characters | Generic | The code must not contain any of Unicode Direction Control Characters
 delegatecall-to-arbitrary-address | Generic | An attacker may perform delegatecall() to an arbitrary address.
 
-# Gas Optimization Rules
+## Gas Optimization Rules
 
 Rule ID | Description
 --- | ---

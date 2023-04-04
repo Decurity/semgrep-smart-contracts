@@ -1,0 +1,32 @@
+rules:
+  - id: non-payable-constructor
+    message: Consider making costructor payable to reduce gas wasting.
+    metadata:
+      references:
+        - https://twitter.com/0xAsm0d3us/status/1518960704271056897
+      category: performance
+      tags:
+        - constructor
+        - payable
+    languages:
+      - solidity
+    severity: INFO
+    patterns:
+      - pattern: |
+          contract $ANY{
+            constructor(...){
+              ...
+            }
+          }
+      - pattern-not: |
+          contract $ANY{
+            constructor(...) payable{
+              ...
+            }
+          }
+      - pattern-not: |
+          abstract contract $ANY{
+            constructor(...){
+              ...
+            }
+          }

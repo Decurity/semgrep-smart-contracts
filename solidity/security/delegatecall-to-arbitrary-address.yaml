@@ -36,5 +36,7 @@ rules:
             if(<... _msgSender() ...>) revert(...);
             ...
         - pattern-not: address(this).delegatecall(...);
-        - pattern: $CONTRACT.delegatecall(...);
+        - pattern-either:
+              - pattern: $CONTRACT.delegatecall(...);
+              - pattern: $CONTRACT.delegatecall{gas:$GAS}(...);
     
