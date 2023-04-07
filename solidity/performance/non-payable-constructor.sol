@@ -1,17 +1,17 @@
 pragma solidity 0.8.15;
 
 
-//ruleid: non-payable-constructor
 contract Test1{
+    //ruleid: non-payable-constructor
     constructor(){}
 }
 
-//ok: non-payable-constructor
 contract Test2{
+    //ok: non-payable-constructor
     constructor() payable{}
 }
 
-//ok: non-payable-constructor
 abstract contract Test3{
+    //ok: non-payable-constructor
     constructor(){}
 }
