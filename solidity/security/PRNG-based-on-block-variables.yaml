@@ -1,0 +1,21 @@
+rules:
+  - id: PRNG-based-on-block-variables
+    severity: WARNING
+    languages:
+      - solidity
+    message: Block variables should not be used as a source of entropy because validators can manipulate them.
+    metadata:
+      category: security
+      tags:
+        - PRNG
+      references: 
+        - https://blog.positive.com/predicting-random-numbers-in-ethereum-smart-contracts-e5358c6b8620
+    mode: taint
+    pattern-sources:
+      - pattern: blockhash
+      - pattern: block.number
+      - pattern: block.difficulty
+      - pattern: block.gaslimit
+    pattern-sinks:
+      - pattern: $TYPE $VAR = uint256(keccak256(...));
+      - pattern: $TYPE $VAR = ... % $MODULUS;
