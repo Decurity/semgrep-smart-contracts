@@ -1,0 +1,30 @@
+rules:
+  - id: accessible-selfdestruct
+    severity: ERROR
+    languages:
+      - solidity
+    message: SELFDESTRUCT target address can be overwritten by untrusted external caller
+    metadata:
+      category: security
+      tags:
+        - selfdestruct
+      references: 
+        - https://www.parity.io/blog/a-postmortem-on-the-parity-multi-sig-library-self-destruct/
+    mode: taint
+    pattern-sources:
+      - patterns:
+        - pattern: |
+            function $FUNC(..., address $ADDR, ...) external {
+            ...
+            }
+        - focus-metavariable:
+            - $ADDR
+      - patterns:
+        - pattern: |
+            function $FUNC(..., address $ADDR, ...) public {
+            ...
+            }
+        - focus-metavariable:
+            - $ADDR
+    pattern-sinks:
+      - pattern: selfdestruct(...);
