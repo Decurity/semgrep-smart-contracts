@@ -15,15 +15,17 @@ rules:
       - patterns:
         - pattern: |
             function $FUNC(..., address $ADDR, ...) external {
-            ...
+              ...
             }
+        - pattern-not: function $FUNC(...) onlyOwner { ... }
         - focus-metavariable:
             - $ADDR
       - patterns:
         - pattern: |
             function $FUNC(..., address $ADDR, ...) public {
-            ...
+              ...
             }
+        - pattern-not: function $FUNC(...) onlyOwner { ... }
         - focus-metavariable:
             - $ADDR
     pattern-sinks:

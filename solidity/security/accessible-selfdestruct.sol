@@ -24,6 +24,18 @@ contract Test{
     function func5(address to) public{
         address payable addr = payable(to);
         //ruleid: accessible-selfdestruct
+        selfdestruct(addr);
+    }
+
+    function func6(address to) public onlyOwner {
+        address payable addr = payable(to);
+        //ok: accessible-selfdestruct
+        selfdestruct(to);
+    }
+
+    function func7(address to) external onlyOwner {
+        address payable addr = payable(to);
+        //ok: accessible-selfdestruct
         selfdestruct(to);
     }
 }
