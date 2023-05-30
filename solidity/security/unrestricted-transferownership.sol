@@ -195,6 +195,9 @@ contract Ownable is Context {
         _owner = newOwner;
     }
 
+    // ok: unrestricted-transferownership
+    function transferOwnership(address newOwner) external {}
+
     function getUnlockTime() public view returns (uint256) {
         return _lockTime;
     }
