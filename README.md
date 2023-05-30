@@ -1,6 +1,6 @@
 # Semgrep rules for smart contracts
 
-In this repository you can find [semgrep](https://semgrep.dev/) rules that look for patterns of vulnerabilities in smart contracts based on actual DeFi exploits.
+In this repository you can find [semgrep](https://semgrep.dev/) rules that look for patterns of vulnerabilities in smart contracts based on actual DeFi exploits as well as gas optimization rules that can be used as a part of the CI pipeline.
 
 ## Disclaimer
 
@@ -30,6 +30,54 @@ Validate rules:
 
 ```shell
 $ semgrep --validate --config solidity
+```
+
+## Using in Github Actions
+
+Create `run-semgrep.yaml` in `.github/workflows` with the following contents:
+```yaml
+# Name of this GitHub Actions workflow.
+name: Run Semgrep
+
+on:
+  # Scan changed files in PRs (diff-aware scanning):
+  pull_request: {}
+  # On-demand 
+  workflow_dispatch: {}
+
+jobs:
+  semgrep:
+    # User-definable name of this GitHub Actions job:
+    name: Scan
+    # If you are self-hosting, change the following `runs-on` value: 
+    runs-on: ubuntu-latest
+
+    container:
+      # A Docker image with Semgrep installed. Do not change this.
+      image: returntocorp/semgrep
+
+    # Skip any PR created by dependabot to avoid permission issues:
+    if: (github.actor != 'dependabot[bot]')
+
+    steps:
+      # Fetch project source with GitHub Actions Checkout.
+      - uses: actions/checkout@v3
+      # Fetch semgrep rules
+      - name: Fetch semgrep rules
+        uses: actions/checkout@v3
+        with:
+          repository: decurity/semgrep-smart-contracts
+          path: rules
+      # Run security and gas optimization rules
+      - run: semgrep ci --sarif --output=semgrep.sarif || true
+        env:
+           SEMGREP_RULES: rules/solidity/security rules/solidity/performance
+      # Upload findings to GitHub Advanced Security Dashboard
+      - name: Upload findings to GitHub Advanced Security Dashboard
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: semgrep.sarif
+        if: always()
 ```
 
 ## Security Rules
@@ -78,3 +126,5 @@ use-nested-if | Using nested is cheaper than using && multiple check combination
 use-prefix-decrement-not-postfix | The prefix decrement expression is cheaper in terms of gas.
 use-prefix-increment-not-postfix | The prefix increment expression is cheaper in terms of gas.
 use-short-revert-string | Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and gas costs when the revert condition has been met.
+non-payable-constructor | Consider making costructor payable to save gas.
+non-optimal-variables-swap | Consider swapping variables using `($VAR1, $VAR2) = ($VAR2, $VAR1)` to save gas.

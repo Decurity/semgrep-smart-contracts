@@ -1,8 +1,8 @@
 rules:
   - id: non-optimal-variables-swap
-    message: Condider rewrating variables swap to `($VAR1, $VAR2) = ($VAR2, $VAR1)` to reduce gas wasting.
+    message: Consider swapping variables using `($VAR1, $VAR2) = ($VAR2, $VAR1)` to save gas
     languages: [solidity]
-    severity: WARNING
+    severity: INFO
     metadata:
       category: performance
       tags:

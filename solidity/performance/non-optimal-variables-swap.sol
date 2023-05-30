@@ -33,3 +33,14 @@ contract Tes2{
         b = c;
     }
 }
+
+contract Test3{
+    uint256 a;
+    uint256 b;
+    uint256 c;
+    
+    function f1() {
+        // ok: non-optimal-variables-swap
+        (b, a) = (a, b); 
+    }
+}
