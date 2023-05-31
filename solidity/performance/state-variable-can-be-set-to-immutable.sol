@@ -116,8 +116,9 @@ contract T12{
 // }
 
 
-//ok: state-variable-can-be-set-to-immutable
+
 contract T14{
+    //ok: state-variable-can-be-set-to-immutable
     uint v1 = 5;
     function kek() {
         v1%=10;
