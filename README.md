@@ -128,3 +128,4 @@ use-prefix-increment-not-postfix | The prefix increment expression is cheaper in
 use-short-revert-string | Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and gas costs when the revert condition has been met.
 non-payable-constructor | Consider making costructor payable to save gas.
 non-optimal-variables-swap | Consider swapping variables using `($VAR1, $VAR2) = ($VAR2, $VAR1)` to save gas.
+state-variable-can-be-set-to-immutable | Consider making variable constant or immutable to save gas.

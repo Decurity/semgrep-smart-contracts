@@ -6,8 +6,7 @@ rules:
       category: performance
       tags:
         - variable
-    message: Consider making variable $VARIABLE constant or immutable to reduce
-      waste of gas.
+    message: Consider making variable $VARIABLE constant or immutable to save gas.
     languages:
       - solidity
     severity: INFO
