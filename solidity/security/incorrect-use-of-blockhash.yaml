@@ -3,7 +3,7 @@ rules:
     severity: ERROR
     languages:
       - solidity
-    message: blockhash(block.number) and blockhash (block.number + N) always returns 0.
+    message: blockhash(block.number) and blockhash(block.number + N) always returns 0.
     metadata:
       category: security
       tags:
