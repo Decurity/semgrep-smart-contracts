@@ -13,20 +13,76 @@ rules:
     mode: taint
     pattern-sources:
       - patterns:
-        - pattern: |
-            function $FUNC(..., address $ADDR, ...) external {
-              ...
-            }
-        - pattern-not: function $FUNC(...) onlyOwner { ... }
         - focus-metavariable:
             - $ADDR
-      - patterns:
-        - pattern: |
-            function $FUNC(..., address $ADDR, ...) public {
+        - pattern-either:
+            - pattern: function $FUNC(..., address $ADDR, ...) external { ... }
+            - pattern: function $FUNC(..., address $ADDR, ...) public { ... }
+        - pattern-not: function $FUNC(...) $MODIFIER { ... }
+        - pattern-not: function $FUNC(...) $MODIFIER(...) { ... }
+        - pattern-not: |
+            function $FUNC(...) {
+              ...
+              require(<... msg.sender ...>, ...);
               ...
             }
-        - pattern-not: function $FUNC(...) onlyOwner { ... }
-        - focus-metavariable:
-            - $ADDR
+        - pattern-not: |
+            function $FUNC(...) {
+              ...
+              require(<... _msgSender ...>, ...);
+              ...
+            }
+        - pattern-not: |
+            function $FUNC(...) {
+              ...
+              if (<... msg.sender ...>) {
+                ...
+              }
+              ...
+            }
+        - pattern-not: |
+            function $FUNC(...) {
+              ...
+              if (<... _msgSender ...>) {
+                ...
+              }
+              ...
+            }
+        - pattern-not: |
+            function $FUNC(...) {
+              ...
+              onlyOwner(...);
+              ...
+            }
+        - pattern-not: |
+            function $FUNC(...) {
+              ...
+              requireOwner(...);
+              ...
+            }
+        - pattern-not: |
+            function $FUNC(...) {
+              ...
+              _requireOwnership(...);
+              ...
+            }
+        - pattern-not: |
+            function $FUNC(...) {
+              ...
+              $C._enforceIsContractOwner(...);
+              ...
+            }
+        - pattern-not: |
+            function $FUNC(...) {
+              ...
+              $C._enforceOwner(...);
+              ...
+            }
+        - pattern-not: |
+            function $FUNC(...) {
+              ...
+              $C.enforceIsContractOwner(...);
+              ...
+            }
     pattern-sinks:
       - pattern: selfdestruct(...);
