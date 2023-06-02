@@ -1,0 +1,65 @@
+rules:
+  - id: no-slippage-check
+    message: Uniswap no slippage check
+    metadata:
+      references:
+        - https://uniswapv3book.com/docs/milestone_3/slippage-protection/
+      category: security
+      tags:
+        - uniswap
+    patterns:
+      - pattern-either:
+        - pattern: $X.swapExactTokensForTokens(...,$LIMIT,...,...,...)
+        - pattern: $X.swapExactTokensForTokensSupportingFeeOnTransferTokens(...,$LIMIT,...,...,...)
+        - pattern: $X.swapExactTokensForETH(...,$LIMIT,...,...,...)
+        - pattern: $X.swapExactTokensForETHSupportingFeeOnTransferTokens(...,$LIMIT,...,...,...)
+        - pattern: $X.swapExactETHForTokens{$VALUE:...}($LIMIT,...,...,...)
+        - pattern: $X.swapExactETHForTokensSupportingFeeOnTransferTokens{$VALUE:...}($LIMIT,...,...,...)
+        - pattern: $X.swapTokensForExactTokens(...,$LIMIT,...,...,...)
+        - pattern: $X.swapTokensForExactETH(...,$LIMIT,...,...,...)
+        - pattern: |
+            function $F(...) {
+              ...
+              $Y = ISwapRouter.ExactInputSingleParams({tokenIn:...,tokenOut:...,fee:...,recipient:...,deadline:...,amountIn:...,amountOutMinimum:$LIMIT,sqrtPriceLimitX96:0});
+              ...
+              $X.exactInputSingle($Y);
+              ...
+            }
+        - pattern: |
+            function $F(...) {
+              ...
+              $X.exactInputSingle(ISwapRouter.ExactInputSingleParams({tokenIn:...,tokenOut:...,fee:...,recipient:...,deadline:...,amountIn:...,amountOutMinimum:$LIMIT,sqrtPriceLimitX96:0}));
+              ...
+            }
+        - pattern: |
+            function $F(...) {
+              ...
+              $Y = ISwapRouter.ExactOutputSingleParams({tokenIn:...,tokenOut:...,fee:...,recipient:...,deadline:...,amountOut:...,amountInMaximum:$LIMIT,sqrtPriceLimitX96:0});
+              ...
+              $X.exactOutputSingle($Y);
+              ...
+            }
+        - pattern: |
+            function $F(...) {
+              ...
+              $X.exactOutputSingle(ISwapRouter.ExactOutputSingleParams({tokenIn:...,tokenOut:...,fee:...,recipient:...,deadline:...,amountOut:...,amountInMaximum:$LIMIT,sqrtPriceLimitX96:0}));
+              ...
+            }
+        - pattern: $X.swap(...,...,...,$LIMIT,...)
+      - metavariable-pattern:
+          metavariable: $LIMIT
+          pattern-either:
+            - pattern: "0"
+            - pattern: type(uint256).max
+            - pattern: uint256(-1)
+            - pattern: type(uint).max
+            - pattern: uint(-1)
+            - pattern: 2**256 - 1
+            - pattern: |
+                115792089237316195423570985008687907853269984665640564039457584007913129639935
+            - pattern: |
+                0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+    languages:
+      - solidity
+    severity: ERROR
+
