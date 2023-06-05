@@ -3,11 +3,11 @@ rules:
     severity: ERROR
     languages:
       - solidity
-    message: SELFDESTRUCT target address can be overwritten by untrusted external caller
+    message: Contract can be destructed by anyone in $FUNC
     metadata:
       category: security
       tags:
-        - selfdestruct
+        - access-control
       references: 
         - https://www.parity.io/blog/a-postmortem-on-the-parity-multi-sig-library-self-destruct/
     mode: taint
@@ -29,7 +29,19 @@ rules:
         - pattern-not: |
             function $FUNC(...) {
               ...
+              assert(<... msg.sender ...>, ...);
+              ...
+            }
+        - pattern-not: |
+            function $FUNC(...) {
+              ...
               require(<... _msgSender ...>, ...);
+              ...
+            }
+        - pattern-not: |
+            function $FUNC(...) {
+              ...
+              assert(<... _msgSender ...>, ...);
               ...
             }
         - pattern-not: |
@@ -85,4 +97,6 @@ rules:
               ...
             }
     pattern-sinks:
-      - pattern: selfdestruct(...);
+      - pattern-either:
+        - pattern: selfdestruct(...);
+        - pattern: suicide(...);
