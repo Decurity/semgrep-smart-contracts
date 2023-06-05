@@ -1,8 +1,5 @@
 rules:
   - id: incorrect-use-of-blockhash
-    severity: ERROR
-    languages:
-      - solidity
     message: blockhash(block.number) and blockhash(block.number + N) always returns 0.
     metadata:
       category: security
@@ -20,3 +17,6 @@ rules:
           - pattern: block.blockhash(block.number)
           - pattern: block.blockhash(block.number + $N)
           - pattern: block.blockhash(block.number * $N)
+    severity: ERROR
+    languages:
+      - solidity
