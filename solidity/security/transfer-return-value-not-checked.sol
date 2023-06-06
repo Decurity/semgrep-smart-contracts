@@ -28,7 +28,7 @@ contract Test{
 }
 
 
-contract Test5 {
+contract Test2 {
     IWETH9 weth = address(0);
     function sendWETHT(address to, uint256 amount) private {
         //ok: transfer-return-value-not-checked
