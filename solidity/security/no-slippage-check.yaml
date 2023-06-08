@@ -9,56 +9,46 @@ rules:
         - uniswap
     patterns:
       - pattern-either:
-        - pattern: $X.swapExactTokensForTokens(...,$LIMIT,...,...,...)
-        - pattern: $X.swapExactTokensForTokensSupportingFeeOnTransferTokens(...,$LIMIT,...,...,...)
-        - pattern: $X.swapExactTokensForETH(...,$LIMIT,...,...,...)
-        - pattern: $X.swapExactTokensForETHSupportingFeeOnTransferTokens(...,$LIMIT,...,...,...)
-        - pattern: $X.swapExactETHForTokens{$VALUE:...}($LIMIT,...,...,...)
-        - pattern: $X.swapExactETHForTokensSupportingFeeOnTransferTokens{$VALUE:...}($LIMIT,...,...,...)
-        - pattern: $X.swapTokensForExactTokens(...,$LIMIT,...,...,...)
-        - pattern: $X.swapTokensForExactETH(...,$LIMIT,...,...,...)
-        - pattern: |
-            function $F(...) {
-              ...
-              $Y = ISwapRouter.ExactInputSingleParams({tokenIn:...,tokenOut:...,fee:...,recipient:...,deadline:...,amountIn:...,amountOutMinimum:$LIMIT,sqrtPriceLimitX96:0});
-              ...
-              $X.exactInputSingle($Y);
-              ...
-            }
-        - pattern: |
-            function $F(...) {
-              ...
-              $X.exactInputSingle(ISwapRouter.ExactInputSingleParams({tokenIn:...,tokenOut:...,fee:...,recipient:...,deadline:...,amountIn:...,amountOutMinimum:$LIMIT,sqrtPriceLimitX96:0}));
-              ...
-            }
-        - pattern: |
-            function $F(...) {
-              ...
-              $Y = ISwapRouter.ExactOutputSingleParams({tokenIn:...,tokenOut:...,fee:...,recipient:...,deadline:...,amountOut:...,amountInMaximum:$LIMIT,sqrtPriceLimitX96:0});
-              ...
-              $X.exactOutputSingle($Y);
-              ...
-            }
-        - pattern: |
-            function $F(...) {
-              ...
-              $X.exactOutputSingle(ISwapRouter.ExactOutputSingleParams({tokenIn:...,tokenOut:...,fee:...,recipient:...,deadline:...,amountOut:...,amountInMaximum:$LIMIT,sqrtPriceLimitX96:0}));
-              ...
-            }
-        - pattern: $X.swap(...,...,...,$LIMIT,...)
-      - metavariable-pattern:
+          - pattern: $X.swapExactTokensForTokens($A,$LIMIT,$B,$C,$D)
+          - pattern: $X.swapExactTokensForTokensSupportingFeeOnTransferTokens($A,$LIMIT,$B,$C,$D)
+          - pattern: $X.swapExactTokensForETH($A,$LIMIT,$B,$C,$D)
+          - pattern: $X.swapExactTokensForETHSupportingFeeOnTransferTokens($A,$LIMIT,$B,$C,$D)
+          - pattern: $X.swapExactETHForTokens{$VALUE:...}($LIMIT,$A,$B,$C)
+          - pattern: $X.swapExactETHForTokensSupportingFeeOnTransferTokens{$VALUE:...}($LIMIT,$A,$B,$C)
+          - pattern: $X.swapTokensForExactTokens($A,$LIMIT,$B,$C,$D)
+          - pattern: $X.swapTokensForExactETH($A,$LIMIT,$B,$C,$D)
+          - pattern: >
+              function $F(...) {
+                ...
+                $Y = ISwapRouter.ExactInputSingleParams({tokenIn:...,tokenOut:...,fee:...,recipient:...,deadline:...,amountIn:...,amountOutMinimum:$LIMIT,sqrtPriceLimitX96:0});
+                ...
+                $X.exactInputSingle($Y);
+                ...
+              }
+          - pattern: >
+              function $F(...) {
+                ...
+                $X.exactInputSingle(ISwapRouter.ExactInputSingleParams({tokenIn:...,tokenOut:...,fee:...,recipient:...,deadline:...,amountIn:...,amountOutMinimum:$LIMIT,sqrtPriceLimitX96:0}));
+                ...
+              }
+          - pattern: >
+              function $F(...) {
+                ...
+                $Y = ISwapRouter.ExactOutputSingleParams({tokenIn:...,tokenOut:...,fee:...,recipient:...,deadline:...,amountOut:...,amountInMaximum:$LIMIT,sqrtPriceLimitX96:0});
+                ...
+                $X.exactOutputSingle($Y);
+                ...
+              }
+          - pattern: >
+              function $F(...) {
+                ...
+                $X.exactOutputSingle(ISwapRouter.ExactOutputSingleParams({tokenIn:...,tokenOut:...,fee:...,recipient:...,deadline:...,amountOut:...,amountInMaximum:$LIMIT,sqrtPriceLimitX96:0}));
+                ...
+              }
+          - pattern: $X.swap($RECIPIENT,$ZEROFORONE,$AMOUNTIN,$LIMIT,$DATA)
+      - metavariable-regex:
           metavariable: $LIMIT
-          pattern-either:
-            - pattern: "0"
-            - pattern: type(uint256).max
-            - pattern: uint256(-1)
-            - pattern: type(uint).max
-            - pattern: uint(-1)
-            - pattern: 2**256 - 1
-            - pattern: |
-                115792089237316195423570985008687907853269984665640564039457584007913129639935
-            - pattern: |
-                0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+          regex: ^(0)|(0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff)|(type\(uint(256)?\)\.max)|(uint(256)?\(-1)|(115792089237316195423570985008687907853269984665640564039457584007913129639935)|(2\s?\*\*\s?256\s?-\s?1)$
     languages:
       - solidity
     severity: ERROR

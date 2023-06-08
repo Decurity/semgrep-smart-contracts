@@ -59,10 +59,28 @@ contract UniswapSwaps {
             block.timestamp
         );
 
+        // ok: no-slippage-check
+        router.swapTokensForExactTokens(
+             amounts[i],
+             (inputAmount[0] * (BASE_UNIT + slippage)) / BASE_UNIT,
+             elkPaths[address(tokens[i])],
+             msg.sender,
+             block.timestamp + 1000
+         );
+
+         // ruleid: no-slippage-check
+         router.swapTokensForExactTokens(
+             amounts[i],
+             2 ** 256 - 1,
+             elkPaths[address(tokens[i])],
+             msg.sender,
+             block.timestamp + 1000
+         );
+
         // ruleid: no-slippage-check
         router.swapTokensForExactTokens(
             amountOutDesired,
-            type(uint256).max,
+            uint256(-1),
             path,
             msg.sender,
             block.timestamp
@@ -109,6 +127,22 @@ contract UniswapSwaps {
 
         // ruleid: no-slippage-check
         router.swapExactTokensForETHSupportingFeeOnTransferTokens(amountIn, 0, path, msg.sender, deadline);
+
+        // ok: no-slippage-check
+        pool.swap(
+            address(this),
+            swapQuantity > 0,
+            swapQuantity > 0 ? swapQuantity : -swapQuantity,
+            sqrtPriceLimitX96,
+            abi.encode(amountMin)
+        );
+
+        // ok: no-slippage-check
+        pair.swap(amount0Out, amount1Out, to, new bytes(0));
+        // ok: no-slippage-check
+        pair.swap(0, amountOut, to, new bytes(0));
+        // ok: no-slippage-check
+        pair.swap(amountOut, 0, to, new bytes(0));
 
         return amounts[1];
     }
@@ -323,7 +357,7 @@ contract UniswapSwaps {
                 recipient: msg.sender,
                 deadline: block.timestamp,
                 amountOut: amountOut,
-                amountInMaximum: type(uint).max,
+                amountInMaximum: uint256(-1),
                 sqrtPriceLimitX96: 0
             }));
 
