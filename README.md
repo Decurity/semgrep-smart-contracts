@@ -113,6 +113,7 @@ no-bidi-characters | Generic | The code must not contain any of Unicode Directio
 delegatecall-to-arbitrary-address | Generic | An attacker may perform delegatecall() to an arbitrary address.
 incorrect-use-of-blockhash | Generic | blockhash(block.number) and blockhash(block.number + N) always returns 0.
 accessible-selfdestruct | Generic | Contract can be destructed by anyone in $FUNC
+missing-array-lengths-check | Generic | User activities may not be completed successfully if the arrays' lengths aren't determined to be the same.
 
 ## Gas Optimization Rules
 

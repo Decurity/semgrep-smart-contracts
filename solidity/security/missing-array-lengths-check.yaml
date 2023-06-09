@@ -1,0 +1,55 @@
+rules:
+  - id: missing-array-lengths-check
+    message: User activities may not be completed successfully if the arrays' lengths aren't determined to be the same.
+    metadata:
+      category: security
+      tags:
+        - array
+        - length
+    patterns:
+        - pattern: |
+              function $F(..., $TYPE[] $VAR, ..., $TYPE2[] $VAR2, ...) {
+                ...
+              }
+        - pattern-not: |
+              function $F(..., $TYPE[] $VAR, ..., $TYPE2[] $VAR2, ...) {
+                ...
+                require(<... $VAR.length ...>, ...);
+                ...
+              }
+        - pattern-not: |
+              function $F(..., $TYPE[] $VAR, ..., $TYPE2[] $VAR2, ...) {
+                ...
+                require(<... $VAR2.length ...>, ...);
+                ...
+              }
+        - pattern-not: |
+              function $F(..., $TYPE[] $VAR, ..., $TYPE2[] $VAR2, ...) {
+                ...
+                assert(<... $VAR.length ...>, ...);
+                ...
+              }
+        - pattern-not: |
+              function $F(..., $TYPE[] $VAR, ..., $TYPE2[] $VAR2, ...) {
+                ...
+                assert(<... $VAR2.length ...>, ...);
+                ...
+              }
+        - pattern-not: |
+              function $F(..., $TYPE[] $VAR, ..., $TYPE2[] $VAR2, ...) {
+                ...
+                if(<... $VAR.length ...>) {...}
+                ...
+              }
+        - pattern-not: |
+              function $F(..., $TYPE[] $VAR, ..., $TYPE2[] $VAR2, ...) {
+                ...
+                if(<... $VAR2.length ...>){...}
+                ...
+              }
+        - focus-metavariable: 
+          - $VAR
+          - $VAR2
+    languages:
+      - solidity
+    severity: INFO
