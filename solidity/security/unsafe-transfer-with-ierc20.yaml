@@ -1,0 +1,45 @@
+rules:
+    - id: unsafe-transfer-with-ierc20
+      metadata:
+        references:
+          - https://medium.com/coinmonks/missing-return-value-bug-at-least-130-tokens-affected-d67bf08521ca
+        category: security
+        tags:
+          - IERC20
+          - transfer
+      message: The majority of code that accepts ERC20 tokens still accepts some tokens even when they do not correctly implement the standard. Using IERC20 interface to work with that kind of token may lead to inablility to transfer funds from smart contract.
+        Use OpenZeppelin's SafeERC20's safeTransfer() instead of transfer() to prevent this issue.
+      languages:
+        - solidity
+      severity: WARNING
+      patterns:
+        - pattern: |
+            $VAR.transfer($TO, $AMOUNT);
+        - pattern-either:
+            - pattern-inside: |
+                contract $C {
+                  ...
+                  IERC20 $VAR = ...; 
+                  ...
+                  function $F(...) {
+                    ...
+                    $VAR.transfer($TO, $AMOUNT);
+                    ...
+                  }
+                  ...
+                }
+            - pattern-inside: |
+                contract $C {
+                  ...
+                  IERC20 $VAR; 
+                  ...
+                  function $F(...) {
+                    ...
+                    $VAR.transfer($TO, $AMOUNT);
+                    ...
+                  }
+                  ...
+                }
+            - pattern-inside: IERC20(...);
+  
+        
