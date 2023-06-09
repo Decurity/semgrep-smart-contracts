@@ -1,0 +1,24 @@
+rules:
+  - id: transfer-return-value-not-checked
+    metadata:
+      references:
+        - https://code4rena.com/reports/2022-03-joyn#h-01-erc20-transferfrom-return-values-not-checked
+      category: security
+      tags:
+        - transfer
+        - transferFrom
+    message: The missing return value check of the ERC20 transfer can result in loss of funds, because some ERC20 tokens indicate a failed transfer by the return value instead of a revert.
+    languages:
+      - solidity
+    severity: WARNING
+    patterns: 
+      - pattern-either:
+          - pattern: $VAR.transfer($TO, $AMOUNT);
+          - pattern: $VAR.transferFrom($FROM, $TO, $AMOUNT);
+      - pattern-not: $RETURN = $VAR.transfer(...);
+      - pattern-not: $RETURN = $VAR.transferFrom(...);
+      - pattern-not-inside: if(...);
+      - pattern-not-inside: require(...); 
+      - pattern-not-inside: assert(...); 
+      - pattern-not-inside: IWETH9(...); 
+      - pattern-not-inside: IWETH(...);
