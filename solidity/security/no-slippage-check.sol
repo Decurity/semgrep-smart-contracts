@@ -211,7 +211,6 @@ contract UniswapSwaps {
             );
     }
 
-    // ruleid: no-slippage-check
     function uniswapV3Swap2(
         uint256 fee0,
         uint256 fee1,
@@ -227,6 +226,7 @@ contract UniswapSwaps {
         uint256 amount1Min = LowGasSafeMath.add(decoded.amount1, fee1);
 
         TransferHelper.safeApprove(token1, address(swapRouter), decoded.amount1);
+        // ruleid: no-slippage-check
         uint256 amountOut0 =
             swapRouter.exactInputSingle(
                 ISwapRouter.ExactInputSingleParams({
@@ -323,11 +323,11 @@ contract UniswapSwaps {
         }
     }
 
-    // ok: no-slippage-check
+    
     function uniswapV3Swap3Ok(uint256 amountOut, uint256 amountInMaximum) external returns (uint256 amountIn) {
         TransferHelper.safeTransferFrom(DAI, msg.sender, address(this), amountInMaximum);
         TransferHelper.safeApprove(DAI, address(swapRouter), amountInMaximum);
-
+        // ok: no-slippage-check
         amountIn = swapRouter.exactOutputSingle(ISwapRouter.ExactOutputSingleParams({
                 tokenIn: DAI,
                 tokenOut: WETH9,
@@ -345,11 +345,11 @@ contract UniswapSwaps {
         }
     }
 
-    // ruleid: no-slippage-check
+    
     function uniswapV3Swap3Ok(uint256 amountOut, uint256 amountInMaximum) external returns (uint256 amountIn) {
         TransferHelper.safeTransferFrom(DAI, msg.sender, address(this), amountInMaximum);
         TransferHelper.safeApprove(DAI, address(swapRouter), amountInMaximum);
-
+        // ruleid: no-slippage-check
         amountIn = swapRouter.exactOutputSingle(ISwapRouter.ExactOutputSingleParams({
                 tokenIn: DAI,
                 tokenOut: WETH9,
