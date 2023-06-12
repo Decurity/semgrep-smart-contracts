@@ -6,3 +6,10 @@ contract Test is ITest, Ownable {
         // ...
     }
 }
+
+//ok: use-ownable2step
+contract Test is ITest, Ownable2Step {
+    function payment() public {
+        // ...
+    }
+}
