@@ -1,0 +1,123 @@
+rules:
+  - id: state-variable-can-be-set-to-immutable
+    metadata:
+      references:
+        - https://twitter.com/0xAsm0d3us/status/1518960501983936512
+      category: performance
+      tags:
+        - variable
+    message: Consider making variable $VARIABLE constant or immutable to save gas.
+    languages:
+      - solidity
+    severity: INFO
+    patterns:
+      - pattern: |
+          $TYPE $VARIABLE = $VALUE;
+      - pattern-inside: |
+          contract $CONTRACT{
+            ...
+            $TYPE $VARIABLE = $VALUE;
+            ...
+          }
+      - pattern-not-inside: |
+          contract $CONTRACT{
+            ...
+            $TYPE immutable $VARIABLE = $VALUE;
+            ...
+          }   
+      - pattern-not-inside: |
+          contract $CONTRACT{
+            ...
+            $TYPE constant $VARIABLE = $VALUE;
+            ...
+          }   
+      - pattern-not-inside: |
+          contract $CONTRACT{
+            ...
+            function $FUNC(...){
+              ...
+              $VARIABLE = $NEWVALUE;
+              ...
+            }
+          }
+      - pattern-not-inside: |
+          contract $CONTRACT{
+            ...
+            function $FUNC(...){
+              ...
+              $VARIABLE += $NEWVALUE;
+              ...
+            }
+          }
+      - pattern-not-inside: |
+          contract $CONTRACT{
+            ...
+            function $FUNC(...){
+              ...
+              $VARIABLE -= $NEWVALUE;
+              ...
+            }
+          }
+      - pattern-not-inside: |
+          contract $CONTRACT{
+            ...
+            function $FUNC(...){
+              ...
+              $VARIABLE *= $NEWVALUE;
+              ...
+            }
+          }
+      - pattern-not-inside: |
+          contract $CONTRACT{
+            ...
+            function $FUNC(...){
+              ...
+              $VARIABLE /= $NEWVALUE;
+              ...
+            }
+          }
+      - pattern-not-inside: |
+          contract $CONTRACT{
+            ...
+            function $FUNC(...){
+              ...
+              $VARIABLE %= $NEWVALUE;
+              ...
+            }
+          }
+      - pattern-not-inside: |
+          contract $CONTRACT{
+            ...
+            function $FUNC(...){
+              ...
+              $VARIABLE++;
+              ...
+            }
+          }
+      - pattern-not-inside: |
+          contract $CONTRACT{
+            ...
+            function $FUNC(...){
+              ...
+              ++$VARIABLE;
+              ...
+            }
+          }
+      - pattern-not-inside: |
+          contract $CONTRACT{
+            ...
+            function $FUNC(...){
+              ...
+              --$VARIABLE;
+              ...
+            }
+          }
+      - pattern-not-inside: |
+          contract $CONTRACT{
+            ...
+            function $FUNC(...){
+              ...
+              $VARIABLE--;
+              ...
+            }
+          }
