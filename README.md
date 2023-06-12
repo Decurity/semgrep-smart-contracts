@@ -135,4 +135,4 @@ non-optimal-variables-swap | Consider swapping variables using `($VAR1, $VAR2) =
 
 Rule ID | Description
 --- | ---
-use-ownable2step | Consider using Ownable2Step rather than Ownable.
+use-abi-encodecall-when-possible | To guarantee type and typo safety, it would be highly recommended to use abi.
