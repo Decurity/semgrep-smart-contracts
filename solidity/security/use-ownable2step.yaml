@@ -1,7 +1,7 @@
 rules:
     - id: use-ownable2step
       metadata:
-        category: security
+        category: best-practice
         tags:
           - ownable
       message: By demanding that the receiver of the owner permissions actively accept via a contract call of its own, Ownable2Step and Ownable2StepUpgradeable prevent the contract ownership from accidentally being transferred to an address that cannot handle it.
@@ -15,5 +15,5 @@ rules:
             }
         - metavariable-regex:
             metavariable: $OWNABLE
-            regex: (Ownable|OwnableUpgradeable)
+            regex: (Ownable$|OwnableUpgradeable)
         - focus-metavariable: $OWNABLE
