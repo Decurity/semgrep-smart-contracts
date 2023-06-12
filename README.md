@@ -113,7 +113,6 @@ no-bidi-characters | Generic | The code must not contain any of Unicode Directio
 delegatecall-to-arbitrary-address | Generic | An attacker may perform delegatecall() to an arbitrary address.
 incorrect-use-of-blockhash | Generic | blockhash(block.number) and blockhash(block.number + N) always returns 0.
 accessible-selfdestruct | Generic | Contract can be destructed by anyone in $FUNC
-use-ownable2step | Generic | Use Ownable2Step rather than Ownable
 
 ## Gas Optimization Rules
 
@@ -131,3 +130,9 @@ use-prefix-increment-not-postfix | The prefix increment expression is cheaper in
 use-short-revert-string | Shortening revert strings to fit in 32 bytes will decrease gas costs for deployment and gas costs when the revert condition has been met.
 non-payable-constructor | Consider making costructor payable to save gas.
 non-optimal-variables-swap | Consider swapping variables using `($VAR1, $VAR2) = ($VAR2, $VAR1)` to save gas.
+
+## Best Practices Rules
+
+Rule ID | Description
+--- | ---
+use-ownable2step | Consider using Ownable2Step rather than Ownable.
