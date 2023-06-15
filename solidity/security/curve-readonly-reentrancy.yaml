@@ -1,0 +1,23 @@
+rules:
+  - id: curve-readonly-reentrancy
+    message: Use withdraw_admin_fees() Curves function as reentrancy guard to protect from readonly reentrancy attack in Curve.
+    metadata:
+      references:
+        - https://chainsecurity.com/heartbreaks-curve-lp-oracles/
+        - https://chainsecurity.com/curve-lp-oracle-manipulation-post-mortem/
+      category: security
+      tags:
+        - curve
+        - reentrancy
+    patterns:
+      - pattern: |
+          $POOL.get_virtual_price()
+      - pattern-not-inside: |
+          function $F(...) {
+            ...
+            $VAR.withdraw_admin_fees(...);
+            ...
+          }
+    languages:
+      - solidity
+    severity: ERROR
