@@ -1,0 +1,54 @@
+rules:
+    - id: balancer-readonly-reentrancy-getpooltokens
+      message: Use VaultReentrancyLib to protect from readonly reentrancy.
+      metadata: 
+        references: 
+          - https://quillaudits.medium.com/decoding-sentiment-protocols-1-million-exploit-quillaudits-f36bee77d376
+        category: security
+        tags:
+          - reentrancy
+          - balancer
+      patterns:
+        - pattern-either:
+          - pattern: |
+              $RETURN = $VAULT.getPoolTokens(...)
+        - metavariable-pattern:
+              metavariable: $RETURN
+              pattern-regex: .*uint256\[].*
+        - pattern-not-inside: |
+            function $F(...) {
+              ...
+              VaultReentrancyLib.ensureNotInVaultContext(...);
+              ...
+            }
+        - pattern-not-inside: |
+            contract LinearPool {
+              ...
+            }
+        - pattern-not-inside: |
+            contract ComposableStablePool {
+              ...
+            }
+        - pattern-not-inside: |
+            contract BalancerQueries {
+              ...
+            } 
+        - pattern-not-inside: |
+            contract ManagedPool {
+              ...
+            }
+        - pattern-not-inside: |
+            contract BaseWeightedPool {
+              ...
+            } 
+        - pattern-not-inside: |
+            contract ComposableStablePoolStorage {
+              ...
+            }
+        - pattern-not-inside: |
+            contract RecoveryModeHelper {
+              ...
+            }
+      languages:
+        - solidity
+      severity: ERROR
