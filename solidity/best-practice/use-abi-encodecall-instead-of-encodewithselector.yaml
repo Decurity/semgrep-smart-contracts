@@ -1,6 +1,6 @@
 rules:
     - id: use-abi-encodecall-instead-of-encodewithselector
-      message: To guarantee arguments type safety it is recommended to use abi.encodeCall instead of abi.encodeWithSelector.
+      message: To guarantee arguments type safety it is recommended to use `abi.encodeCall` instead of `abi.encodeWithSelector`.
       metadata:
         category: best-practice
         references:

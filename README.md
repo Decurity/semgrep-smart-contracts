@@ -136,5 +136,5 @@ non-optimal-variables-swap | Consider swapping variables using `($VAR1, $VAR2) =
 
 Rule ID | Description
 --- | ---
-use-abi-encodecall-instead-of-encodewithselector | To guarantee arguments type safety it is recommended to use abi.encodeCall instead of abi.encodeWithSelector.
-use-ownable2step | Generic | Use Ownable2Step rather than Ownable
+use-abi-encodecall-instead-of-encodewithselector | To guarantee arguments type safety it is recommended to use `abi.encodeCall` instead of `abi.encodeWithSelector`.
+use-ownable2step | By demanding that the receiver of the owner permissions actively accept via a contract call of its own, `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred to an address that cannot handle it.
