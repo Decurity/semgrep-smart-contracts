@@ -1,0 +1,15 @@
+rules:
+    - id: use-abi-encodecall-when-possible
+      message: To guarantee type and typo safety, it would be highly recommended to use abi.encodeCall.
+      metadata:
+        category: best-practice
+        tags:
+          - abi
+          - call
+          - selector
+      patterns:
+        - pattern: |
+            abi.encodeWithSelector(...);
+      languages:
+        - solidity
+      severity: INFO
