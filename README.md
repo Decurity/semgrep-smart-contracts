@@ -136,4 +136,4 @@ non-optimal-variables-swap | Consider swapping variables using `($VAR1, $VAR2) =
 
 Rule ID | Description
 --- | ---
-use-abi-encodecall-when-possible | To guarantee type and typo safety, it would be highly recommended to use abi.encodeCall.
+use-abi-encodecall-instead-of-encodewithselector | To guarantee arguments type safety it is recommended to use abi.encodeCall instead of abi.encodeWithSelector.
