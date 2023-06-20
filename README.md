@@ -132,7 +132,7 @@ use-short-revert-string | Shortening revert strings to fit in 32 bytes will decr
 non-payable-constructor | Consider making costructor payable to save gas.
 non-optimal-variables-swap | Consider swapping variables using `($VAR1, $VAR2) = ($VAR2, $VAR1)` to save gas.
 
-# Best Practices Rules
+## Best Practices Rules
 
 Rule ID | Description
 --- | ---
