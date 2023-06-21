@@ -7,12 +7,16 @@ contract BALBBA3USDOracle is IOracle, IOracleValidate {
         // ok: balancer-readonly-reentrancy-getpooltokens  
         (address[] memory poolTokens, , ) = getVault().getPoolTokens(getPoolId());
     }
+    function test() view {
+        // ruleid: balancer-readonly-reentrancy-getpooltokens  
+        (, uint256[] memory balances, ) = IVault(VAULT_ADDRESS).getPoolTokens(poolId);
+    }
 
     function getPrice(address token) external view returns (uint) {
-        // ruleid: balancer-readonly-reentrancy-getpooltokens  
         (
             address[] memory poolTokens,
             uint256[] memory balances,
+        // ruleid: balancer-readonly-reentrancy-getpooltokens  
         ) = vault.getPoolTokens(IPool(token).getPoolId());
 
         uint256[] memory weights = IPool(token).getNormalizedWeights();
@@ -33,7 +37,7 @@ contract BALBBA3USDOracle is IOracle, IOracleValidate {
         return invariant
             .mulDown(temp)
             .divDown(IPool(token).totalSupply());
-    }
+    }  
 }
 
 abstract contract LinearPool {
@@ -41,4 +45,79 @@ abstract contract LinearPool {
         // ok: balancer-readonly-reentrancy-getpooltokens  
         (, uint256[] memory registeredBalances, ) = getVault().getPoolTokens(getPoolId());
     }
+}
+
+contract Sentiment {
+
+    function checkReentrancy() internal {
+        vault.manageUserBalance(new IVault.UserBalanceOp[](0));
+    }
+
+    function getPrice(address token) external returns (uint) {
+        checkReentrancy();
+        (
+            address[] memory poolTokens,
+            uint256[] memory balances,
+        // ok: balancer-readonly-reentrancy-getpooltokens
+        ) = vault.getPoolTokens(IPool(token).getPoolId());
+        
+        //...
+    }  
+}
+
+contract Testing {
+
+    function getPrice(address token) external returns (uint) {
+        
+        (
+            address[] memory poolTokens,
+            uint256[] memory balances,
+        // ok: balancer-readonly-reentrancy-getpooltokens
+        ) = vault.getPoolTokens(IPool(token).getPoolId());
+        
+        vault.manageUserBalance(new IVault.UserBalanceOp[](0));
+
+        //...
+    }
+}
+
+contract TestingSecondCase {
+
+    function checkReentrancy() internal {
+        VaultReentrancyLib.ensureNotInVaultContext(getVault());
+    }
+
+    function getPrice(address token) external returns (uint) {
+        checkReentrancy();
+        
+        (
+            address[] memory poolTokens,
+            uint256[] memory balances,
+        // ok: balancer-readonly-reentrancy-getpooltokens
+        ) = vault.getPoolTokens(IPool(token).getPoolId());
+        
+        //...
+    }  
+
+    function getPrice2(address token) external returns (uint) {
+        
+        (
+            address[] memory poolTokens,
+            uint256[] memory balances,
+        // ruleid: balancer-readonly-reentrancy-getpooltokens
+        ) = vault.getPoolTokens(IPool(token).getPoolId());
+        
+        //...
+    }  
+
+    function getPrice3(address token) external returns (uint) {
+        VaultReentrancyLib.ensureNotInVaultContext(getVault());
+        (
+            address[] memory poolTokens,
+            uint256[] memory balances,
+        // ok: balancer-readonly-reentrancy-getpooltokens
+        ) = vault.getPoolTokens(IPool(token).getPoolId());
+        
+        //...
+    }  
 }

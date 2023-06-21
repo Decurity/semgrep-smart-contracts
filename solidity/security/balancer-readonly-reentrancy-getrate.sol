@@ -41,3 +41,40 @@ contract PoolRecoveryHelper is SingletonAuthentication {
         emit TokenRateCacheUpdated(index, rate);
     }
 }
+
+
+contract TestA {
+    function checkReentrancy() {
+        VaultReentrancyLib.ensureNotInVaultContext(IVault(BALANCER_VAULT));
+    }
+
+    function test() internal view returns (uint256) {
+        checkReentrancy();
+        // ok: balancer-readonly-reentrancy-getrate
+        return (BAL_BB_A3_USD.getRate() * minValue) / 1e18;
+    }
+
+    function test2() internal view returns (uint256) {
+        
+        // ruleid: balancer-readonly-reentrancy-getrate
+        return (BAL_BB_A3_USD.getRate() * minValue) / 1e18;
+    }
+}
+
+contract TestB {
+    function checkReentrancy() {
+        vault.manageUserBalance(new IVault.UserBalanceOp[](0));
+    }
+
+    function test() internal view returns (uint256) {
+        checkReentrancy();
+        // ok: balancer-readonly-reentrancy-getrate
+        return (BAL_BB_A3_USD.getRate() * minValue) / 1e18;
+    }
+
+    function test2() internal view returns (uint256) {
+        vault.manageUserBalance(new IVault.UserBalanceOp[](0));        
+        // ok: balancer-readonly-reentrancy-getrate
+        return (BAL_BB_A3_USD.getRate() * minValue) / 1e18;
+    }
+}
