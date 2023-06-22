@@ -1,6 +1,6 @@
 rules:
   - id: balancer-readonly-reentrancy-getrate
-    message: Use VaultReentrancyLib to protect from readonly reentrancy.
+    message: $VAR.getRate() call on a Balancer pool is not protected from the read-only reentrancy.
     metadata: 
       references: 
         - https://forum.balancer.fi/t/reentrancy-vulnerability-scope-expanded/4345

@@ -114,8 +114,9 @@ delegatecall-to-arbitrary-address | Generic | An attacker may perform delegateca
 incorrect-use-of-blockhash | Generic | blockhash(block.number) and blockhash(block.number + N) always returns 0.
 accessible-selfdestruct | Generic | Contract can be destructed by anyone in $FUNC
 no-slippage-check| Generic|  No slippage check in a Uniswap v2/v3 trade
-balancer-readonly-reentrancy-getrate | Balancer | Using Balancers getRate() function without reentrancy protection
-balancer-readonly-reentrancy-getpooltokens | Balancer | Using Balancers getPoolTokens() function without reentrancy protection
+balancer-readonly-reentrancy-getrate | Balancer | getRate() call on a Balancer pool is not protected from the read-only reentrancy.
+balancer-readonly-reentrancy-getpooltokens | Balancer | getPoolTokens() call on a Balancer pool is not protected from the read-only reentrancy.
+
 ## Gas Optimization Rules
 
 Rule ID | Description

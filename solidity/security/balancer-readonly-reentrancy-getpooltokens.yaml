@@ -1,6 +1,6 @@
 rules:
     - id: balancer-readonly-reentrancy-getpooltokens
-      message: Use VaultReentrancyLib to protect from readonly reentrancy.
+      message: $VAULT.getPoolTokens() call on a Balancer pool is not protected from the read-only reentrancy.
       metadata: 
         references: 
           - https://quillaudits.medium.com/decoding-sentiment-protocols-1-million-exploit-quillaudits-f36bee77d376
