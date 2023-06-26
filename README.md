@@ -116,6 +116,7 @@ accessible-selfdestruct | Generic | Contract can be destructed by anyone in $FUN
 no-slippage-check| Generic|  No slippage check in a Uniswap v2/v3 trade
 balancer-readonly-reentrancy-getrate | Balancer | getRate() call on a Balancer pool is not protected from the read-only reentrancy.
 balancer-readonly-reentrancy-getpooltokens | Balancer | getPoolTokens() call on a Balancer pool is not protected from the read-only reentrancy.
+curve-readonly-reentrancy | Curve | get_virtual_price() call on a Curve pool is not protected from the read-only reentrancy.
 
 ## Gas Optimization Rules
 
