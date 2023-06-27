@@ -8,8 +8,8 @@ contract TestRequiere {
     }
 
     function testRevert(uint256 a) public {
-        // ruleid: use-short-revert-string
         if (a > 10) {
+        // ruleid: use-short-revert-string
             revert("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"); // "a"*33
         }
     }
