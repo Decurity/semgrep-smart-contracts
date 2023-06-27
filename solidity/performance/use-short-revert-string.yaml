@@ -12,11 +12,14 @@ rules:
           - require
           - revert
       patterns:
+        - pattern-either:
           - pattern: |
               require(..., "$MSG");
-          - metavariable-regex:
-              metavariable: $MSG
-              regex: .{33,}
+          - pattern: |
+              revert("$MSG");
+        - metavariable-regex:
+            metavariable: $MSG
+            regex: .{33,}
       languages: 
       - solidity
       severity: INFO

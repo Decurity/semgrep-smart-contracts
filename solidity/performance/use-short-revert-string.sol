@@ -7,6 +7,13 @@ contract TestRequiere {
         require(a>10, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"); // "a"*33
     }
 
+    function testRevert(uint256 a) public {
+        // ruleid: use-short-revert-string
+        if (a > 10) {
+            revert("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"); // "a"*33
+        }
+    }
+
     function test2(uint256 a) public {
         // ok: use-short-revert-string
         require(a>10, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"); // "a"*32
