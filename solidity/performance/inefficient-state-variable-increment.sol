@@ -7,7 +7,7 @@ contract A {
     function one() public {
         a[0] = 4;
         b = 5;
-        // ruleid: plus-equal-cost-more-for-state-variables
+        // ruleid: inefficient-state-variable-increment
         a[0] += b;
     }
 }
@@ -19,7 +19,7 @@ contract B {
     function one() public {
         a = 4;
         b = 5;
-        // ok: plus-equal-cost-more-for-state-variables
+        // ok: inefficient-state-variable-increment
         a = a + b;
     }
 }
@@ -29,7 +29,7 @@ contract C {
     uint256 public b;
     function one() public {
         b = 5;
-        // ruleid: plus-equal-cost-more-for-state-variables
+        // ruleid: inefficient-state-variable-increment
         a += b;
     }
 }
@@ -38,7 +38,7 @@ contract D {
     function one() public {
         a = 4;
         b = 5;
-        // ok: plus-equal-cost-more-for-state-variables
+        // ok: inefficient-state-variable-increment
         a += b;
     }
 }
@@ -46,7 +46,7 @@ contract D {
 contract E {
     mapping (address => uint) public a;
     function one() public {
-        // ok: plus-equal-cost-more-for-state-variables
+        // ok: inefficient-state-variable-increment
         a[msg.sender] += 4;
     }
 }

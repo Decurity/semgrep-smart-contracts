@@ -1,6 +1,6 @@
 rules:
     -
-      id: plus-equal-cost-more-for-state-variables
+      id: inefficient-state-variable-increment
       message: |
         <x> += <y> costs more gas than <x> = <x> + <y> for state variables.
       metadata:
