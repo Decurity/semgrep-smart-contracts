@@ -3,11 +3,17 @@ rules:
     id: proxy-storage-collision
     message: Proxy declares a state var that may override a storage slot of the implementation
     metadata:
+        category: security
+        technology:
+          - solidity
+        cwe: "CWE-787: Out-of-bounds Write"
+        confidence: HIGH
+        likelihood: MEDIUM
+        impact: HIGH
+        subcategory:
+            - vuln
         references:
         - https://blog.audius.co/article/audius-governance-takeover-post-mortem-7-23-22
-        category: security
-        tags:
-        - audius
     patterns:
         - pattern-either:
           - pattern: |

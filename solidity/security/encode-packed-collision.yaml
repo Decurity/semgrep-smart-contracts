@@ -3,11 +3,17 @@ rules:
   id: encode-packed-collision
   message: abi.encodePacked hash collision with variable length arguments in $F()
   metadata:
+    category: security
+    technology:
+      - solidity
+    cwe: "CWE-20: Improper Input Validation"
+    confidence: HIGH
+    likelihood: MEDIUM
+    impact: MEDIUM
+    subcategory:
+        - vuln
     references:
       - https://swcregistry.io/docs/SWC-133
-    category: security
-    tags:
-      - swc-133
   patterns:
     - pattern-either:
       - pattern-inside: |

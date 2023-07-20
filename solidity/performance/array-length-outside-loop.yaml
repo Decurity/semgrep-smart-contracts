@@ -6,9 +6,8 @@ rules:
       references:
         - https://github.com/byterocket/c4-common-issues/blob/main/0-Gas-Optimizations.md/#g002---cache-array-length-outside-of-loop
       category: performance
-      tags:
-        - array
-        - length
+      technology:
+        - solidity
     patterns:
       - pattern-either:
           - pattern-inside: |

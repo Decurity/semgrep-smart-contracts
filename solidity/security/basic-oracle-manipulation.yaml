@@ -3,6 +3,15 @@ rules:
     id: basic-oracle-manipulation
     message: Price oracle can be manipulated via flashloan
     metadata:
+        category: security
+        technology:
+            - solidity
+        cwe: "CWE-682: Incorrect Calculation"
+        confidence: LOW
+        likelihood: MEDIUM
+        impact: HIGH
+        subcategory:
+            - vuln
         references:
         - https://medium.com/oneringfinance/onering-finance-exploit-post-mortem-after-oshare-hack-602a529db99b
         - https://twitter.com/peckshield/status/1506090607059431427
@@ -11,10 +20,6 @@ rules:
         - https://ftmscan.com/address/0xc06826f52f29b34c5d8b2c61abf844cebcf78abf # OneRing
         - https://ftmscan.com/address/0x5CEB2b0308a7f21CcC0915DB29fa5095bEAdb48D # Deus
         - https://ftmscan.com/address/0x8129026c585bcfa530445a6267f9389057761a00 # Deus (again)
-        category: security
-        tags:
-        - onering-finance
-        - deus-finance
     patterns:
     - pattern-inside: |
         function $F(...) {

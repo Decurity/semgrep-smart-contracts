@@ -1,14 +1,19 @@
 rules:
     - id: balancer-readonly-reentrancy-getpooltokens
       message: $VAULT.getPoolTokens() call on a Balancer pool is not protected from the read-only reentrancy.
-      metadata: 
+      metadata:
+        category: security
+        technology:
+            - solidity
+        cwe: "CWE-841: Improper Enforcement of Behavioral Workflow"
+        confidence: HIGH
+        likelihood: MEDIUM
+        impact: HIGH
+        subcategory:
+            - vuln
         references: 
           - https://quillaudits.medium.com/decoding-sentiment-protocols-1-million-exploit-quillaudits-f36bee77d376
           - https://hackmd.io/@sentimentxyz/SJCySo1z2
-        category: security
-        tags:
-          - reentrancy
-          - balancer
       patterns:
         - pattern-either:
           - pattern: |

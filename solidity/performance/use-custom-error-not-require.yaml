@@ -8,9 +8,8 @@ rules:
           references:
           - https://blog.soliditylang.org/2021/04/21/custom-errors/
           category: performance
-          tags:
-          - require
-          - error
+          technology:
+          - solidity
       patterns:
             # todo: check pragma when semgrep supports it
             # - pattern-regex: pragma solidity .*0\.8\.([3-9]|\d\d+);

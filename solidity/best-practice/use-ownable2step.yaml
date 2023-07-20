@@ -5,8 +5,8 @@ rules:
         references:
           - https://docs.openzeppelin.com/contracts/4.x/api/access#Ownable2Step
           - https://www.rareskills.io/post/openzeppelin-ownable2step
-        tags:
-          - ownable
+        technology:
+          - solidity
       message: |
         By demanding that the receiver of the owner permissions actively accept via a contract call of its own, 
         `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred 

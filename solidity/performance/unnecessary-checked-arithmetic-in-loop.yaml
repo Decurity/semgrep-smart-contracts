@@ -7,10 +7,8 @@ rules:
         references:
           - https://github.com/byterocket/c4-common-issues/blob/main/0-Gas-Optimizations.md/#g011---unnecessary-checked-arithmetic-in-for-loop
         category: performance
-        tags:
-          - unchecked
-          - loop
-          - overflow
+        technology:
+          - solidity
       patterns:
       - pattern-either:
           - pattern-inside: |

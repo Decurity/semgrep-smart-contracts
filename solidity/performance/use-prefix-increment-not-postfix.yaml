@@ -7,8 +7,8 @@ rules:
         references:
           - https://github.com/byterocket/c4-common-issues/blob/main/0-Gas-Optimizations.md/#g012---use-prefix-increment-instead-of-postfix-increment-if-possible
         category: performance
-        tags:
-          - increment
+        technology:
+         - solidity
       patterns:
         - pattern: $VAR++
         - pattern-not-inside: |

@@ -2,12 +2,19 @@ rules:
   - id: delegatecall-to-arbitrary-address
     message: An attacker may perform delegatecall() to an arbitrary address.
     metadata:
+        category: security
+        technology:
+          - solidity
+        cwe: "CWE-20: Improper Input Validation"
+        confidence: LOW
+        likelihood: HIGH
+        impact: HIGH
+        subcategory:
+            - vuln
         references:
         - https://entethalliance.org/specs/ethtrust-sl/v1/#req-1-delegatecall
-        category: security
-        tags:
-          - ethtrust
-    languages: [solidity]
+    languages: 
+      - solidity
     severity: ERROR
     mode: taint
     pattern-sources:

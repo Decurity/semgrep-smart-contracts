@@ -1,0 +1,20 @@
+name: semgrep-rule-lints
+
+on:
+  pull_request:
+  push:
+    branches: [ master ]
+
+jobs:
+  semgrep:
+    runs-on: ubuntu-20.04
+    name: semgrep-rule-lints
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.9.2
+      - name: install semgrep
+        run: pip3 install semgrep
+      - name: lints for semgrep rules
+        run: semgrep --config "p/semgrep-rule-lints"

@@ -7,8 +7,8 @@ rules:
       references:
         - https://github.com/byterocket/c4-common-issues/blob/main/0-Gas-Optimizations.md/#g001---dont-initialize-variables-with-default-value
       category: performance
-      tags:
-        - default-value
+      technology:
+        - solidity
     patterns:
       - pattern-either:
           - pattern: $TYPE $VAR = 0
