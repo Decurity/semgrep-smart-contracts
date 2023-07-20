@@ -3,12 +3,18 @@ rules:
   id: sense-missing-oracle-access-control
   message: Oracle update is not restricted in $F()
   metadata:
+    category: security
+    technology:
+        - solidity
+    cwe: "CWE-284: Improper Access Control"
+    confidence: MEDIUM
+    likelihood: HIGH
+    impact: HIGH
+    subcategory:
+        - vuln
     author: https://twitter.com/ArbazKiraak
     references:
       - https://medium.com/immunefi/sense-finance-access-control-issue-bugfix-review-32e0c806b1a0
-    category: security
-    tags:
-      - sense-finance
   patterns:
     - pattern-either:
         - pattern-inside: |

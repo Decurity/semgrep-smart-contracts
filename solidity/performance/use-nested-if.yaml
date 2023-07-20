@@ -7,8 +7,8 @@ rules:
         references:
           - https://code4rena.com/reports/2023-01-biconomy#g-18-use-nested-if-and-avoid-multiple-check-combinations
         category: performance
-        tags:
-          - if
+        technology:
+          - solidity
       patterns:
         - pattern: |
             if (<... $X && $Y ...>) {

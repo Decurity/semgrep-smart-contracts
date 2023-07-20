@@ -1,13 +1,18 @@
 rules:
   - id: balancer-readonly-reentrancy-getrate
     message: $VAR.getRate() call on a Balancer pool is not protected from the read-only reentrancy.
-    metadata: 
+    metadata:
+      category: security
+      technology:
+          - solidity
+      cwe: "CWE-841: Improper Enforcement of Behavioral Workflow"
+      confidence: HIGH
+      likelihood: MEDIUM
+      impact: HIGH
+      subcategory:
+          - vuln
       references: 
         - https://forum.balancer.fi/t/reentrancy-vulnerability-scope-expanded/4345
-      category: security
-      tags:
-        - reentrancy
-        - balancer
     patterns:
       - pattern: |
           function $F(...) {

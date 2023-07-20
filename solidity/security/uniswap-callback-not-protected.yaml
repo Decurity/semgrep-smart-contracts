@@ -4,9 +4,16 @@ rules:
     message: Uniswap callback is not protected
     metadata:
         category: security
-        tags:
-        - uniswap
-        - mev
+        technology:
+            - solidity
+        cwe: "CWE-284: Improper Access Control"
+        confidence: LOW
+        likelihood: MEDIUM
+        impact: HIGH
+        subcategory:
+            - vuln
+        references:
+            - https://docs.uniswap.org/contracts/v3/guides/flash-integrations/flash-callback
     patterns:
         - pattern: |
             function $CALLBACK(...) { ... }

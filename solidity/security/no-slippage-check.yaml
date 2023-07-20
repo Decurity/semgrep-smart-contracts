@@ -2,11 +2,17 @@ rules:
   - id: no-slippage-check
     message: No slippage check in a Uniswap v2/v3 trade
     metadata:
+      category: security
+      technology:
+        - solidity
+      cwe: "CWE-682: Incorrect Calculation"
+      confidence: MEDIUM
+      likelihood: HIGH
+      impact: MEDIUM
+      subcategory:
+          - vuln
       references:
         - https://uniswapv3book.com/docs/milestone_3/slippage-protection/
-      category: security
-      tags:
-        - uniswap
     patterns:
       - pattern-either:
           - pattern: $X.swapExactTokensForTokens($A, $LIMIT, $B, $C, $D)

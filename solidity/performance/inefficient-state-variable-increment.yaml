@@ -7,8 +7,8 @@ rules:
           references:
           - https://gist.github.com/IllIllI000/cbbfb267425b898e5be734d4008d4fe8
           category: performance
-          tags:
-          - plus-equal
+          technology:
+          - solidity
       patterns:
         - pattern-either:
           - pattern: |

@@ -3,9 +3,10 @@ rules:
     message: Replace state variable reads and writes within loops with local variable reads and writes.
     metadata:
       category: performance
-      tags:
-        - variables
-        - loops
+      technology:
+        - solidity
+      references:
+        - https://github.com/devanshbatham/Solidity-Gas-Optimization-Tips#10--replace-state-variable-reads-and-writes-within-loops-with-local-variable-reads-and-writes
     patterns:
       - pattern-either:
           - pattern-inside: |

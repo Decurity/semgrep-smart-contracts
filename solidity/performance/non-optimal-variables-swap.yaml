@@ -5,8 +5,10 @@ rules:
     severity: INFO
     metadata:
       category: performance
-      tags:
-        - variables
+      technology:
+        - solidity
+      references:
+        - https://dev.to/oliverjumpertz/solidity-quick-tip-efficiently-swap-two-variables-1f8i
     patterns:
       - pattern: |
           $TMP = $VAR1;

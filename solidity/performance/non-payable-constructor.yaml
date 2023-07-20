@@ -5,9 +5,8 @@ rules:
       references:
         - https://twitter.com/0xAsm0d3us/status/1518960704271056897
       category: performance
-      tags:
-        - constructor
-        - payable
+      technology:
+        - solidity
     languages:
       - solidity
     severity: INFO

@@ -5,10 +5,8 @@ rules:
         category: best-practice
         references:
           - https://blog.soliditylang.org/2021/12/20/solidity-0.8.11-release-announcement/
-        tags:
-          - abi
-          - call
-          - selector
+        technology:
+          - solidity
       patterns:
         - pattern: |
             abi.encodeWithSelector(...);

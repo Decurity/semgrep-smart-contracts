@@ -3,10 +3,14 @@ rules:
     message: blockhash(block.number) and blockhash(block.number + N) always returns 0.
     metadata:
       category: security
-      tags:
-        - blockhash
-        - block.number
-        - block.blockhash
+      technology:
+        - solidity
+      cwe: "CWE-341: Predictable from Observable State"
+      confidence: HIGH
+      likelihood: LOW
+      impact: MEDIUM
+      subcategory:
+          - vuln
       references:
         - https://blog.positive.com/predicting-random-numbers-in-ethereum-smart-contracts-e5358c6b8620
     patterns:

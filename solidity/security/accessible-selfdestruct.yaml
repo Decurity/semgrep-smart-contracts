@@ -6,8 +6,14 @@ rules:
     message: Contract can be destructed by anyone in $FUNC
     metadata:
       category: security
-      tags:
-        - access-control
+      technology:
+        - solidity
+      cwe: "CWE-284: Improper Access Control"
+      confidence: LOW
+      likelihood: HIGH
+      impact: HIGH
+      subcategory:
+        - vuln
       references: 
         - https://www.parity.io/blog/a-postmortem-on-the-parity-multi-sig-library-self-destruct/
     mode: taint

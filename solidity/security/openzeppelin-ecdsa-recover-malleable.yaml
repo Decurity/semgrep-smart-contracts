@@ -3,13 +3,17 @@ rules:
     id: openzeppelin-ecdsa-recover-malleable
     message: Potential signature malleability in $F
     metadata:
+      category: security
+      technology:
+        - solidity
+      cwe: "CWE-347: Improper Verification of Cryptographic Signature"
+      confidence: LOW
+      likelihood: MEDIUM
+      impact: MEDIUM
+      subcategory:
+          - vuln
       references:
          - https://github.com/advisories/GHSA-4h98-2769-gh6h
-      category: security
-      tags:
-         - swc-117
-         - cve-2022-35961
-         - openzeppelin
     pattern-either:
     - pattern: |
          function $F(..., bytes $Y, ...) {

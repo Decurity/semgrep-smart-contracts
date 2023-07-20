@@ -7,8 +7,8 @@ rules:
         references:
           - https://code4rena.com/reports/2023-01-ondo#g-15-splitting-require-statements-that-use--saves-gas---saves-8-gas-per-
         category: performance
-        tags:
-          - require
+        technology:
+          - solidity
       patterns:
         - pattern: |
             require (<... $X && $Y ...>, ...);
