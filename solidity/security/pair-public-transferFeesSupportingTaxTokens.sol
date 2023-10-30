@@ -277,6 +277,7 @@ contract LeetSwapV2Pair is ILeetSwapV2Pair {
     }
 
     // Used to transfer fees when calling _update[01]
+    //ruleid: transferFeesSupportingTaxTokens-public-transfer
     function _transferFeesSupportingTaxTokens(address token, uint256 amount)
         public
         returns (uint256)

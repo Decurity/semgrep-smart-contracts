@@ -91,6 +91,7 @@ contract FloorStaking is FloorAccessControlled {
         bool _rebasing,
         bool _claim
     ) external returns (uint256) {
+        //ruleid: rebase-order-bug
         FLOOR.safeTransferFrom(msg.sender, address(this), _amount);
         _amount = _amount.add(rebase()); // add bounty if rebase occurred
         if (_claim && warmupPeriod == 0) {
@@ -114,105 +115,6 @@ contract FloorStaking is FloorAccessControlled {
         }
     }
 
-    /**
-     * @notice retrieve stake from warmup
-     * @param _to address
-     * @param _rebasing bool
-     * @return uint
-     */
-    function claim(address _to, bool _rebasing) public returns (uint256) {
-        Claim memory info = warmupInfo[_to];
-
-        if (!info.lock) {
-            require(_to == msg.sender, "External claims for account are locked");
-        }
-
-        if (epoch.number >= info.expiry && info.expiry != 0) {
-            delete warmupInfo[_to];
-
-            gonsInWarmup = gonsInWarmup.sub(info.gons);
-
-            return _send(_to, sFLOOR.balanceForGons(info.gons), _rebasing);
-        }
-        return 0;
-    }
-
-    /**
-     * @notice forfeit stake and retrieve FLOOR
-     * @return uint
-     */
-    function forfeit() external returns (uint256) {
-        Claim memory info = warmupInfo[msg.sender];
-        delete warmupInfo[msg.sender];
-
-        gonsInWarmup = gonsInWarmup.sub(info.gons);
-
-        FLOOR.safeTransfer(msg.sender, info.deposit);
-
-        return info.deposit;
-    }
-
-    /**
-     * @notice prevent new deposits or claims from ext. address (protection from malicious activity)
-     */
-    function toggleLock() external {
-        warmupInfo[msg.sender].lock = !warmupInfo[msg.sender].lock;
-    }
-
-    /**
-     * @notice redeem sFLOOR for FLOORs
-     * @param _to address
-     * @param _amount uint
-     * @param _trigger bool
-     * @param _rebasing bool
-     * @return amount_ uint
-     */
-    function unstake(
-        address _to,
-        uint256 _amount,
-        bool _trigger,
-        bool _rebasing
-    ) external returns (uint256 amount_) {
-        amount_ = _amount;
-        uint256 bounty;
-        if (_trigger) {
-            bounty = rebase();
-        }
-        if (_rebasing) {
-            sFLOOR.safeTransferFrom(msg.sender, address(this), _amount);
-            amount_ = amount_.add(bounty);
-        } else {
-            gFLOOR.burn(msg.sender, _amount); // amount was given in gFLOOR terms
-            amount_ = gFLOOR.balanceFrom(amount_).add(bounty); // convert amount to FLOOR terms & add bounty
-        }
-
-        require(amount_ <= FLOOR.balanceOf(address(this)), "Insufficient FLOOR balance in contract");
-        FLOOR.safeTransfer(_to, amount_);
-    }
-
-    /**
-     * @notice convert _amount sFLOOR into gBalance_ gFLOOR
-     * @param _to address
-     * @param _amount uint
-     * @return gBalance_ uint
-     */
-    function wrap(address _to, uint256 _amount) external returns (uint256 gBalance_) {
-        sFLOOR.safeTransferFrom(msg.sender, address(this), _amount);
-        gBalance_ = gFLOOR.balanceTo(_amount);
-        gFLOOR.mint(_to, gBalance_);
-    }
-
-    /**
-     * @notice convert _amount gFLOOR into sBalance_ sFLOOR
-     * @param _to address
-     * @param _amount uint
-     * @return sBalance_ uint
-     */
-    function unwrap(address _to, uint256 _amount) external returns (uint256 sBalance_) {
-        gFLOOR.burn(msg.sender, _amount);
-        sBalance_ = gFLOOR.balanceFrom(_amount);
-        sFLOOR.safeTransfer(_to, sBalance_);
-    }
 
     /**
      * @notice trigger rebase if epoch over
@@ -241,69 +143,295 @@ contract FloorStaking is FloorAccessControlled {
         return bounty;
     }
 
-    /* ========== INTERNAL FUNCTIONS ========== */
+}
 
-    /**
-     * @notice send staker their amount as sFLOOR or gFLOOR
-     * @param _to address
-     * @param _amount uint
-     * @param _rebasing bool
-     */
-    function _send(
-        address _to,
-        uint256 _amount,
-        bool _rebasing
-    ) internal returns (uint256) {
-        if (_rebasing) {
-            sFLOOR.safeTransfer(_to, _amount); // send as sFLOOR (equal unit as FLOOR)
-            return _amount;
-        } else {
-            gFLOOR.mint(_to, gFLOOR.balanceTo(_amount)); // send as gFLOOR (convert units from FLOOR)
-            return gFLOOR.balanceTo(_amount);
+
+contract QWAStaking is Ownable {
+
+    /// DATA STRUCTURES ///
+
+    struct Epoch {
+        uint256 length; // in seconds
+        uint256 number; // since inception
+        uint256 end; // timestamp
+        uint256 distribute; // amount
+    }
+
+    /// STATE VARIABLES ///
+
+    /// @notice QWA address
+    IERC20 public immutable QWA;
+    /// @notice sQWA address
+    IsQWA public immutable sQWA;
+
+    /// @notice Current epoch details
+    Epoch public epoch;
+
+    /// @notice Distributor address
+    IDistributor public distributor;
+
+    /// CONSTRUCTOR ///
+
+    /// @param _QWA                   Address of QWA
+    /// @param _sQWA                  Address of sQWA
+    /// @param _epochLength            Epoch length
+    /// @param _secondsTillFirstEpoch  Seconds till first epoch starts
+    constructor(
+        address _QWA,
+        address _sQWA,
+        uint256 _epochLength,
+        uint256 _secondsTillFirstEpoch
+    ) {
+        QWA = IERC20(_QWA);
+        sQWA = IsQWA(_sQWA);
+
+        epoch = Epoch({
+            length: _epochLength,
+            number: 0,
+            end: block.timestamp + _secondsTillFirstEpoch,
+            distribute: 0
+        });
+    }
+
+    /// MUTATIVE FUNCTIONS ///
+
+    /// @notice stake QWA
+    /// @param _to address
+    /// @param _amount uint
+    function stake(address _to, uint256 _amount) external {
+        //ok: rebase-order-bug
+        rebase();
+        QWA.transferFrom(msg.sender, address(this), _amount);
+        sQWA.transfer(_to, _amount);
+    }
+
+    /// @notice redeem sQWA for QWA
+    /// @param _to address
+    /// @param _amount uint
+    function unstake(address _to, uint256 _amount, bool _rebase) external {
+        if (_rebase) rebase();
+        sQWA.transferFrom(msg.sender, address(this), _amount);
+        require(
+            _amount <= QWA.balanceOf(address(this)),
+            "Insufficient QWA balance in contract"
+        );
+        QWA.transfer(_to, _amount);
+    }
+
+    ///@notice Trigger rebase if epoch over
+    function rebase() public {
+        if (epoch.end <= block.timestamp) {
+            sQWA.rebase(epoch.distribute, epoch.number);
+
+            epoch.end = epoch.end + epoch.length;
+            epoch.number++;
+
+            if (address(distributor) != address(0)) {
+                distributor.distribute();
+            }
+
+            uint256 balance = QWA.balanceOf(address(this));
+            uint256 staked = sQWA.circulatingSupply();
+
+            if (balance <= staked) {
+                epoch.distribute = 0;
+            } else {
+                epoch.distribute = balance - staked;
+            }
         }
     }
+}
 
-    /* ========== VIEW FUNCTIONS ========== */
+contract HATEStaking is Ownable{
+    /* ========== EVENTS ========== */
+
+    event DistributorSet(address distributor);
+
+    /* ========== DATA STRUCTURES ========== */
+
+    struct Epoch {
+        uint256 length; // in seconds
+        uint256 number; // since inception
+        uint256 end; // timestamp
+        uint256 distribute; // amount
+    }
+
+    struct Claim {
+        uint256 deposit; // if forfeiting
+        uint256 gons; // staked balance
+        uint256 expiry; // end of warmup period
+        bool lock; // prevents malicious delays for claim
+    }
+
+    /* ========== STATE VARIABLES ========== */
+
+    IERC20 public immutable HATE;
+    IsHATE public immutable sHATE;
+
+    Epoch public epoch;
+
+    IDistributor public distributor;
+
+    /* ========== CONSTRUCTOR ========== */
+
+    constructor(address _HATE, address _sHATE, uint256 _epochLength) {
+        require(_HATE != address(0), "Zero address: HATE");
+        HATE = IERC20(_HATE);
+        require(_sHATE != address(0), "Zero address: sHATE");
+        sHATE = IsHATE(_sHATE);
+
+        epoch = Epoch({length: _epochLength, number: 0, end: block.timestamp + _epochLength, distribute: 0});
+    }
+
+    /* ========== MUTATIVE FUNCTIONS ========== */
 
     /**
-     * @notice returns the sFLOOR index, which tracks rebase growth
-     * @return uint
+     * @notice stake HATE
+     * @param _to address
+     * @param _amount uint
      */
-    function index() public view returns (uint256) {
-        return sFLOOR.index();
+    function stake(address _to, uint256 _amount) external {
+        //ruleid: rebase-order-bug
+        HATE.transferFrom(msg.sender, address(this), _amount);
+        rebase();
+        sHATE.transfer(_to, _amount);
     }
 
     /**
-     * @notice total supply in warmup
+     * @notice redeem sHATE for HATEs
+     * @param _to address
+     * @param _amount uint
      */
-    function supplyInWarmup() public view returns (uint256) {
-        return sFLOOR.balanceForGons(gonsInWarmup);
+    function unstake(address _to, uint256 _amount, bool _rebase) external {
+        if (_rebase) rebase();
+        sHATE.transferFrom(msg.sender, address(this), _amount);
+        require(_amount <= HATE.balanceOf(address(this)), "Insufficient HATE balance in contract");
+        HATE.transfer(_to, _amount);
     }
 
     /**
-     * @notice seconds until the next epoch begins
+     * @notice trigger rebase if epoch over
      */
-    function secondsToNextEpoch() external view returns (uint256) {
-        return epoch.end.sub(block.timestamp);
+    function rebase() public {
+        if (epoch.end <= block.timestamp) {
+            sHATE.rebase(epoch.distribute, epoch.number);
+
+            epoch.end = epoch.end + epoch.length;
+            epoch.number++;
+
+            if (address(distributor) != address(0)) {
+                distributor.distribute();
+            }
+
+            uint256 balance = HATE.balanceOf(address(this));
+            uint256 staked = sHATE.circulatingSupply();
+
+            if (balance <= staked) {
+                epoch.distribute = 0;
+            } else {
+                epoch.distribute = balance - staked;
+            }
+        }
+    }
+}
+
+contract Staking is Ownable {
+    /// EVENTS ///
+
+    event DistributorSet(address distributor);
+
+    /// DATA STRUCTURES ///
+
+    struct Epoch {
+        uint256 length; // in seconds
+        uint256 number; // since inception
+        uint256 end; // timestamp
+        uint256 distribute; // amount
     }
 
-    /* ========== MANAGERIAL FUNCTIONS ========== */
+    /// STATE VARIABLES ///
 
-    /**
-     * @notice sets the contract address for LP staking
-     * @param _distributor address
-     */
-    function setDistributor(address _distributor) external onlyGovernor {
-        distributor = IDistributor(_distributor);
-        emit DistributorSet(_distributor);
+    /// @notice TOKEN address
+    IERC20 public immutable TOKEN;
+    /// @notice sTOKEN address
+    IsStakingProtocol public immutable sTOKEN;
+
+    /// @notice Current epoch details
+    Epoch public epoch;
+
+    /// @notice Distributor address
+    IDistributor public distributor;
+
+    /// CONSTRUCTOR ///
+
+    /// @param _TOKEN                   Address of TOKEN
+    /// @param _sTOKEN                  Address of sTOKEN
+    /// @param _epochLength            Epoch length
+    /// @param _secondsTillFirstEpoch  Seconds till first epoch starts
+    constructor(
+        address _TOKEN,
+        address _sTOKEN,
+        uint256 _epochLength,
+        uint256 _secondsTillFirstEpoch
+    ) {
+        require(_TOKEN != address(0), "Zero address: TOKEN");
+        TOKEN = IERC20(_TOKEN);
+        require(_sTOKEN != address(0), "Zero address");
+        sTOKEN = IsStakingProtocol(_sTOKEN);
+
+        epoch = Epoch({
+            length: _epochLength,
+            number: 0,
+            end: block.timestamp + _secondsTillFirstEpoch,
+            distribute: 0
+        });
     }
 
-    /**
-     * @notice set warmup period for new stakers
-     * @param _warmupPeriod uint
-     */
-    function setWarmupLength(uint256 _warmupPeriod) external onlyGovernor {
-        warmupPeriod = _warmupPeriod;
-        emit WarmupSet(_warmupPeriod);
+    /// MUTATIVE FUNCTIONS ///
+
+    /// @notice stake TOKEN
+    /// @param _to address
+    /// @param _amount uint
+    function stake(address _to, uint256 _amount) external {
+        //ok: rebase-order-bug
+        rebase();
+        TOKEN.transferFrom(msg.sender, address(this), _amount);
+        sTOKEN.transfer(_to, _amount);
+    }
+
+    /// @notice redeem sTOKEN for TOKEN
+    /// @param _to address
+    /// @param _amount uint
+    function unstake(address _to, uint256 _amount, bool _rebase) external {
+        if (_rebase) rebase();
+        sTOKEN.transferFrom(msg.sender, address(this), _amount);
+        require(
+            _amount <= TOKEN.balanceOf(address(this)),
+            "Insufficient TOKEN balance in contract"
+        );
+        TOKEN.transfer(_to, _amount);
+    }
+
+    ///@notice Trigger rebase if epoch over
+    function rebase() public {
+        if (epoch.end <= block.timestamp) {
+            sTOKEN.rebase(epoch.distribute, epoch.number);
+
+            epoch.end = epoch.end + epoch.length;
+            epoch.number++;
+
+            if (address(distributor) != address(0)) {
+                distributor.distribute();
+            }
+
+            uint256 balance = TOKEN.balanceOf(address(this));
+            uint256 staked = sTOKEN.circulatingSupply();
+
+            if (balance <= staked) {
+                epoch.distribute = 0;
+            } else {
+                epoch.distribute = balance - staked;
+            }
+        }
     }
 }
