@@ -91,7 +91,7 @@ contract FloorStaking is FloorAccessControlled {
         bool _rebasing,
         bool _claim
     ) external returns (uint256) {
-        //ruleid: rebase-order-bug
+        //ruleid: olympus-dao-staking-incorrect-call-order
         FLOOR.safeTransferFrom(msg.sender, address(this), _amount);
         _amount = _amount.add(rebase()); // add bounty if rebase occurred
         if (_claim && warmupPeriod == 0) {
@@ -291,7 +291,7 @@ contract HATEStaking is Ownable{
      * @param _amount uint
      */
     function stake(address _to, uint256 _amount) external {
-        //ruleid: rebase-order-bug
+        //ruleid: olympus-dao-staking-incorrect-call-order
         HATE.transferFrom(msg.sender, address(this), _amount);
         rebase();
         sHATE.transfer(_to, _amount);

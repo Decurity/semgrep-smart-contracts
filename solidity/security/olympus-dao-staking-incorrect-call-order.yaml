@@ -1,7 +1,7 @@
 rules:
  -
-    id: rebase-order-bug
-    message: Bug is in the order of calling the transferFrom() and rebase() functions in Olympus DAO forks
+    id: olympus-dao-staking-incorrect-call-order
+    message: The order of calling the transferFrom() and rebase() functions is incorrect in Olympus DAO forks
     metadata:
         category: security
         technology:

@@ -1,6 +1,6 @@
 rules:
  -
-    id: transferFeesSupportingTaxTokens-public-transfer
+    id: public-transfer-fees-supporting-tax-tokens
     message: public _transferFeesSupportingTaxTokens() without any modificators 
     metadata:
         category: security
