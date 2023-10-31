@@ -199,7 +199,7 @@ contract QWAStaking is Ownable {
     /// @param _to address
     /// @param _amount uint
     function stake(address _to, uint256 _amount) external {
-        //ok: rebase-order-bug
+        //ok: olympus-dao-staking-incorrect-call-order
         rebase();
         QWA.transferFrom(msg.sender, address(this), _amount);
         sQWA.transfer(_to, _amount);
@@ -393,7 +393,7 @@ contract Staking is Ownable {
     /// @param _to address
     /// @param _amount uint
     function stake(address _to, uint256 _amount) external {
-        //ok: rebase-order-bug
+        //ok: olympus-dao-staking-incorrect-call-order
         rebase();
         TOKEN.transferFrom(msg.sender, address(this), _amount);
         sTOKEN.transfer(_to, _amount);
