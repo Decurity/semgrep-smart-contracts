@@ -1,0 +1,29 @@
+rules:
+ -
+    id: public-transfer-fees-supporting-tax-tokens
+    message: public _transferFeesSupportingTaxTokens() without any modificators 
+    metadata:
+        category: security
+        technology:
+          - solidity
+        cwe: "CWE-284: Improper Access Control"
+        confidence: LOW
+        likelihood: HIGH
+        impact: HIGH
+        subcategory:
+            - vuln
+        references:
+        - https://twitter.com/BlockSecTeam/status/1686217464051539968
+    patterns:
+      - pattern-either:
+         - pattern: |
+            function _transferFeesSupportingTaxTokens(...) public { ... }
+         - pattern: |
+            function _transferFeesSupportingTaxTokens(...) external { ... }
+      - pattern-not: |
+         function _transfer(...) $M { ... }
+      - pattern-not: |
+         function _transfer(...) $M(...) { ... }
+    languages: 
+    - solidity
+    severity: WARNING

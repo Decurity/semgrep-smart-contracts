@@ -1,0 +1,34 @@
+rules:
+ -
+    id: olympus-dao-staking-incorrect-call-order
+    message: The order of calling the transferFrom() and rebase() functions is incorrect in Olympus DAO forks
+    metadata:
+        category: security
+        technology:
+          - solidity
+        cwe: "CWE-841: Improper Enforcement of Behavioral Workflow"
+        confidence: MEDIUM
+        likelihood: LOW
+        impact: HIGH
+        subcategory:
+            - vuln
+        references:
+        - https://medium.com/floordao/floor-post-mortem-incident-summary-september-5-2023-e054a2d5afa4
+        - https://github.com/OlympusDAO/olympus-contracts/issues/172
+        - https://twitter.com/DecurityHQ/status/1699384904218202618
+    patterns:
+      - pattern-inside: |
+         function stake(...) {
+            ...
+         }
+      - pattern: |
+            $TOKEN.$TRANSFERFROM(...);
+            ...
+            rebase(...);
+      - metavariable-regex:
+         metavariable: $TRANSFERFROM
+         regex: (transferFrom|safeTransferFrom)
+
+    languages: 
+    - solidity
+    severity: WARNING
