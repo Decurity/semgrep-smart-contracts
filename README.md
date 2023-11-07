@@ -119,6 +119,8 @@ balancer-readonly-reentrancy-getpooltokens | Balancer | getPoolTokens() call on 
 curve-readonly-reentrancy | Curve | get_virtual_price() call on a Curve pool is not protected from the read-only reentrancy.
 public-transfer-fees-supporting-tax-tokens | LeetSwap | public _transferFeesSupportingTaxTokens() without any modificators 
 olympus-dao-staking-incorrect-call-order | OlympusDAO, FloorDAO, Heavens Gate, Jump Farm, QuantumWN | The order of calling the transferFrom() and rebase() functions is incorrect in Olympus DAO forks
+redeemFresh-redeemAmount-unsafe-calculation | Hundred Finance, Onyx Finance | In compound forks if there is a market with totalSupply = 0 and collateralFactor != 0 a division 
+error attack is possible if redeemAmount is taken from the arguments of redeemFresh()
 
 ## Gas Optimization Rules
 
