@@ -1,0 +1,30 @@
+rules:
+ -
+    id: compound-precision-loss
+    message: In Compound forks if there is a market with totalSupply = 0 and collateralFactor != 0 a precision loss attack is possible if redeemAmount is taken from the arguments of redeemFresh()
+    metadata:
+        category: security
+        technology:
+          - solidity
+        cwe: "CWE-1339: Insufficient Precision or Accuracy of a Real Number"
+        confidence: HIGH
+        likelihood: HIGH
+        impact: HIGH
+        subcategory:
+            - vuln
+        references:
+        - https://twitter.com/DecurityHQ/status/1719657969925677161
+        - https://defimon.xyz/attack/mainnet/0xf7c21600452939a81b599017ee24ee0dfd92aaaccd0a55d02819a7658a6ef635
+        - https://blog.hundred.finance/15-04-23-hundred-finance-hack-post-mortem-d895b618cf33
+        
+    patterns:
+      - pattern-inside: |
+         function redeemFresh(...) internal {
+            ...
+         }
+      - pattern-either:
+          - pattern: redeemAmount = redeemAmountIn;
+          - pattern: $VARS.redeemAmount = redeemAmountIn;
+    languages: 
+    - solidity
+    severity: ERROR
