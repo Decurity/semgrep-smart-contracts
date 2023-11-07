@@ -1,8 +1,7 @@
 rules:
  -
     id: redeemFresh-redeemAmount-unsafe-calculation
-    message: In compound forks if there is a market with totalSupply = 0 and collateralFactor != 0 a division error attack is possible if redeemAmount is taken from the 
-arguments of redeemFresh()
+    message: In compound forks if there is a market with totalSupply = 0 and collateralFactor != 0 a division error attack is possible if redeemAmount is taken from the arguments of redeemFresh()
     metadata:
         category: security
         technology:
@@ -27,8 +26,6 @@ arguments of redeemFresh()
       - pattern-either:
           - pattern: redeemAmount = redeemAmountIn;
           - pattern: vars.redeemAmount = redeemAmountIn;
-          
-
     languages: 
     - solidity
     severity: WARNING
