@@ -46,7 +46,7 @@ contract CERC20HundredFinance {
             if (vars.mathErr != MathError.NO_ERROR) {
                 return failOpaque(Error.MATH_ERROR, FailureInfo.REDEEM_EXCHANGE_AMOUNT_CALCULATION_FAILED, uint(vars.mathErr));
             }
-            //ruleid: redeemFresh-redeemAmount-unsafe-calculation
+            //ruleid: compound-precision-loss
             vars.redeemAmount = redeemAmountIn;
         }
 
@@ -139,7 +139,7 @@ contract CERC20TwisterFinance {
             redeemTokens = div_(redeemAmountIn, exchangeRate);
             // redeemAmount = redeemAmountIn;
             // Fix for division attack
-            //ok: redeemFresh-redeemAmount-unsafe-calculation
+            //ok: compound-precision-loss
             redeemAmount = mul_ScalarTruncate(exchangeRate, redeemTokens);
         }
 
@@ -241,7 +241,7 @@ contract CERC20OnyxFinance {
             if (vars.mathErr != MathError.NO_ERROR) {
                 return failOpaque(Error.MATH_ERROR, FailureInfo.REDEEM_EXCHANGE_AMOUNT_CALCULATION_FAILED, uint(vars.mathErr));
             }
-            //ruleid: redeemFresh-redeemAmount-unsafe-calculation
+            //ruleid: compound-precision-loss
             vars.redeemAmount = redeemAmountIn;
         }
 

@@ -1,15 +1,15 @@
 rules:
  -
-    id: redeemFresh-redeemAmount-unsafe-calculation
-    message: In compound forks if there is a market with totalSupply = 0 and collateralFactor != 0 a division error attack is possible if redeemAmount is taken from the arguments of redeemFresh()
+    id: compound-precision-loss
+    message: In Compound forks if there is a market with totalSupply = 0 and collateralFactor != 0 a precision loss attack is possible if redeemAmount is taken from the arguments of redeemFresh()
     metadata:
         category: security
         technology:
           - solidity
-        cwe: "CWE-841: Improper Enforcement of Behavioral Workflow"
-        confidence: LOW
+        cwe: "CWE-1339: Insufficient Precision or Accuracy of a Real Number"
+        confidence: HIGH
         likelihood: HIGH
-        impact: MEDIUM
+        impact: HIGH
         subcategory:
             - vuln
         references:
@@ -19,13 +19,12 @@ rules:
         
     patterns:
       - pattern-inside: |
-         function redeemFresh(address payable redeemer, uint redeemTokensIn, uint redeemAmountIn) internal {
+         function redeemFresh(...) internal {
             ...
          }
-         
       - pattern-either:
           - pattern: redeemAmount = redeemAmountIn;
-          - pattern: vars.redeemAmount = redeemAmountIn;
+          - pattern: $VARS.redeemAmount = redeemAmountIn;
     languages: 
     - solidity
-    severity: WARNING
+    severity: ERROR
