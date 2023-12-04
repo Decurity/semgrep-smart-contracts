@@ -1,6 +1,6 @@
 # Semgrep rules for smart contracts
 
-In this repository you can find [semgrep](https://semgrep.dev/) rules that look for patterns of vulnerabilities in smart contracts based on actual DeFi exploits as well as gas optimization rules that can be used as a part of the CI pipeline.
+In this repository you can find [semgrep](https://semgrep.dev/) rules that look for patterns of vulnerabilities in smart contracts based on actual DeFi exploits as well as gas optimization rules that can be used as a part of the CI pipeline. The rules are part of the semgrep registry under [p/smart-contracts](https://semgrep.dev/p/smart-contracts).
 
 ## Disclaimer
 
@@ -8,33 +8,24 @@ Currently semgrep supports [Solidity](https://semgrep.dev/docs/language-support/
 
 ## Scanning
 
-semgrep + [smart-contract-sanctuary](https://github.com/tintinweb/smart-contract-sanctuary) = ❤️
+1) By cloning the repository:
 
-```shell
-$ semgrep --config solidity/security ~/smart-contract-sanctuary-arbitrum/contracts/mainnet
-```
+  ```shell
+  $ semgrep --config solidity/security path/to/your/project
+  ```
 
-## Testing
+2) By using [semgrep registry](https://semgrep.dev/r):
 
-Each rule is accompanied by an actual vulnerable source code that was targeted by an exploit. Vulnerable lines are marked with `// ruleid: ...`
+  ```shell
+  $ semgrep --config p/smart-contracts path/to/your/project
+  ```
 
-In case a rule is not yet supported by semgrep, you will find `// todoruleid: ...`
-
-Run tests: 
-
-```shell
-$ semgrep --test solidity
-```
-
-Validate rules: 
-
-```shell
-$ semgrep --validate --config solidity
-```
-
-## Using in Github Actions
+3) In your CI:
 
 Create `run-semgrep.yaml` in `.github/workflows` with the following contents:
+<details>
+  <summary>run-semgrep.yaml</summary>
+  
 ```yaml
 # Name of this GitHub Actions workflow.
 name: Run Semgrep
@@ -79,6 +70,27 @@ jobs:
           sarif_file: semgrep.sarif
         if: always()
 ```
+</details>
+
+## Testing
+
+Each rule is accompanied by an actual vulnerable source code that was targeted by an exploit. Vulnerable lines are marked with `// ruleid: ...`
+
+In case a rule is not yet supported by semgrep, you will find `// todoruleid: ...`
+
+Run tests: 
+
+```shell
+$ semgrep --test solidity
+```
+
+Validate rules: 
+
+```shell
+$ semgrep --validate --config solidity
+```
+
+Feel free to submit any issues with the precision and quality of the rules!
 
 ## Security Rules
 
