@@ -132,6 +132,7 @@ curve-readonly-reentrancy | Curve | get_virtual_price() call on a Curve pool is 
 public-transfer-fees-supporting-tax-tokens | LeetSwap | public _transferFeesSupportingTaxTokens() without any modificators 
 olympus-dao-staking-incorrect-call-order | OlympusDAO, FloorDAO, Heavens Gate, Jump Farm, QuantumWN | The order of calling the transferFrom() and rebase() functions is incorrect in Olympus DAO forks
 compound-precision-loss | Hundred Finance, Midas Finance, Onyx Protocol | In Compound forks if there is a market with totalSupply = 0 and collateralFactor != 0 a precision loss attack is possible if redeemAmount is taken from the arguments of redeemFresh()
+thirdweb-vulnerability | Swopple Token, TIME Token, NAME Token, HXA Token | In contracts that support Multicall and ERC2771Context an Arbitrary Address Spoofing attack is possible
 
 ## Gas Optimization Rules
 
