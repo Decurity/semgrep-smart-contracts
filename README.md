@@ -133,6 +133,7 @@ public-transfer-fees-supporting-tax-tokens | LeetSwap | public _transferFeesSupp
 olympus-dao-staking-incorrect-call-order | OlympusDAO, FloorDAO, Heavens Gate, Jump Farm, QuantumWN | The order of calling the transferFrom() and rebase() functions is incorrect in Olympus DAO forks
 compound-precision-loss | Hundred Finance, Midas Finance, Onyx Protocol | In Compound forks if there is a market with totalSupply = 0 and collateralFactor != 0 a precision loss attack is possible if redeemAmount is taken from the arguments of redeemFresh()
 thirdweb-vulnerability | Swopple Token, TIME Token, NAME Token, HXA Token | In contracts that support Multicall and ERC2771Context an Arbitrary Address Spoofing attack is possible
+exact-balance-check | Generic | Testing the balance of an account as a basis for some action has risks associated with unexpected receipt of ether or another token, including tokens deliberately transfered to cause such tests to fail, as an MEV attack.
 
 ## Gas Optimization Rules
 
