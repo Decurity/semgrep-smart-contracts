@@ -1,0 +1,47 @@
+rules:
+  - id: missing-assignment
+    message: Meaningless statement that does not change any values could be a sign of missed security checks or other important changes.
+    metadata:
+      category: security
+      technology:
+          - solidity
+      cwe: "CWE-1164: Irrelevant Code"
+      confidence: HIGH
+      likelihood: HIGH
+      impact: MEDIUM
+      subcategory:
+          - vuln
+    patterns:
+      - pattern-either:
+        - pattern: |
+            $X;
+        - pattern: |
+            $X[$Y];
+        - pattern: |
+            $X == $Y;
+      - pattern-not: $FUNC(...);
+      - pattern-not: $FUNC();
+      - pattern-not: $VAR++;
+      - pattern-not: $VAR--;
+      - pattern-not: ++$VAR;
+      - pattern-not: --$VAR;
+      - pattern-not: ... = ...;
+      - pattern-not: ... += ...;
+      - pattern-not: ... -= ...;
+      - pattern-not: $TYPE $VAR;
+      - pattern-not: return $VAR;
+      - pattern-not: return;
+      - pattern-not: continue;
+      - pattern-not: break;
+      - pattern-not: _;
+      - pattern-not: error $NAME();
+      - pattern-not: error $NAME($ARGS);
+      #- pattern-not: function $NAME($ARGS) virtual {} # doesn't work
+      - pattern-not: | # let's not match empty function bodies
+          {}
+      - metavariable-regex:
+          metavariable: $X
+          regex: "^\\S+$"
+    languages:
+      - solidity
+    severity: WARNING

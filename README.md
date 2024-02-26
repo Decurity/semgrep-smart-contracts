@@ -134,6 +134,8 @@ olympus-dao-staking-incorrect-call-order | OlympusDAO, FloorDAO, Heavens Gate, J
 compound-precision-loss | Hundred Finance, Midas Finance, Onyx Protocol | In Compound forks if there is a market with totalSupply = 0 and collateralFactor != 0 a precision loss attack is possible if redeemAmount is taken from the arguments of redeemFresh()
 thirdweb-vulnerability | Swopple Token, TIME Token, NAME Token, HXA Token | In contracts that support Multicall and ERC2771Context an Arbitrary Address Spoofing attack is possible
 exact-balance-check | Generic | Testing the balance of an account as a basis for some action has risks associated with unexpected receipt of ether or another token, including tokens deliberately transfered to cause such tests to fail, as an MEV attack.
+missing-assignment | Generic | Meaningless statement that does not change any values could be a sign of missed security checks or other important changes.
+
 
 ## Gas Optimization Rules
 
