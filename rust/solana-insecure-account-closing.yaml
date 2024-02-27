@@ -1,10 +1,19 @@
 rules:
   - id: solana-insecure-account-closing
-    message: Writing the CLOSED_ACCOUNT_DISCRIMINATOR to a closed account is crucial to prevent the reuse of the account within the same transaction
+    message: Writing the CLOSED_ACCOUNT_DISCRIMINATOR to a closed account is crucial
+      to prevent the reuse of the account within the same transaction
     languages:
       - rust
     metadata:
-      category: solana
+      category: security
+      technology:
+        - solana
+        - rust
+      confidence: MEDIUM
+      likelihood: LOW
+      impact: HIGH
+      subcategory:
+        - vuln
       references:
         - https://github.com/Unboxed-Software/solana-course/blob/3718de75823c9d5f90c73ad7ab4feb1a5e4dd20c/content/closing-accounts.md#secure-account-closing
     mode: taint
@@ -21,15 +30,14 @@ rules:
                   ...) {
                     ...
                   }
-          - pattern-not: >
+          - pattern-not: |
               fn $F($CTX: Context<$CTXT>, ...) {
                 ...
                 $CURSOR.write_all(&CLOSED_ACCOUNT_DISCRIMINATOR);
                 ...
               }
-          - pattern-not: >
-              fn $F($CTX: Context<'$CTXA, '$CTXB, '$CTXC, '$CTXI, $CTXT>,
-              ...) {
+          - pattern-not: |
+              fn $F($CTX: Context<'$CTXA, '$CTXB, '$CTXC, '$CTXI, $CTXT>, ...) {
                 ...
                 $CURSOR.write_all(&CLOSED_ACCOUNT_DISCRIMINATOR);
                 ...
