@@ -7,17 +7,18 @@ rules:
     metadata:
       category: security
       technology:
-        - solana
         - rust
-      confidence: MEDIUM
-      likelihood: LOW
+        - solana
+        - anchor
+      confidence: LOW
+      likelihood: MEDIUM
       impact: HIGH
       subcategory:
         - vuln
       references:
         - https://github.com/Unboxed-Software/solana-course/blob/3718de75823c9d5f90c73ad7ab4feb1a5e4dd20c/content/closing-accounts.md#secure-account-closing
     mode: taint
-    severity: WARNING
+    severity: ERROR
     pattern-sources:
       - patterns:
           - pattern-either:

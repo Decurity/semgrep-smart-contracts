@@ -1,0 +1,55 @@
+rules:
+  - id: solana-arbitrary-program-call
+    message: An attacker may be able to invoke arbitrary programs without address validations
+    languages:
+      - rust
+    metadata:
+      category: security
+      technology:
+        - solana
+        - rust
+        - anchor
+      confidence: LOW
+      likelihood: HIGH
+      impact: HIGH
+      subcategory:
+        - vuln
+      references:
+        - https://github.com/Unboxed-Software/solana-course/blob/3718de75823c9d5f90c73ad7ab4feb1a5e4dd20c/content/arbitrary-cpi.md
+    severity: ERROR
+    patterns:
+      - pattern-either:
+        - pattern: >
+            ...
+            struct $STRUCT<'info> {
+              ..., $ACCOUNT: UncheckedAccount<'info>, ...
+            }
+            ...
+        - pattern: >
+            ...
+            struct $STRUCT<'info> {
+              ..., $ACCOUNT: AccountInfo<'info>, ...
+            }
+            ...
+      - pattern-either:
+          - pattern-inside: >
+              fn $F($CTX: Context<$STRUCT>, ...) {
+                ...
+              }
+          - pattern-inside: >
+              fn $F($CTX: Context<'$CTXA, '$CTXB, '$CTXC, '$CTXI, $STRUCT>,
+              ...) {
+                ...
+              }
+      - pattern-not-inside:
+          if <... $CTX.accounts.$ACCOUNT.key ...> {
+            ...
+          }
+          ...
+
+      - pattern-inside: >
+          solana_program::program::invoke(...)
+      - pattern: >
+          $INSTR($CTX.accounts.$ACCOUNT.key, ...)
+      - focus-metavariable: $INSTR
+
