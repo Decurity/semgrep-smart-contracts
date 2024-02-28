@@ -161,3 +161,9 @@ Rule ID | Description
 --- | ---
 use-abi-encodecall-instead-of-encodewithselector | To guarantee arguments type safety it is recommended to use `abi.encodeCall` instead of `abi.encodeWithSelector`.
 use-ownable2step | By demanding that the receiver of the owner permissions actively accept via a contract call of its own, `Ownable2Step` and `Ownable2StepUpgradeable` prevent the contract ownership from accidentally being transferred to an address that cannot handle it.
+
+## Solana Rules
+Rule ID | Description
+--- | ---
+solana-arbitrary-program-call | An attacker may be able to invoke arbitrary programs without address validations
+solana-insecure-account-closing | Writing the CLOSED_ACCOUNT_DISCRIMINATOR to a closed account is crucial to prevent the reuse of the account within the same transaction
