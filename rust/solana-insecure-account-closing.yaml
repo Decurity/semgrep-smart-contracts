@@ -17,6 +17,8 @@ rules:
         - vuln
       references:
         - https://github.com/Unboxed-Software/solana-course/blob/3718de75823c9d5f90c73ad7ab4feb1a5e4dd20c/content/closing-accounts.md#secure-account-closing
+      cwe:
+        - "CWE 672: Operation on a Resource after Expiration or Release"
     mode: taint
     severity: ERROR
     pattern-sources:
