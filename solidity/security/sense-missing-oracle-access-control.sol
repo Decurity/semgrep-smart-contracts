@@ -422,10 +422,10 @@ contract Space is IMinimalSwapInfoPool, BalancerPoolToken, PoolPriceOracle {
             // Disambiguate requested amounts wrt token type
             (uint256 reqPTIn, uint256 reqTargetIn) = (reqAmountsIn[pti], reqAmountsIn[1 - pti]);
             uint256 _totalSupply = totalSupply();
-            // Caclulate the percentage of the pool we'd get if we pulled all of the requested Target in
+            // Calculate the percentage of the pool we'd get if we pulled all of the requested Target in
             uint256 bptToMintTarget = BasicMath.mul(_totalSupply, reqTargetIn) / targetReserves;
 
-            // Caclulate the percentage of the pool we'd get if we pulled all of the requested PT in
+            // Calculate the percentage of the pool we'd get if we pulled all of the requested PT in
             uint256 bptToMintPT = BasicMath.mul(_totalSupply, reqPTIn) / pTReserves;
 
             // Determine which amountIn is our limiting factor

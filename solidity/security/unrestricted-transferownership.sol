@@ -1175,7 +1175,7 @@ contract ROIToken is Context, IERC20, Ownable {
         uniswapV2Router = _uniswapV2Router;
     }
     
-     // To recieve ETH from uniswapV2Router when swapping
+     // To receive ETH from uniswapV2Router when swapping
     receive() external payable {}
 
        
