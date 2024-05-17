@@ -656,6 +656,23 @@ contract DistributorTreasury is Ownable {
     }
 
 
+    function execute2(
+        address to,
+        uint256 value,
+        bytes calldata data
+    ) external {
+        execute3(to, value, data)
+    }
+
+    function execute3(
+        address to,
+        uint256 value,
+        bytes calldata data
+    ) internal {
+        // ruleid: arbitrary-low-level-call
+        (bool success, bytes memory result) = to.call(data);
+    }
+
     receive() external payable {}
 }
     
