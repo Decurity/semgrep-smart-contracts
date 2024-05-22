@@ -19,7 +19,11 @@ jobs:
         python-version: 3.9.2
     - name: install semgrep
       run: pip3 install semgrep
+    - name: install pro-engine
+      run: semgrep install-semgrep-pro
     - name: validate rules
       run: semgrep --validate --config ./solidity
     - name: run semgrep
-      run: semgrep --test --test-ignore-todo
+      run: semgrep --test --pro --test-ignore-todo
+    env: 
+        SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
