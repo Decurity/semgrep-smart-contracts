@@ -134,4 +134,13 @@ contract Test{
         //ok: accessible-selfdestruct
         selfdestruct(to);
     }
+
+    function func21(address to) external {
+        func22(to);
+    }
+
+    function func22(address to) internal {
+        // ruleid: accessible-selfdestruct
+        selfdestruct(to);
+    }
 }
