@@ -19,12 +19,23 @@ rules:
     mode: taint
     pattern-sinks:
       - pattern: $Y - $X
+      - pattern: $Y -= $X
     pattern-sources:
-        - pattern-either:
-            - pattern-inside: |
-                function $F(..., $X, ...) external { ... }
-            - pattern-inside: |
-                function $F(..., $X, ...) public { ... }
+      - patterns:
+          - pattern-inside: |
+              function $F(..., $TYPE $X, ...) public { ... }
+          - focus-metavariable: $X
+      - patterns: 
+          - pattern-inside: |
+              function $F(..., $TYPE $X, ...) external { ... }
+          - focus-metavariable: $X
+      - patterns: 
+          - pattern-inside: |
+              function $F(..., $TYPE $X, ...) { ... }
+          - focus-metavariable: $X
+          
+      
+  
     languages: 
     - solidity
     severity: INFO

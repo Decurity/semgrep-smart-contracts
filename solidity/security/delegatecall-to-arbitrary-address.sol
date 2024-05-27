@@ -36,7 +36,7 @@ contract Test{
 
     function sink(address  _contract, uint256 _num) internal {
         // intraprocedural tainting does not work for now...
-        // todoruleid: delegatecall-to-arbitrary-address
+        // ruleid: delegatecall-to-arbitrary-address
         (bool success, bytes memory data) = _contract.delegatecall(
             abi.encodeWithSignature("setVars(uint256)", _num)
         );

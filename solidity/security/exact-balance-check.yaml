@@ -7,44 +7,53 @@ rules:
     metadata:
       category: security
       technology:
-          - solidity
+        - solidity
       cwe: "CWE-667: Improper Locking"
       confidence: LOW
       likelihood: MEDIUM
       impact: MEDIUM
       subcategory:
-          - vuln
+        - vuln
       references:
         - https://entethalliance.org/specs/ethtrust-sl/v1/#req-1-exact-balance-check
     mode: taint
     pattern-sinks:
       - pattern-either:
-        - patterns:
-            - pattern-either:
-                - pattern: $X == ...
-                - pattern: ... == $X
-            - pattern-either:
-                - pattern-inside: require(...)
-                - pattern-inside: |
-                    if (<... $X == ... ...>) {
+          - patterns:
+              - pattern-either:
+                  - pattern: $X == ...
+                  - pattern: ... == $X
+                  - pattern:  $X >= ... && $X <= ...
+                  - pattern:  $X <= ... && $X >= ...
+                  - pattern:  $X > ... && $X < ...
+                  - pattern:  $X < ... && $X > ...
+              - pattern-either:
+                  - pattern-inside: require(...)
+                  - pattern-inside: |
+                      if (<... $X == ... ...>) {
+                        ...
+                      }
+                  - pattern-inside: |
+                      if (<... ... == $X ...>) {
+                        ...
+                      }
+              
+          - patterns:
+              - pattern-either:
+                  - pattern: $BOOL = <... ... == ... ...>
+                  - pattern: $BOOL = <... ... >= ... ...> && <... ... <= ... ...>
+                  - pattern: $BOOL = <... ... <= ... ...> && <... ... >= ... ...>
+                  - pattern: $BOOL = <... ... > ... ...> && <... ... < ... ...>
+                  - pattern: $BOOL = <... ... < ... ...> && <... ... > ... ...>
+              - pattern-either:
+                  - pattern-inside: |
                       ...
-                    }
-                - pattern-inside: |
-                    if (<... ... == $X ...>) {
+                      require(<... $BOOL ...>)
+                  - pattern-inside: |
                       ...
-                    }
-        - patterns:
-            - pattern-either:
-                - pattern: $BOOL = <... ... == ... ...>
-            - pattern-either:
-                - pattern-inside: |
-                    ...
-                    require(<... $BOOL ...>)
-                - pattern-inside: |
-                    ...
-                    if (<... $BOOL ...>) {
-                      ...
-                    }
+                      if (<... $BOOL ...>) {
+                        ...
+                      }
     pattern-sources:
       - pattern-either:
           - pattern: $T.balanceOf($A)
