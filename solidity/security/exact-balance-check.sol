@@ -65,32 +65,6 @@ contract Foobar {
         // do smth
     }
 
-    function doit6(address ext) {
-        uint256 bal = IERC20(ext).balanceOf(address(this));
-        doit7(bal);
-    }
-
-    function doit7(uint256 bal) {
-        uint256 a;
-        uint256 b;
-        //ruleid: exact-balance-check
-        require(bal <= a && bal >= b);
-    }
-
-    function doit8() {
-        uint256 bal = IERC20(ext).balanceOf(address(this));
-        uint256 a;
-        uint256 b;
-        //ruleid: exact-balance-check
-        bool result = (bal <= a && bal >= b);
-
-        require(result);
-        
-    }
-
-
-
-
     function doit2_safe(address ext) {
         require(
             1==1 &&

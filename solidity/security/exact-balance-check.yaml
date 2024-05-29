@@ -22,11 +22,7 @@ rules:
           - patterns:
               - pattern-either:
                   - pattern: $X == ...
-                  - pattern: ... == $X
-                  - pattern:  $X >= ... && $X <= ...
-                  - pattern:  $X <= ... && $X >= ...
-                  - pattern:  $X > ... && $X < ...
-                  - pattern:  $X < ... && $X > ...
+                  - pattern: ... == $X                  
               - pattern-either:
                   - pattern-inside: require(...)
                   - pattern-inside: |
@@ -36,15 +32,10 @@ rules:
                   - pattern-inside: |
                       if (<... ... == $X ...>) {
                         ...
-                      }
-              
+                      }             
           - patterns:
               - pattern-either:
                   - pattern: $BOOL = <... ... == ... ...>
-                  - pattern: $BOOL = <... ... >= ... ...> && <... ... <= ... ...>
-                  - pattern: $BOOL = <... ... <= ... ...> && <... ... >= ... ...>
-                  - pattern: $BOOL = <... ... > ... ...> && <... ... < ... ...>
-                  - pattern: $BOOL = <... ... < ... ...> && <... ... > ... ...>
               - pattern-either:
                   - pattern-inside: |
                       ...
