@@ -28,14 +28,7 @@ rules:
       - patterns: 
           - pattern-inside: |
               function $F(..., $TYPE $X, ...) external { ... }
-          - focus-metavariable: $X
-      - patterns: 
-          - pattern-inside: |
-              function $F(..., $TYPE $X, ...) { ... }
-          - focus-metavariable: $X
-          
-      
-  
+          - focus-metavariable: $X 
     languages: 
     - solidity
     severity: INFO
