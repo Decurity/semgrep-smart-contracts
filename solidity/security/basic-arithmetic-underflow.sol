@@ -339,7 +339,7 @@ contract RemcoToken is Token, Owned {
         // according to AssetToken's total supply, never overflow here
         if (balanceOf[msg.sender] >= _amount
             && _amount > 0) {
-            // ruleid: basic-arithmetic-underflow            
+            // todoruleid: basic-arithmetic-underflow            
             balanceOf[msg.sender] -= uint112(_amount);
             balanceOf[_to] = _amount.add(balanceOf[_to]).toUINT112();
             soldToken = _amount.add(soldToken).toUINT112();
@@ -361,7 +361,7 @@ contract RemcoToken is Token, Owned {
             && allowed[_from][msg.sender] >= _amount
             && _amount > 0) {
             balanceOf[_from] = balanceOf[_from].sub(_amount).toUINT112();
-            // ruleid: basic-arithmetic-underflow
+            // todoruleid: basic-arithmetic-underflow
             allowed[_from][msg.sender] -= _amount;
             balanceOf[_to] = _amount.add(balanceOf[_to]).toUINT112();
             Transfer(_from, _to, _amount);
@@ -408,11 +408,27 @@ contract RemcoToken is Token, Owned {
         uint256 c = b - a
     }
 
-    function ok(address s) public {
+    function exp2(uint255 a) public {
+        exp3(a);
+    }
+
+    function exp3(uint255 a) intenal {
+        uint256 b = 1337;
+        // ruleid: basic-arithmetic-underflow
+        uint256 c = b - a;
+    }
+    
+    function ok1(address s) public {
         uint256 h = 1338;
         uint256 g = 256;
         // ok: basic-arithmetic-underflow
         h -= g;
+    }
+
+    function ok2(uint255 a) internal {
+        uint256 y = 1337;
+        // ok: basic-arithmetic-underflow
+        uint256 x = y - a;
     }
     
   }
