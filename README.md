@@ -8,6 +8,8 @@ Currently semgrep supports [Solidity](https://semgrep.dev/docs/language-support/
 
 ## Scanning
 
+> **Important:** Some of the rules utilize the [taint mode](https://semgrep.dev/docs/writing-rules/data-flow/taint-mode), which is restricted to the same function in the open-source version of semgrep. To take advantage of intra-procedural taint analysis, you must include the `--pro` flag with each command. Please note that this requires semgrep Pro.
+
 1) By cloning the repository:
 
   ```shell
