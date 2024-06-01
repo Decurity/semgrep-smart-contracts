@@ -1480,7 +1480,7 @@ contract Hospo is ERC20, Ownable {
         _isExcludedFromFees[presaleAddress] = true;
     }
 
-    // call this function once liquiidity is added
+    // call this function once liquidity is added
     function startTrading() external onlyOwner {
         buyFee.devFee = 35;
         buyFee.liquidityFee = 10;
