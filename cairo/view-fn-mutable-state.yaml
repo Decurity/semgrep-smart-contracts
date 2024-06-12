@@ -1,0 +1,19 @@
+rules:
+  - id: view-fn-mutable-state 
+    languages: [cairo]
+    message: View function $FN should not be able to modify state
+    severity: ERROR
+    patterns:
+      - pattern: |
+          fn $FN(..., $VAR: $TYPE, ...) {...}
+      # should be a getter function 
+      - metavariable-regex:
+          metavariable: $FN
+          regex: ^[G,g][E,e][T,t].*
+      # check that contract param is mutable
+      - metavariable-regex:
+          metavariable: $VAR
+          regex: self
+      - metavariable-regex:
+          metavariable: $TYPE
+          regex: ^ContractState 
