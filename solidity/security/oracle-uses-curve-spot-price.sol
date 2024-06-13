@@ -63,6 +63,7 @@ IUwUOracle(0xAC4A2aC76D639E10f2C05a41274c1aF85B772598);
 
   function getPrices(bool sorted) external view returns (uint256[] memory, 
 bool) {
+    // ruleid: oracle-uses-curve-spot-price
     return _getPrices(sorted);
   }
 
@@ -136,7 +137,7 @@ memory, bool uniFail) {
     if (sorted) {
       _bubbleSort(prices);
     }
-
+    // ruleid: oracle-uses-curve-spot-price
     return (prices, uniFail);
   }
 

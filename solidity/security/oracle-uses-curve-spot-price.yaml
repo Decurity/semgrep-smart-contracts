@@ -1,8 +1,7 @@
 rules:
  -
     id: oracle-uses-curve-spot-price
-    message: Oracle uses the get_p() curve pool function which can be 
-manipulated via flashloan to calculate the asset price 
+    message: Oracle uses the get_p() curve pool function which can be manipulated via flashloan to calculate the asset price 
     metadata:
         category: security
         technology:
@@ -15,10 +14,8 @@ manipulated via flashloan to calculate the asset price
             - vuln
         references:
             - https://x.com/danielvf/status/1800556249924440211
-            - 
-https://slowmist.medium.com/analysis-of-the-uwu-lend-hack-9502b2c06dbe
-            - 
-https://defimon.xyz/attacker/mainnet/0x841ddf093f5188989fa1524e7b893de64b421f47
+            - https://slowmist.medium.com/analysis-of-the-uwu-lend-hack-9502b2c06dbe
+            - https://defimon.xyz/attacker/mainnet/0x841ddf093f5188989fa1524e7b893de64b421f47
             - https://x.com/CyversAlerts/status/1800139071857316328
     mode: taint
     pattern-sources:
