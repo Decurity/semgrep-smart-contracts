@@ -3,8 +3,7 @@ pragma solidity 0.6.6;
 
 import {FullMath} from '../uniswap-v2/libraries/FullMath.sol';
 import {IPriceGetter} from '../uniswap-v2/interfaces/IPriceGetter.sol';
-import {IERC20Metadata} from 
-'../uniswap-v2/interfaces/IERC20Metadata.sol';
+import {IERC20Metadata} from '../uniswap-v2/interfaces/IERC20Metadata.sol';
 
 interface ICurvePoolWithOracle {
   function price_oracle(uint256 i) external view returns (uint256);
@@ -17,16 +16,11 @@ interface IUwUOracle {
 }
 
 contract sUSDePriceProviderBUniCatch is IPriceGetter {
-  address public constant FRAX = 
-0x853d955aCEf822Db058eb8505911ED77F175b99e;
-  address public constant USDC = 
-0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
-  address public constant DAI = 
-0x6B175474E89094C44Da98b954EedeAC495271d0F;
-  address public constant CRVUSD = 
-0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E;
-  address public constant GHO = 
-0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f;
+  address public constant FRAX = 0x853d955aCEf822Db058eb8505911ED77F175b99e;
+  address public constant USDC = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
+  address public constant DAI = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
+  address public constant CRVUSD = 0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E;
+  address public constant GHO = 0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f;
   ICurvePoolWithOracle public constant FRAX_POOL =
     ICurvePoolWithOracle(0x5dc1BF6f1e983C0b21EfB003c105133736fA0743);
   ICurvePoolWithOracle public constant DAI_POOL =
@@ -37,8 +31,7 @@ contract sUSDePriceProviderBUniCatch is IPriceGetter {
     ICurvePoolWithOracle(0xF55B0f6F2Da5ffDDb104b58a60F2862745960442);
   ICurvePoolWithOracle public constant GHO_POOL =
     ICurvePoolWithOracle(0x670a72e6D22b0956C0D2573288F82DCc5d6E3a61);
-  IUwUOracle public constant uwuOracle = 
-IUwUOracle(0xAC4A2aC76D639E10f2C05a41274c1aF85B772598);
+  IUwUOracle public constant uwuOracle = IUwUOracle(0xAC4A2aC76D639E10f2C05a41274c1aF85B772598);
   IPriceGetter public immutable UNI_V3_TWAP_USDT_ORACLE;
 
   uint256 public sUSDeScalingFactor = 1047;
@@ -61,9 +54,7 @@ IUwUOracle(0xAC4A2aC76D639E10f2C05a41274c1aF85B772598);
     return FullMath.mulDiv(median, sUSDeScalingFactor, 1e3);
   }
 
-  function getPrices(bool sorted) external view returns (uint256[] memory, 
-bool) {
-    // ruleid: oracle-uses-curve-spot-price
+  function getPrices(bool sorted) external view returns (uint256[] memory, bool) {
     return _getPrices(sorted);
   }
 
@@ -73,13 +64,11 @@ bool) {
     return uniFail ? (prices[5] + prices[6]) / 2 : prices[5];
   }
 
-  function getUSDeFraxEMAInUSD() external view returns (uint256, uint256) 
-{
+  function getUSDeFraxEMAInUSD() external view returns (uint256, uint256) {
     return _getUSDeFraxEMAInUSD();
   }
 
-  function getUSDeUSDCEMAInUSD() external view returns (uint256, uint256) 
-{
+  function getUSDeUSDCEMAInUSD() external view returns (uint256, uint256) {
     return _getUSDeUsdcEMAInUSD();
   }
 
@@ -87,8 +76,7 @@ bool) {
     return _getUSDeDaiEMAInUSD();
   }
 
-  function getUSDeCrvUsdEMAInUSD() external view returns (uint256, 
-uint256) {
+  function getUSDeCrvUsdEMAInUSD() external view returns (uint256, uint256) {
     return _getCrvUsdUSDeEMAInUSD();
   }
 
@@ -108,8 +96,7 @@ uint256) {
 
   function changeScalingFactor(uint256 _newScalingFactor) external {
     require(msg.sender == owner, 'Only Owner');
-    require(_newScalingFactor >= 1000, 'Factor cannot be lower than 
-1000');
+    require(_newScalingFactor >= 1000, 'Factor cannot be lower than 1000');
     sUSDeScalingFactor = _newScalingFactor;
   }
 
@@ -120,8 +107,7 @@ uint256) {
 
   /******* INTERNAL *******/
 
-  function _getPrices(bool sorted) internal view returns (uint256[] 
-memory, bool uniFail) {
+  function _getPrices(bool sorted) internal view returns (uint256[] memory, bool uniFail) {
     uint256[] memory prices = new uint256[](11);
     (prices[0], prices[1]) = _getUSDeFraxEMAInUSD();
     (prices[2], prices[3]) = _getUSDeUsdcEMAInUSD();
@@ -137,12 +123,11 @@ memory, bool uniFail) {
     if (sorted) {
       _bubbleSort(prices);
     }
-    // ruleid: oracle-uses-curve-spot-price
+
     return (prices, uniFail);
   }
 
-  function _getUSDeFraxEMAInUSD() internal view returns (uint256, uint256) 
-{
+  function _getUSDeFraxEMAInUSD() internal view returns (uint256, uint256) {
     uint256 price = uwuOracle.getAssetPrice(FRAX);
     // (USDe/FRAX * FRAX/USD) / 1e18
     return (
@@ -151,8 +136,7 @@ memory, bool uniFail) {
     );
   }
 
-  function _getUSDeUsdcEMAInUSD() internal view returns (uint256, uint256) 
-{
+  function _getUSDeUsdcEMAInUSD() internal view returns (uint256, uint256) {
     uint256 price = uwuOracle.getAssetPrice(USDC);
     // (USDC/USD * 1e18) / USDC/USDe
     return (
@@ -161,8 +145,7 @@ memory, bool uniFail) {
     );
   }
 
-  function _getUSDeDaiEMAInUSD() internal view returns (uint256, uint256) 
-{
+  function _getUSDeDaiEMAInUSD() internal view returns (uint256, uint256) {
     uint256 price = uwuOracle.getAssetPrice(DAI);
     // (DAI/USD * 1e18) / DAI/USDe
     return (
@@ -171,8 +154,7 @@ memory, bool uniFail) {
     );
   }
 
-  function _getCrvUsdUSDeEMAInUSD() internal view returns (uint256, 
-uint256) {
+  function _getCrvUsdUSDeEMAInUSD() internal view returns (uint256, uint256) {
     uint256 price = uwuOracle.getAssetPrice(CRVUSD);
     // (CRVUSD/USD * 1e18) / CRVUSD/USDe
     return (
@@ -181,8 +163,7 @@ uint256) {
     );
   }
 
-  function _getUSDeGhoEMAInUSD() internal view returns (uint256, uint256) 
-{
+  function _getUSDeGhoEMAInUSD() internal view returns (uint256, uint256) {
     uint256 price = uwuOracle.getAssetPrice(GHO);
     // (USDe/GHO * GHO/USD) / 1e18
     return (
@@ -191,8 +172,7 @@ uint256) {
     );
   }
 
-  function _bubbleSort(uint[] memory arr) internal pure returns (uint[] 
-memory) {
+  function _bubbleSort(uint[] memory arr) internal pure returns (uint[] memory) {
     uint256 n = arr.length;
     for (uint256 i = 0; i < n - 1; i++) {
       for (uint256 j = 0; j < n - i - 1; j++) {
@@ -204,4 +184,3 @@ memory) {
     return arr;
   }
 }
-
