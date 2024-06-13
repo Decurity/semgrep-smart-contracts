@@ -55,6 +55,7 @@ contract sUSDePriceProviderBUniCatch is IPriceGetter {
   }
 
   function getPrices(bool sorted) external view returns (uint256[] memory, bool) {
+    // ruleid: oracle-uses-curve-spot-price
     return _getPrices(sorted);
   }
 
@@ -123,7 +124,7 @@ contract sUSDePriceProviderBUniCatch is IPriceGetter {
     if (sorted) {
       _bubbleSort(prices);
     }
-
+    // ruleid: oracle-uses-curve-spot-price
     return (prices, uniFail);
   }
 
