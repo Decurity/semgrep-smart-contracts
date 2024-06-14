@@ -1,0 +1,34 @@
+rules:
+  - id: oracle-uses-curve-spot-price
+    message: Oracle uses the get_p() Curve pool function which can be manipulated via flashloan to calculate the asset price
+    metadata:
+      category: security
+      technology:
+        - solidity
+      cwe: "CWE-682: Incorrect Calculation"
+      confidence: LOW
+      likelihood: LOW
+      impact: HIGH
+      subcategory:
+        - vuln
+      references:
+        - https://x.com/danielvf/status/1800556249924440211
+        - https://slowmist.medium.com/analysis-of-the-uwu-lend-hack-9502b2c06dbe
+        - https://defimon.xyz/attacker/mainnet/0x841ddf093f5188989fa1524e7b893de64b421f47
+        - https://x.com/CyversAlerts/status/1800139071857316328
+        - https://docs.curve.fi/stableswap-exchange/stableswap-ng/pools/oracles/?h=get_p#price-and-d-oracles
+    mode: taint
+    pattern-sources:
+      - patterns:
+        - pattern-either:
+            - pattern: $CONTRACT.get_p($I)
+            - pattern: $CONTRACT.get_p()
+        - metavariable-regex:
+            metavariable: $I
+            regex: "[0-9]"
+    pattern-sinks:
+      - patterns:
+          - pattern: return ...;
+    languages:
+      - solidity
+    severity: ERROR
