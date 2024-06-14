@@ -1,0 +1,39 @@
+rules:
+  - id: zero-division
+    languages: [cairo]
+    message: Possible division by zero in $FN 
+    severity: INFO 
+    patterns:
+      - pattern-inside: |
+          fn $FN(..., $VAR: $TYPE, ...) {
+            ...
+          }
+      - pattern: $X / $VAR
+      # check that $VAR is not self 
+      - metavariable-regex:
+          metavariable: $VAR
+          regex: '^(?!self$).*$'
+      - pattern-not-inside: |
+          fn $FN(...) {
+            ...
+            assert(<... $VAR > 0 ...>, ...);
+            ...
+          }
+      - pattern-not-inside: |
+          fn $FN(...) {
+            ...
+            assert(<... $VAR != 0 ...>, ...);
+            ...
+          }     
+      - pattern-not-inside: |
+          fn $FN(...) {
+            ...
+            if (<... $VAR > 0 ...>) {...}
+            ...
+          }
+      - pattern-not-inside: |
+          fn $FN(...) {
+            ...
+            if(<... $VAR != 0 ...>) {...}
+            ...
+          }
