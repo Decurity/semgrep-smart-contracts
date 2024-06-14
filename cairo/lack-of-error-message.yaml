@@ -1,7 +1,7 @@
 rules:
   - id: lack-of-error-message 
     languages: [cairo]
-    message: $C
+    message: Add error message to assert
     severity: INFO 
     patterns:
       - pattern: assert(...)
