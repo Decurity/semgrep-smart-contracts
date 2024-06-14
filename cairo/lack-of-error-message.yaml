@@ -1,0 +1,9 @@
+rules:
+  - id: lack-of-error-message 
+    languages: [cairo]
+    message: $C
+    severity: INFO 
+    patterns:
+      - pattern: assert(...)
+      # - pattern-not: assert(..., ...)  # use this when will be supported 
+      - pattern-not-regex: \,\s*\'.*\'
