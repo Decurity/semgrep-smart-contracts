@@ -66,22 +66,27 @@ contract sUSDePriceProviderBUniCatch is IPriceGetter {
   }
 
   function getUSDeFraxEMAInUSD() external view returns (uint256, uint256) {
+    // ruleid: oracle-uses-curve-spot-price
     return _getUSDeFraxEMAInUSD();
   }
 
   function getUSDeUSDCEMAInUSD() external view returns (uint256, uint256) {
+    // ruleid: oracle-uses-curve-spot-price
     return _getUSDeUsdcEMAInUSD();
   }
 
   function getUSDeDAIEMAInUSD() external view returns (uint256, uint256) {
+    // ruleid: oracle-uses-curve-spot-price
     return _getUSDeDaiEMAInUSD();
   }
 
   function getUSDeCrvUsdEMAInUSD() external view returns (uint256, uint256) {
+    // ruleid: oracle-uses-curve-spot-price
     return _getCrvUsdUSDeEMAInUSD();
   }
 
   function getUSDeGhoEMAInUSD() external view returns (uint256, uint256) {
+    // ruleid: oracle-uses-curve-spot-price
     return _getUSDeGhoEMAInUSD();
   }
 
@@ -131,6 +136,7 @@ contract sUSDePriceProviderBUniCatch is IPriceGetter {
   function _getUSDeFraxEMAInUSD() internal view returns (uint256, uint256) {
     uint256 price = uwuOracle.getAssetPrice(FRAX);
     // (USDe/FRAX * FRAX/USD) / 1e18
+    // ruleid: oracle-uses-curve-spot-price
     return (
       FullMath.mulDiv(FRAX_POOL.price_oracle(0), price, 1e18),
       FullMath.mulDiv(FRAX_POOL.get_p(0), price, 1e18)
@@ -140,6 +146,7 @@ contract sUSDePriceProviderBUniCatch is IPriceGetter {
   function _getUSDeUsdcEMAInUSD() internal view returns (uint256, uint256) {
     uint256 price = uwuOracle.getAssetPrice(USDC);
     // (USDC/USD * 1e18) / USDC/USDe
+    // ruleid: oracle-uses-curve-spot-price
     return (
       FullMath.mulDiv(price, 1e18, USDC_POOL.price_oracle(0)),
       FullMath.mulDiv(price, 1e18, USDC_POOL.get_p(0))
@@ -149,6 +156,7 @@ contract sUSDePriceProviderBUniCatch is IPriceGetter {
   function _getUSDeDaiEMAInUSD() internal view returns (uint256, uint256) {
     uint256 price = uwuOracle.getAssetPrice(DAI);
     // (DAI/USD * 1e18) / DAI/USDe
+    // ruleid: oracle-uses-curve-spot-price
     return (
       FullMath.mulDiv(price, 1e18, DAI_POOL.price_oracle(0)),
       FullMath.mulDiv(price, 1e18, DAI_POOL.get_p(0))
@@ -158,6 +166,7 @@ contract sUSDePriceProviderBUniCatch is IPriceGetter {
   function _getCrvUsdUSDeEMAInUSD() internal view returns (uint256, uint256) {
     uint256 price = uwuOracle.getAssetPrice(CRVUSD);
     // (CRVUSD/USD * 1e18) / CRVUSD/USDe
+    // ruleid: oracle-uses-curve-spot-price
     return (
       FullMath.mulDiv(price, 1e18, CRVUSD_POOL.price_oracle(0)),
       FullMath.mulDiv(price, 1e18, CRVUSD_POOL.get_p(0))
@@ -167,6 +176,7 @@ contract sUSDePriceProviderBUniCatch is IPriceGetter {
   function _getUSDeGhoEMAInUSD() internal view returns (uint256, uint256) {
     uint256 price = uwuOracle.getAssetPrice(GHO);
     // (USDe/GHO * GHO/USD) / 1e18
+    // ruleid: oracle-uses-curve-spot-price
     return (
       FullMath.mulDiv(GHO_POOL.price_oracle(0), price, 1e18),
       FullMath.mulDiv(GHO_POOL.get_p(0), price, 1e18)
@@ -182,6 +192,7 @@ contract sUSDePriceProviderBUniCatch is IPriceGetter {
         }
       }
     }
+    // ruleid: oracle-uses-curve-spot-price
     return arr;
   }
 }
