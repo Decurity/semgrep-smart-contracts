@@ -17,25 +17,20 @@ rules:
             - https://slowmist.medium.com/analysis-of-the-uwu-lend-hack-9502b2c06dbe
             - https://defimon.xyz/attacker/mainnet/0x841ddf093f5188989fa1524e7b893de64b421f47
             - https://x.com/CyversAlerts/status/1800139071857316328
+            - https://docs.curve.fi/stableswap-exchange/stableswap-ng/pools/oracles/?h=get_p#price-and-d-oracles
     mode: taint
     pattern-sources:
       - patterns:
           - pattern: $CONTRACT.get_p($I)
-          - pattern-not: $CONTRACT.get_p($I, $OTHER, ...)
+          - pattern: $CONTRACT.get_p()
           - metavariable-regex:
               metavariable: $I
               regex: '[0-9]'
 
     pattern-sinks:
       - patterns:
-        - pattern-inside: |
-            function $F(...) {
-              ...
-            }
         - pattern: return ...;
-        - metavariable-regex:
-            metavariable: $F
-            regex: _*(?i)get([a-z0-9_])*price
+
     languages: 
         - solidity
     severity: ERROR
