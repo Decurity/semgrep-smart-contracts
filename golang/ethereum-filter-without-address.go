@@ -9,9 +9,6 @@ import (
 	ethcommon "github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
-	"github.com/p2p-org/eth-staking-middleware/pkg/entities"
-	"github.com/p2p-org/eth-staking-middleware/pkg/logger"
-	"github.com/p2p-org/eth-staking-middleware/pkg/utils"
 )
 
 func (s *DepositHandler) findTransactionsInBlock(block []uint64, addressesMap map[string]*entities.User) error {
@@ -30,7 +27,7 @@ func (s *DepositHandler) findTransactionsInBlock(block []uint64, addressesMap ma
 		})
 }
 
-func (s *DepositHandler) GeTx(ctx context.Context, user string) (nonce uint32, err error) {
+func (s *DepositHandler) GetTx(ctx context.Context, user string) (nonce uint32, err error) {
 	childCtx, cancel := context.WithTimeout(ctx, ssvScannerTimeout)
 	defer cancel()
 
