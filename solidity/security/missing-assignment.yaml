@@ -39,6 +39,8 @@ rules:
       #- pattern-not: function $NAME($ARGS) virtual {} # doesn't work
       - pattern-not: | # let's not match empty function bodies
           {}
+      - pattern-not: | # let's not match empty constructors
+          constructor(...){}
       - metavariable-regex:
           metavariable: $X
           regex: "^\\S+$"
