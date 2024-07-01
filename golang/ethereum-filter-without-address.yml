@@ -1,0 +1,21 @@
+rules:
+- id: ethereum-filter-without-address
+  patterns:
+  - pattern: |
+      ethereum.FilterQuery{
+        Topics:    ...,
+        ...
+      }
+  - pattern-not: |
+      ethereum.FilterQuery{
+        Topics:    $TOPICS,
+        Addresses: $ADDRESSES,
+        ...
+      }
+  message: "ethereum.FilterQuery lacks Addresses parameter, therefore it listens to all the events with a certain signature on the blockchain."
+  severity: WARNING
+  languages:
+  - go
+  metadata:
+    category: security
+    technology: blockchain
