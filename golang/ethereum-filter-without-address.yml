@@ -8,7 +8,7 @@ rules:
       }
   - pattern-not: |
       ethereum.FilterQuery{
-        Topics:    $TOPICS,
+        Topics:    ...,
         Addresses: $ADDRESSES,
         ...
       }
