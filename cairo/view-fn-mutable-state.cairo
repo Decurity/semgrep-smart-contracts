@@ -2,7 +2,7 @@
 mod contract {
     struct Storage {}
 
-    // ruleid: ok 
+    // ok: view-fn-mutable-state 
     #[external]
     fn get_variable((self: @ContractState) {}
 
