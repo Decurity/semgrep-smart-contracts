@@ -3,6 +3,18 @@ rules:
     languages: [cairo]
     message: View function $FN should not be able to modify state
     severity: ERROR
+    metadata:
+      category: security
+      technology:
+        - cairo
+      cwe: "CWE-288: Authentication Bypass Using an Alternate Path or Channel"
+      confidence: LOW
+      likelihood: LOW
+      impact: LOW
+      subcategory:
+        - vuln
+      references: 
+        - https://book.starknet.io/ch02-14-security-considerations.html
     patterns:
       - pattern: |
           fn $FN(..., $VAR: $TYPE, ...) {...}

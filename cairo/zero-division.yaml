@@ -2,7 +2,13 @@ rules:
   - id: zero-division
     languages: [cairo]
     message: Possible division by zero in $FN 
-    severity: INFO 
+    severity: INFO  
+    metadata:
+      category: best-practice
+      technology:
+        - cairo
+      references: 
+        - https://book.starknet.io/ch02-14-security-considerations.html 
     patterns:
       - pattern-inside: |
           fn $FN(..., $VAR: $TYPE, ...) {
