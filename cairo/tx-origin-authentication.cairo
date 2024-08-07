@@ -37,6 +37,6 @@ mod TxOrigin {
     #[external(v0)]
     fn correct_authentication(ref self: ContractState) {
         // ok: tx-origin-authentication
-        assert(get_caller_address() == self.owner.read(), "Not Owner");
+        assert(get_caller_address() == self.owner.read(), 2);
     }
 }
