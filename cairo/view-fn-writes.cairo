@@ -13,7 +13,7 @@ mod SimpleStorage {
 
     #[abi(embed_v0)]
     impl SimpleStorage of super::ISimpleStorage<ContractState> {
-        // ruleid: ok
+        // ok: view-fn-writes
         fn set(ref self: ContractState, x: u128) {
             self.stored_data.write(x);
         }
