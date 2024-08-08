@@ -7,7 +7,7 @@ rules:
       category: security
       technology:
         - cairo
-      cwe: "CWE-288: Authentication Bypass Using an Alternate Path or Channel"
+      cwe: "CWE-749: Exposed Dangerous Method or Function"
       confidence: LOW
       likelihood: LOW
       impact: LOW
