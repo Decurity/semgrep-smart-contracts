@@ -18,9 +18,9 @@ mod TxOrigin {
     #[external(v0)]
     fn authenticate_user(ref self: ContractState) {
         let tx_info = starknet::get_tx_info().unbox();
+        // ruleid: tx-origin-authentication
         let account = tx_info.account_contract_address;
 
-        // ruleid: tx-origin-authentication
         assert(account == self.owner.read(), 1);
     }
 
