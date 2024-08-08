@@ -1,0 +1,15 @@
+rules:
+  - id: lack-of-error-message 
+    languages: [cairo]
+    message: Add error message to assert
+    severity: INFO 
+    metadata:
+      category: best-practice
+      technology:
+        - cairo
+      references: 
+        - https://book.starknet.io/ch02-14-security-considerations.html 
+    patterns:
+      - pattern: assert(...)
+      # - pattern-not: assert(..., ...)  # use this when will be supported 
+      - pattern-not-regex: \,\s*\'.*\'

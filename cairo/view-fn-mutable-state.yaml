@@ -1,0 +1,31 @@
+rules:
+  - id: view-fn-mutable-state 
+    languages: [cairo]
+    message: View function $FN should not be able to modify state
+    severity: ERROR
+    metadata:
+      category: security
+      technology:
+        - cairo
+      cwe: "CWE-749: Exposed Dangerous Method or Function"
+      confidence: LOW
+      likelihood: LOW
+      impact: LOW
+      subcategory:
+        - vuln
+      references: 
+        - https://book.starknet.io/ch02-14-security-considerations.html
+    patterns:
+      - pattern: |
+          fn $FN(..., $VAR: $TYPE, ...) {...}
+      # should be a getter function 
+      - metavariable-regex:
+          metavariable: $FN
+          regex: ^[G,g][E,e][T,t].*
+      # check that contract param is mutable
+      - metavariable-regex:
+          metavariable: $VAR
+          regex: self
+      - metavariable-regex:
+          metavariable: $TYPE
+          regex: ^ContractState 
