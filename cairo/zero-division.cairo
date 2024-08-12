@@ -1,6 +1,6 @@
 use starknet::ContractAddress;
 
-#[contract]
+#[starknet::contract]
 mod TestContract {
     fn test1(x: uint256) -> uint256 {
         // ruleid: zero-division 
