@@ -1,7 +1,7 @@
 rules:
   - id: view-fn-writes
     languages: [cairo]
-    message: View function $FN should not be able to modify state
+    message: View function $FN should not write to the state
     severity: ERROR
     metadata:
       category: security

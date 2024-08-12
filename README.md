@@ -169,3 +169,12 @@ Rule ID | Description
 --- | ---
 solana-arbitrary-program-call | An attacker may be able to invoke arbitrary programs without address validations
 solana-insecure-account-closing | Writing the CLOSED_ACCOUNT_DISCRIMINATOR to a closed account is crucial to prevent the reuse of the account within the same transaction
+
+## Cairo Rules
+Rule ID | Description
+--- | ---
+lack-of-error-message  | Error message is missing in the assert statement
+tx-origin-authentication | Using `account_contract_address` for authentication is insecure. Use `get_caller_address` or an appropriate method for verifying users.
+view-fn-mutable-state | View function should not be able to modify state
+view-fn-writes | View function should not write to the state
+zero-division | Possible division by zero

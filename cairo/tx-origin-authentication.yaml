@@ -1,7 +1,7 @@
 rules:
   - id: tx-origin-authentication
     languages: [cairo]
-    message: "Using account_contract_address for authentication is insecure. Use get_caller_address or an appropriate method for verifying users."
+    message: Using `account_contract_address` for authentication is insecure. Use `get_caller_address` or an appropriate method for verifying users.
     severity: MEDIUM
     metadata:
       category: security
