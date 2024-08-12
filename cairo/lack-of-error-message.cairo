@@ -1,6 +1,6 @@
 use starknet::ContractAddress;
 
-#[contract]
+#[starknet::contract]
 mod TestContract {
     fn test1() {
         let a = 1;
