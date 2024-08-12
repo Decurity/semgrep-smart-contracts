@@ -1,7 +1,7 @@
 rules:
-  - id: lack-of-error-message 
+  - id: lack-of-error-message
     languages: [cairo]
-    message: Add error message to assert
+    message: Error message is missing in the assert statement
     severity: INFO 
     metadata:
       category: best-practice
