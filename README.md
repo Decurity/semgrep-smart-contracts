@@ -137,7 +137,8 @@ compound-precision-loss | Hundred Finance, Midas Finance, Onyx Protocol | In Com
 thirdweb-vulnerability | Swopple Token, TIME Token, NAME Token, HXA Token | In contracts that support Multicall and ERC2771Context an Arbitrary Address Spoofing attack is possible
 exact-balance-check | Generic | Testing the balance of an account as a basis for some action has risks associated with unexpected receipt of ether or another token, including tokens deliberately transfered to cause such tests to fail, as an MEV attack.
 missing-assignment | Generic | Meaningless statement that does not change any values could be a sign of missed security checks or other important changes.
-oracle-uses-curve-spot-price | UwU | Oracle uses the get_p() Curve pool function which can be manipulated via flashloan to calculate the asset price 
+oracle-uses-curve-spot-price | UwU | Oracle uses the get_p() Curve pool function which can be manipulated via flashloan to calculate the asset price
+bad-transferfrom-access-control | Generic | Funds approved by users can be stolen because of improper access control to a transferFrom function 
 
 ## Gas Optimization Rules
 
