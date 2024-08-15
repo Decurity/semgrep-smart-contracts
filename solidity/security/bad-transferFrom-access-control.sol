@@ -1,4 +1,5 @@
 contract Test {
+
     function func1(address from, address to) public {
         // ruleid: bad-transferFrom-access-control
         usdc.transferFrom(from, to, amount);
@@ -6,7 +7,7 @@ contract Test {
 
     function func2(address from, address to) public {
         // ok: bad-transferFrom-access-control
-        usdc.transferFrom(owner, random, amount);
+        usdc.transferFrom(owner, pool, amount);
     }
 
     function func3(address from, address to) public {
@@ -26,7 +27,7 @@ contract Test {
 
     function func6(address from, address to) external {
         // ok: bad-transferFrom-access-control
-        usdc.transferFrom(owner, random, amount);
+        usdc.transferFrom(owner, pool, amount);
     }
 
     function func7(address from, address to) external {
@@ -86,7 +87,7 @@ contract Test {
 
     function func12(address from, address to) public {
         // ok: bad-transferFrom-access-control
-        usdc.safeTransferFrom(owner, random, amount);
+        usdc.safeTransferFrom(owner, pool, amount);
     }
 
     function func13(address from, address to) public {
@@ -106,7 +107,7 @@ contract Test {
 
     function func16(address from, address to) external {
         // ok: bad-transferFrom-access-control
-        usdc.safeTransferFrom(owner, random, amount);
+        usdc.safeTransferFrom(owner, pool, amount);
     }
 
     function func17(address from, address to) external {
@@ -154,6 +155,18 @@ contract Test {
     function _func20(address from, address to) internal {
         // ruleid: bad-transferFrom-access-control
         usdc.safeTransferFrom(from, to, amount);
+    }
+
+    function _func21(address from, address to) internal {
+        // internal never called
+        // ok: bad-transferFrom-access-control
+        usdc.safeTransferFrom(from, to, amount);
+        // ok: bad-transferFrom-access-control
+        usdc.transferFrom(from, to, amount);
+        // ok: bad-transferFrom-access-control
+        TransferHelper.safeTransferFrom(usdc, from, to, amount);
+        // ok: bad-transferFrom-access-control
+        TransferHelper.transferFrom(usdc, from, to, amount);
     }
 
 }
