@@ -1,0 +1,39 @@
+rules:
+  - id: bad-transferFrom-access-control
+    languages:
+      - solidity
+    severity: ERROR
+    message: An attacker may perform transferFrom() with arbitrary addresses
+    pattern-sources:
+      - label: INPUT_TO
+        pattern-either:
+          - patterns:
+              - pattern: function $F(..., address $FROM, ..., address $TO, ...) public { ... }
+              - focus-metavariable: $TO
+          - patterns:
+              - pattern: function $F(..., address $FROM, ..., address $TO, ...) external { ... }
+              - focus-metavariable: $TO
+      - label: INPUT_FROM
+        pattern-either:
+          - patterns:
+              - pattern: function $F(..., address $FROM, ..., address $TO, ...) public { ... }
+              - focus-metavariable: $FROM
+          - patterns:
+              - pattern: function $F(..., address $FROM, ..., address $TO, ...) external { ... }
+              - focus-metavariable: $FROM
+    pattern-sinks:
+      - requires: INPUT_TO and INPUT_FROM
+        pattern-either:
+          - patterns:
+              - pattern: $TOKEN.transferFrom(...,$FROM,...);
+              - pattern: $TOKEN.transferFrom(...,$TO,...);
+          - patterns:
+              - pattern: $TOKEN.safeTransferFrom(...,$FROM,...);
+              - pattern: $TOKEN.safeTransferFrom(...,$TO,...);
+          - patterns:
+              - pattern: $HELPER.transferFrom($TOKEN,...,$FROM,...);
+              - pattern: $HELPER.transferFrom($TOKEN,...,$TO,...);
+          - patterns:
+              - pattern: $HELPER.safeTransferFrom($TOKEN,...,$FROM,...);
+              - pattern: $HELPER.safeTransferFrom($TOKEN,...,$TO,...);
+    mode: taint
