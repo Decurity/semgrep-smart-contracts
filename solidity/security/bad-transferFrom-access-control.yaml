@@ -1,5 +1,5 @@
 rules:
-  - id: bad-transferFrom-access-control
+  - id: bad-transferfrom-access-control
     languages:
       - solidity
     severity: ERROR
@@ -37,15 +37,7 @@ rules:
     pattern-sinks:
       - requires: INPUT_TO and INPUT_FROM
         pattern-either:
-          - patterns:
-              - pattern: $TOKEN.transferFrom(...,$FROM,...);
-              - pattern: $TOKEN.transferFrom(...,$TO,...);
-          - patterns:
-              - pattern: $TOKEN.safeTransferFrom(...,$FROM,...);
-              - pattern: $TOKEN.safeTransferFrom(...,$TO,...);
-          - patterns:
-              - pattern: $HELPER.transferFrom($TOKEN,...,$FROM,...);
-              - pattern: $HELPER.transferFrom($TOKEN,...,$TO,...);
-          - patterns:
-              - pattern: $HELPER.safeTransferFrom($TOKEN,...,$FROM,...);
-              - pattern: $HELPER.safeTransferFrom($TOKEN,...,$TO,...);
+          - pattern: $TOKEN.transferFrom($FROM,$TO,$AMOUNT);
+          - pattern: $TOKEN.safeTransferFrom($FROM,$TO,$AMOUNT);
+          - pattern: $HELPER.transferFrom($TOKEN,$FROM,$TO,...);
+          - pattern: $HELPER.safeTransferFrom($TOKEN,$FROM,$TO,...);

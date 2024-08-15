@@ -1,42 +1,41 @@
 contract Test {
-
     function func1(address from, address to) public {
-        // ruleid: bad-transferFrom-access-control
+        // ruleid: bad-transferfrom-access-control
         usdc.transferFrom(from, to, amount);
     }
 
     function func2(address from, address to) public {
-        // ok: bad-transferFrom-access-control
-        usdc.transferFrom(owner, pool, amount);
+        // ok: bad-transferfrom-access-control
+        usdc.transferFrom(owner, random, amount);
     }
 
     function func3(address from, address to) public {
-        // ok: bad-transferFrom-access-control
+        // ok: bad-transferfrom-access-control
         usdc.transferFrom(pool, to, amount);
     }
 
     function func4(address from, uint256 amount, address random) public {
-        // ok: bad-transferFrom-access-control
+        // ok: bad-transferfrom-access-control
         usdc.transferFrom(pool, owner, amount);
     }
 
     function func5(address from, address to) external {
-        // ruleid: bad-transferFrom-access-control
+        // ruleid: bad-transferfrom-access-control
         usdc.transferFrom(from, to, amount);
     }
 
     function func6(address from, address to) external {
-        // ok: bad-transferFrom-access-control
-        usdc.transferFrom(owner, pool, amount);
+        // ok: bad-transferfrom-access-control
+        usdc.transferFrom(owner, random, amount);
     }
 
     function func7(address from, address to) external {
-        // ok: bad-transferFrom-access-control
+        // ok: bad-transferfrom-access-control
         usdc.transferFrom(pool, to, amount);
     }
 
     function func8(address from, uint256 amount, address random) external {
-        // ok: bad-transferFrom-access-control
+        // ok: bad-transferfrom-access-control
         usdc.transferFrom(pool, owner, amount);
     }
 
@@ -52,7 +51,7 @@ contract Test {
                     TransferHelper.safeTransfer(token, to, fee);
                 } else {
                     // safeTransferFrom requires approval
-                    // ruleid: bad-transferFrom-access-control
+                    // ruleid: bad-transferfrom-access-control
                     TransferHelper.transferFrom(token, from, to, fee);
                 }
             } else {
@@ -73,7 +72,7 @@ contract Test {
     }
 
     function _func10(address from, address to) internal {
-        // ruleid: bad-transferFrom-access-control
+        // ruleid: bad-transferfrom-access-control
         usdc.transferFrom(from, to, amount);
     }
 
@@ -81,42 +80,42 @@ contract Test {
     // SAFE TRANSFER TESTS
 
     function func11(address from, address to) public {
-        // ruleid: bad-transferFrom-access-control
+        // ruleid: bad-transferfrom-access-control
         usdc.safeTransferFrom(from, to, amount);
     }
 
     function func12(address from, address to) public {
-        // ok: bad-transferFrom-access-control
-        usdc.safeTransferFrom(owner, pool, amount);
+        // ok: bad-transferfrom-access-control
+        usdc.safeTransferFrom(owner, random, amount);
     }
 
     function func13(address from, address to) public {
-        // ok: bad-transferFrom-access-control
+        // ok: bad-transferfrom-access-control
         usdc.safeTransferFrom(pool, to, amount);
     }
 
     function func14(address from, uint256 amount, address random) public {
-        // ok: bad-transferFrom-access-control
+        // ok: bad-transferfrom-access-control
         usdc.safeTransferFrom(pool, owner, amount);
     }
 
     function func15(address from, address to) external {
-        // ruleid: bad-transferFrom-access-control
+        // ruleid: bad-transferfrom-access-control
         usdc.safeTransferFrom(from, to, amount);
     }
 
     function func16(address from, address to) external {
-        // ok: bad-transferFrom-access-control
-        usdc.safeTransferFrom(owner, pool, amount);
+        // ok: bad-transferfrom-access-control
+        usdc.safeTransferFrom(owner, random, amount);
     }
 
     function func17(address from, address to) external {
-        // ok: bad-transferFrom-access-control
+        // ok: bad-transferfrom-access-control
         usdc.safeTransferFrom(pool, to, amount);
     }
 
     function func18(address from, uint256 amount, address random) external {
-        // ok: bad-transferFrom-access-control
+        // ok: bad-transferfrom-access-control
         usdc.safeTransferFrom(pool, owner, amount);
     }
 
@@ -132,7 +131,7 @@ contract Test {
                     TransferHelper.safeTransfer(token, to, fee);
                 } else {
                     // safeTransferFrom requires approval
-                    // ruleid: bad-transferFrom-access-control
+                    // ruleid: bad-transferfrom-access-control
                     TransferHelper.safeTransferFrom(token, from, to, fee);
                 }
             } else {
@@ -153,20 +152,30 @@ contract Test {
     }
 
     function _func20(address from, address to) internal {
-        // ruleid: bad-transferFrom-access-control
+        // ruleid: bad-transferfrom-access-control
         usdc.safeTransferFrom(from, to, amount);
     }
 
     function _func21(address from, address to) internal {
         // internal never called
-        // ok: bad-transferFrom-access-control
+        // ok: bad-transferfrom-access-control
         usdc.safeTransferFrom(from, to, amount);
-        // ok: bad-transferFrom-access-control
+        // ok: bad-transferfrom-access-control
         usdc.transferFrom(from, to, amount);
-        // ok: bad-transferFrom-access-control
-        TransferHelper.safeTransferFrom(usdc, from, to, amount);
-        // ok: bad-transferFrom-access-control
-        TransferHelper.transferFrom(usdc, from, to, amount);
+        // ok: bad-transferfrom-access-control
+        Helper.safeTransferFrom(token, from, to, amount);
+        // ok: bad-transferfrom-access-control
+        Helper.transferFrom(token, from, to, amount);
+    }
+
+    function func22(address from, address to) external {
+        // ok: bad-transferfrom-access-control
+        usdc.safeTransferFrom(from, from, amount);
+    }
+
+    function func23(address to, address from) external {
+        // ruleid: bad-transferfrom-access-control
+        usdc.safeTransferFrom(from, to, amount);
     }
 
 }
