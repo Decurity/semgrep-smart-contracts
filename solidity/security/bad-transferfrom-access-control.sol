@@ -178,4 +178,36 @@ contract Test {
         usdc.safeTransferFrom(from, to, amount);
     }
 
+    function transferFrom(address to, address from, uint256 amount) external {
+        // ok: bad-transferfrom-access-control
+        super.transferFrom(from, to, amount);
+    }
+
+    function _stake(address _fundingAccount, address _account, address _depositToken, uint256 _amount) private {
+        require(_amount > 0, "RewardTracker: invalid _amount");
+        require(isDepositToken[_depositToken], "RewardTracker: invalid _depositToken");
+
+        // ok: bad-transferfrom-access-control
+        IERC20(_depositToken).transferFrom(_fundingAccount, address(this), _amount);
+
+        _updateRewards(_account);
+
+        stakedAmounts[_account] = stakedAmounts[_account] + _amount;
+        depositBalances[_account][_depositToken] = depositBalances[_account][_depositToken] + _amount;
+        totalDepositSupply[_depositToken] = totalDepositSupply[_depositToken] + _amount;
+
+        _mint(_account, _amount);
+    }
+
+
+    function func24(address to, address from) external onlyOwner {
+        // ok: bad-transferfrom-access-control
+        usdc.safeTransferFrom(from, to, amount);
+    }
+
+    function func25(address from, address to) public {
+        // ok: bad-transferfrom-access-control
+        usdc.safeTransferFrom(from, address(this), amount);
+    }
 }
+
