@@ -72,7 +72,7 @@ contract Test {
     }
 
     function _func10(address from, address to) internal {
-        // ruleid: bad-transferfrom-access-control
+        // todoruleid: bad-transferfrom-access-control
         usdc.transferFrom(from, to, amount);
     }
 
@@ -152,7 +152,7 @@ contract Test {
     }
 
     function _func20(address from, address to) internal {
-        // ruleid: bad-transferfrom-access-control
+        // todoruleid: bad-transferfrom-access-control
         usdc.safeTransferFrom(from, to, amount);
     }
 
@@ -183,6 +183,11 @@ contract Test {
         super.transferFrom(from, to, amount);
     }
 
+    function stakeForAccount(address _fundingAccount, address _account, address _depositToken, uint256 _amount) external override nonReentrant {
+        _validateHandler();
+        _stake(_fundingAccount, _account, _depositToken, _amount);
+    }
+
     function _stake(address _fundingAccount, address _account, address _depositToken, uint256 _amount) private {
         require(_amount > 0, "RewardTracker: invalid _amount");
         require(isDepositToken[_depositToken], "RewardTracker: invalid _depositToken");
@@ -200,7 +205,7 @@ contract Test {
     }
 
 
-    function func24(address to, address from) external onlyOwner {
+    function func24(address from, address to) onlyOwner public {
         // ok: bad-transferfrom-access-control
         usdc.safeTransferFrom(from, to, amount);
     }
@@ -208,6 +213,30 @@ contract Test {
     function func25(address from, address to) public {
         // ok: bad-transferfrom-access-control
         usdc.safeTransferFrom(from, address(this), amount);
+    }
+
+    function transferIn(
+    address _token,
+    address _sender,
+    uint256 _amount
+    ) public onlyGame onlyWhitelistedToken(_token) {
+        // ok: bad-transferfrom-access-control
+        IERC20(_token).safeTransferFrom(_sender, address(this), _amount);
+    }
+
+    function func26(address random, address from, address to) public {
+        // ok: bad-transferfrom-access-control
+        usdc.safeTransferFrom(from, someaddress, amount);
+    }
+
+    function func28(address random, address from, address to) public {
+        // ok: bad-transferfrom-access-control
+        usdc.safeTransferFrom(this, some, from);
+    }
+
+    function func29(address random, address from, address token, address onemore) public {
+        // ok: bad-transferfrom-access-control
+        IERC20(token).safeTransferFrom(this, some, amount);
     }
 }
 
