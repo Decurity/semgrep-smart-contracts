@@ -1,0 +1,40 @@
+rules:
+  - id: bad-transferfrom-access-control
+    languages:
+      - solidity
+    severity: ERROR
+    message: An attacker may perform transferFrom() with arbitrary addresses
+    metadata:
+      category: security
+      technology:
+        - solidity
+      cwe: "CWE-284: Improper Access Control"
+      confidence: LOW
+      likelihood: HIGH
+      impact: HIGH
+      subcategory:
+        - vuln
+      references:
+        - https://app.blocksec.com/explorer/tx/eth/0x54f659773dae6e01f83184d4b6d717c7f1bb71c0aa59e8c8f4a57c25271424b3 #YODL hack
+    mode: taint
+    options:
+      taint_unify_mvars: true
+    pattern-sources:
+      - patterns:
+          - pattern-either:
+              - pattern: function $F(..., address $FROM, ..., address $TO, ...) external { ... }
+              - pattern: function $F(..., address $FROM, ..., address $TO, ...) public { ... }
+              - pattern: function $F(..., address $TO, ..., address $FROM, ...) external { ... }
+              - pattern: function $F(..., address $TO, ..., address $FROM, ...) public { ... }
+          - focus-metavariable:
+              - $FROM
+              - $TO
+          - pattern-not: function $F(...) onlyOwner { ... }
+    pattern-sinks:
+      - patterns:
+          - pattern-either:
+              - pattern: $TOKEN.transferFrom($FROM,$TO,$AMOUNT);
+              - pattern: $TOKEN.safeTransferFrom($FROM,$TO,$AMOUNT);
+              - pattern: $HELPER.transferFrom($TOKEN,$FROM,$TO,...);
+              - pattern: $HELPER.safeTransferFrom($TOKEN,$FROM,$TO,...);
+          - pattern-not: super.$FUN(...);
