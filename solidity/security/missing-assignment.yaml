@@ -25,6 +25,10 @@ rules:
       - pattern-not: $VAR--;
       - pattern-not: ++$VAR;
       - pattern-not: --$VAR;
+      - pattern-not: $VAR[...]++;
+      - pattern-not: $VAR[...]--;
+      - pattern-not: ++$VAR[...];
+      - pattern-not: --$VAR[...];
       - pattern-not: ... = ...;
       - pattern-not: ... += ...;
       - pattern-not: ... -= ...;
