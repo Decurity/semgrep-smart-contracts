@@ -1,0 +1,78 @@
+rules:
+ -
+    id: uniswap-v4-callback-not-protected
+    message: Uniswap v4 callback $CALLBACK is not protected with onlyPoolManager modifier
+    metadata:
+        category: security
+        technology:
+            - solidity
+        cwe: "CWE-284: Improper Access Control"
+        confidence: HIGH
+        likelihood: HIGH
+        impact: HIGH
+        subcategory:
+            - vuln
+        references:
+            - https://docs.uniswap.org/contracts/v4/overview
+            - https://github.com/Uniswap/v4-core/blob/main/src/interfaces/IHooks.sol
+            - https://dedaub.com/blog/the-11m-cork-protocol-hack-a-critical-lesson-in-uniswap-v4-hook-security/
+    patterns:
+        - pattern: function $CALLBACK(...) external {...}
+        - pattern-not: function $CALLBACK(...) external onlyPoolManager {...}
+        - pattern-not: function $CALLBACK(...) external view onlyPoolManager {...}
+        - pattern-not: function $CALLBACK(...) external override onlyPoolManager {...}
+        - pattern-not: function $CALLBACK(...) external view override onlyPoolManager {...}
+        - pattern-not: function $CALLBACK(...) external onlyPoolManager override {...}
+        - pattern-not: function $CALLBACK(...) external view onlyPoolManager override {...}
+        - pattern-not: function $CALLBACK(...) external onlyPoolManager view {...}
+        - pattern-not: function $CALLBACK(...) external override onlyPoolManager view {...}
+        - pattern-not: function $CALLBACK(...) external onlyPoolManager whenNotPaused {...}
+        - pattern-not: function $CALLBACK(...) external view onlyPoolManager whenNotPaused {...}
+        - pattern-not: function $CALLBACK(...) external override onlyPoolManager whenNotPaused {...}
+        - pattern-not: function $CALLBACK(...) external view override onlyPoolManager whenNotPaused {...}
+        - pattern-not: |
+            function $CALLBACK(...) external {...
+                ...
+                require(msg.sender == $POOL_MANAGER, ...);
+                ...
+            }
+        - pattern-not: |
+            function $CALLBACK(...) external {...
+                ...
+                require(msg.sender == address($POOL_MANAGER), ...);
+                ...
+            }
+        - pattern-not: |
+            function $CALLBACK(...) external {...
+                ...
+                require($POOL_MANAGER == msg.sender, ...);
+                ...
+            }
+        - pattern-not: |
+            function $CALLBACK(...) external {...
+                ...
+                require(address($POOL_MANAGER) == msg.sender, ...);
+                ...
+            }
+        - pattern-not: |
+            function $CALLBACK(...) external {...
+                ...
+                if (msg.sender != $POOL_MANAGER) {
+                  ...
+                }
+                ...
+            }
+        - pattern-not: |
+            function $CALLBACK(...) external {...
+                ...
+                if (msg.sender != address($POOL_MANAGER)) {
+                  ...
+                }
+                ...
+            }
+        - metavariable-regex:
+            metavariable: $CALLBACK
+            regex: (beforeInitialize|afterInitialize|beforeAddLiquidity|afterAddLiquidity|beforeRemoveLiquidity|afterRemoveLiquidity|beforeSwap|afterSwap|beforeDonate|afterDonate)
+    languages: 
+    - solidity
+    severity: ERROR 
