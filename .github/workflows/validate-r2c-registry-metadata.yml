@@ -34,7 +34,7 @@ jobs:
         run: echo $CHANGED_FILES
       - uses: actions/setup-python@v2
         with:
-          python-version: 3.9.2
+          python-version: 3.9.22
       - name: install deps
         run: pip install jsonschema pyyaml
       - name: validate metadata
