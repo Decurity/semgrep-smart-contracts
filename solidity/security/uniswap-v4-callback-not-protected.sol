@@ -33,6 +33,9 @@ struct BeforeSwapDelta {
     int128 deltaAmountUnspecified;
 }
 
+error HookNotImplemented();
+error NotImplemented();
+
 contract Test {
     modifier onlyPoolManager() {
         require(msg.sender == address(poolManager), "Not authorized");
@@ -174,6 +177,218 @@ contract Test {
     ) external view returns (bytes4) {
         require(address(poolManager) == msg.sender, "Access control failed");
         return bytes4(0);
+    }
+
+    // ok: uniswap-v4-callback-not-protected - functions that revert with HookNotImplemented() should not be detected
+    function beforeSwap(
+        address,
+        PoolKey calldata,
+        IPoolManager.SwapParams calldata,
+        bytes calldata
+    ) external pure override returns (bytes4, BeforeSwapDelta memory, uint24) {
+        revert HookNotImplemented();
+    }
+
+    // ok: uniswap-v4-callback-not-protected - functions that revert with HookNotImplemented() should not be detected
+    function afterInitialize(
+        address,
+        PoolKey calldata,
+        uint160,
+        int24,
+        bytes calldata
+    ) external pure override returns (bytes4) {
+        revert HookNotImplemented();
+    }
+
+    // ok: uniswap-v4-callback-not-protected - functions that revert with HookNotImplemented() should not be detected
+    function beforeAddLiquidity(
+        address,
+        PoolKey calldata,
+        IPoolManager.ModifyLiquidityParams calldata,
+        bytes calldata
+    ) external pure override returns (bytes4) {
+        revert HookNotImplemented();
+    }
+
+    // ok: uniswap-v4-callback-not-protected - functions that revert with HookNotImplemented() should not be detected
+    function afterRemoveLiquidity(
+        address,
+        PoolKey calldata,
+        IPoolManager.ModifyLiquidityParams calldata,
+        BeforeSwapDelta memory,
+        bytes calldata
+    ) external pure override returns (bytes4) {
+        revert HookNotImplemented();
+    }
+
+    // ok: uniswap-v4-callback-not-protected - functions that revert with HookNotImplemented() should not be detected
+    function beforeDonate(
+        address,
+        PoolKey calldata,
+        uint256,
+        uint256,
+        bytes calldata
+    ) external pure override returns (bytes4) {
+        revert HookNotImplemented();
+    }
+
+    // ok: uniswap-v4-callback-not-protected - functions that revert with HookNotImplemented() should not be detected
+    function afterSwap(
+        address,
+        PoolKey calldata,
+        IPoolManager.SwapParams calldata,
+        BeforeSwapDelta memory,
+        bytes calldata
+    ) external pure override returns (bytes4) {
+        revert HookNotImplemented();
+    }
+
+    // ok: uniswap-v4-callback-not-protected - functions that revert with HookNotImplemented() should not be detected
+    function afterDonate(
+        address,
+        PoolKey calldata,
+        uint256,
+        uint256,
+        bytes calldata
+    ) external pure override returns (bytes4) {
+        revert HookNotImplemented();
+    }
+
+    // ok: uniswap-v4-callback-not-protected - functions that revert with HookNotImplemented() should not be detected
+    function beforeRemoveLiquidity(
+        address,
+        PoolKey calldata,
+        IPoolManager.ModifyLiquidityParams calldata,
+        bytes calldata
+    ) external pure override returns (bytes4) {
+        revert HookNotImplemented();
+    }
+
+    // ok: uniswap-v4-callback-not-protected - functions that revert with HookNotImplemented() should not be detected
+    function beforeInitialize(
+        address,
+        PoolKey calldata,
+        uint160,
+        bytes calldata
+    ) external pure override returns (bytes4) {
+        revert HookNotImplemented();
+    }
+
+    // ok: uniswap-v4-callback-not-protected - functions that revert with HookNotImplemented() should not be detected
+    function afterAddLiquidity(
+        address,
+        PoolKey calldata,
+        IPoolManager.ModifyLiquidityParams calldata,
+        BeforeSwapDelta memory,
+        bytes calldata
+    ) external pure override returns (bytes4) {
+        revert HookNotImplemented();
+    }
+
+    // ok: uniswap-v4-callback-not-protected - functions that revert with NotImplemented() should not be detected
+    function beforeSwap(
+        address,
+        PoolKey calldata,
+        IPoolManager.SwapParams calldata,
+        bytes calldata
+    ) external pure override returns (bytes4, BeforeSwapDelta memory, uint24) {
+        revert NotImplemented();
+    }
+
+    // ok: uniswap-v4-callback-not-protected - functions that revert with NotImplemented() should not be detected
+    function afterInitialize(
+        address,
+        PoolKey calldata,
+        uint160,
+        int24,
+        bytes calldata
+    ) external pure override returns (bytes4) {
+        revert NotImplemented();
+    }
+
+    // ok: uniswap-v4-callback-not-protected - functions that revert with NotImplemented() should not be detected
+    function beforeAddLiquidity(
+        address,
+        PoolKey calldata,
+        IPoolManager.ModifyLiquidityParams calldata,
+        bytes calldata
+    ) external pure override returns (bytes4) {
+        revert NotImplemented();
+    }
+
+    // ok: uniswap-v4-callback-not-protected - functions that revert with NotImplemented() should not be detected
+    function afterRemoveLiquidity(
+        address,
+        PoolKey calldata,
+        IPoolManager.ModifyLiquidityParams calldata,
+        BeforeSwapDelta memory,
+        bytes calldata
+    ) external pure override returns (bytes4) {
+        revert NotImplemented();
+    }
+
+    // ok: uniswap-v4-callback-not-protected - functions that revert with NotImplemented() should not be detected
+    function beforeDonate(
+        address,
+        PoolKey calldata,
+        uint256,
+        uint256,
+        bytes calldata
+    ) external pure override returns (bytes4) {
+        revert NotImplemented();
+    }
+
+    // ok: uniswap-v4-callback-not-protected - functions that revert with NotImplemented() should not be detected
+    function afterSwap(
+        address,
+        PoolKey calldata,
+        IPoolManager.SwapParams calldata,
+        BeforeSwapDelta memory,
+        bytes calldata
+    ) external pure override returns (bytes4) {
+        revert NotImplemented();
+    }
+
+    // ok: uniswap-v4-callback-not-protected - functions that revert with NotImplemented() should not be detected
+    function afterDonate(
+        address,
+        PoolKey calldata,
+        uint256,
+        uint256,
+        bytes calldata
+    ) external pure override returns (bytes4) {
+        revert NotImplemented();
+    }
+
+    // ok: uniswap-v4-callback-not-protected - functions that revert with NotImplemented() should not be detected
+    function beforeRemoveLiquidity(
+        address,
+        PoolKey calldata,
+        IPoolManager.ModifyLiquidityParams calldata,
+        bytes calldata
+    ) external pure override returns (bytes4) {
+        revert NotImplemented();
+    }
+
+    // ok: uniswap-v4-callback-not-protected - functions that revert with NotImplemented() should not be detected
+    function beforeInitialize(
+        address,
+        PoolKey calldata,
+        uint160,
+        bytes calldata
+    ) external pure override returns (bytes4) {
+        revert NotImplemented();
+    }
+
+    // ok: uniswap-v4-callback-not-protected - functions that revert with NotImplemented() should not be detected
+    function afterAddLiquidity(
+        address,
+        PoolKey calldata,
+        IPoolManager.ModifyLiquidityParams calldata,
+        BeforeSwapDelta memory,
+        bytes calldata
+    ) external pure override returns (bytes4) {
+        revert NotImplemented();
     }
 
     // ruleid: uniswap-v4-callback-not-protected
