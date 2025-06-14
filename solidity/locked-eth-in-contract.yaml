@@ -1,0 +1,71 @@
+rules:
+  - id: locked-eth-in-contract
+    message: Contract supports depositing ETH, but have no direct way to withdraw any ETH balance present in the contract.
+    languages:
+      - solidity
+    severity: WARNING
+    metadata:
+      references:
+        - https://blog.openzeppelin.com/compound-iii-audit/
+        - https://github.com/compound-finance/comet/commit/36816138e15477d0ac487b9d97affc0d296ccc49
+      category: security
+      tags:
+        - compound
+    patterns:
+      - pattern: |
+          contract $CONTRACT {
+            ...
+            function $RECEIVE(...) payable {
+              ...
+            }
+            ...
+          }
+      - pattern-not: |
+          contract $CONTRACT {
+            ...
+            function $FUNC(...) {
+              ...
+              $ADDR.call{value: $AMOUNT, gas: $GAS}(...);
+            }
+            ...
+          }
+      - pattern-not: |
+          contract $CONTRACT {
+            ...
+            function $FUNC(...) {
+              ...
+              $ADDR.call{value: $AMOUNT}(...);
+            }
+            ...
+          }
+      - pattern-not: |
+          contract $CONTRACT {
+            ...
+            function $FUNC(...) {
+              ...
+              $ADDR.send(...);
+            }
+            ...
+          }
+      - pattern-not: |
+          contract $CONTRACT {
+            ...
+            function $FUNC(...) {
+              ...
+              $ADDR.transfer($AMOUNT);
+            }
+            ...
+          }
+      - pattern-not: |
+          contract $CONTRACT {
+            ...
+            function $FUNC(...) {
+              ...
+              selfdestruct(...);
+            }
+            ...
+          }
+      - pattern-not-inside: |
+          abstract contract $CONTRACT {
+            ...
+          }
